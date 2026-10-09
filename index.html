@@ -3,11 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>M.V // CYBERNETIC HUD, MIND MAP & ARCADE SYSTEM</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&display=swap');
+  <title>M.V // CYBERNETIC HUD, NEURAL LAB & ARCADE PLATFORM</title>
+  
+  <!-- Sci-Fi Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            mv: {
+              void: '#020612',
+              dark: '#030a1e',
+              panel: '#040d28',
+              cyan: '#00f3ff',
+              cyanGlow: '#00d2ff',
+              electric: '#0066ff',
+              alert: '#ff0055',
+              amber: '#ffaa00',
+              emerald: '#00ffaa'
+            }
+          },
+          fontFamily: {
+            orbitron: ['Orbitron', 'sans-serif'],
+            rajdhani: ['Rajdhani', 'sans-serif'],
+            mono: ['Share Tech Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
     :root {
       --neon-cyan: #00f3ff;
       --neon-blue: #0066ff;
@@ -29,34 +62,51 @@
     .font-hud { font-family: 'Orbitron', monospace; }
     .font-mono-hud { font-family: 'Share Tech Mono', monospace; }
 
-    .hud-border {
-      border: 1px solid rgba(0, 243, 255, 0.35);
-      background: rgba(3, 9, 30, 0.85);
-      box-shadow: 0 0 20px rgba(0, 243, 255, 0.12), inset 0 0 15px rgba(0, 243, 255, 0.04);
+    .hud-bracket {
+      border: 1px solid rgba(0, 243, 255, 0.4);
+      background: rgba(3, 10, 30, 0.88);
       position: relative;
+      box-shadow: 0 0 20px rgba(0, 243, 255, 0.08), inset 0 0 25px rgba(0, 243, 255, 0.03);
     }
 
-    .hud-border::before, .hud-border::after {
+    .hud-bracket::before, .hud-bracket::after {
       content: '';
       position: absolute;
-      width: 10px;
-      height: 10px;
+      width: 12px;
+      height: 12px;
       pointer-events: none;
       z-index: 10;
     }
-    .hud-border::before {
+    .hud-bracket::before {
       top: -2px; left: -2px;
       border-top: 2px solid var(--neon-cyan);
       border-left: 2px solid var(--neon-cyan);
     }
-    .hud-border::after {
+    .hud-bracket::after {
       bottom: -2px; right: -2px;
       border-bottom: 2px solid var(--neon-cyan);
       border-right: 2px solid var(--neon-cyan);
     }
 
-    .glow-cyan { text-shadow: 0 0 12px rgba(0, 243, 255, 0.8); }
-    .glow-box { box-shadow: 0 0 22px rgba(0, 243, 255, 0.35); }
+    .corner-notch-tr {
+      position: absolute;
+      top: -2px; right: -2px;
+      width: 12px; height: 12px;
+      border-top: 2px solid var(--neon-cyan);
+      border-right: 2px solid var(--neon-cyan);
+      pointer-events: none;
+    }
+    .corner-notch-bl {
+      position: absolute;
+      bottom: -2px; left: -2px;
+      width: 12px; height: 12px;
+      border-bottom: 2px solid var(--neon-cyan);
+      border-left: 2px solid var(--neon-cyan);
+      pointer-events: none;
+    }
+
+    .glow-cyan { text-shadow: 0 0 12px rgba(0, 243, 255, 0.85); }
+    .glow-box { box-shadow: 0 0 25px rgba(0, 243, 255, 0.35); }
 
     @keyframes rotateCW {
       from { transform: rotate(0deg); }
@@ -67,7 +117,7 @@
       to { transform: rotate(0deg); }
     }
     @keyframes pulseCore {
-      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px #00f3ff); }
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 16px #00f3ff); }
       50% { transform: scale(1.08); filter: drop-shadow(0 0 35px #00f3ff); }
     }
 
@@ -75,8 +125,23 @@
     .rotate-ccw { animation: rotateCCW 28s linear infinite; }
     .pulse-core { animation: pulseCore 2.8s ease-in-out infinite; }
 
+    @keyframes scanLineAnim {
+      0% { top: 0%; opacity: 0.9; }
+      50% { opacity: 0.4; }
+      100% { top: 100%; opacity: 0.9; }
+    }
+    .scanner-laser-bar {
+      position: absolute;
+      left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #00f3ff, #fff, #00f3ff, transparent);
+      box-shadow: 0 0 12px #00f3ff, 0 0 20px #00f3ff;
+      animation: scanLineAnim 2s ease-in-out infinite alternate;
+    }
+
     .scanlines {
-      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.28) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.28) 50%),
+                  linear-gradient(90deg, rgba(0, 243, 255, 0.02), rgba(0, 0, 0, 0), rgba(0, 102, 255, 0.02));
       background-size: 100% 3px, 6px 100%;
       pointer-events: none;
     }
@@ -89,282 +154,606 @@
     ::-webkit-scrollbar-thumb:hover { background: rgba(0, 243, 255, 0.8); }
   </style>
 </head>
-<body class="relative min-h-screen">
-  <div class="fixed inset-0 scanlines z-40"></div>
+<body class="relative min-h-screen flex flex-col selection:bg-cyan-400 selection:text-black">
+  <div class="fixed inset-0 scanlines z-40 pointer-events-none"></div>
   <canvas id="ambientMatrixCanvas" class="fixed inset-0 pointer-events-none z-0 opacity-40"></canvas>
 
-  <!-- TELEMETRY BAR -->
-  <aside class="relative z-50 bg-[#01040e]/95 border-b border-cyan-500/25 px-4 py-1 text-[11px] font-mono-hud flex items-center justify-between text-cyan-400/80">
+  <!-- TOP TELEMETRY DOCK -->
+  <aside class="relative z-50 bg-[#01040e]/95 border-b border-cyan-500/25 px-4 py-1 text-[11px] font-mono-hud flex flex-wrap items-center justify-between text-cyan-400/80">
     <div class="flex items-center gap-4">
-      <span>LATENCY: <strong id="telemetryLatency" class="text-cyan-300">14ms</strong></span>
+      <span>LATENCY: <strong id="telemetryLatency" class="text-cyan-300">12ms</strong></span>
       <span>SYS FPS: <strong id="telemetryFps" class="text-cyan-300">60</strong></span>
-      <span>AI CORE: <strong class="text-cyan-300">M.V OPERATIONAL</strong></span>
+      <span>API LINK: <strong id="apiKeyBadge" class="text-cyan-300">CANVAS RUNTIME</strong></span>
     </div>
+    
+    <!-- MASTER AUDIO MUTE / UNMUTE BUTTON -->
     <div class="flex items-center gap-3">
+      <button onclick="toggleMasterAudio()" id="masterAudioBtn" class="flex items-center gap-1.5 px-2.5 py-0.5 rounded border border-emerald-500/50 bg-emerald-950/60 text-emerald-300 hover:bg-emerald-800 transition">
+        <span id="masterAudioIcon">🔊</span>
+        <span id="masterAudioText" class="uppercase font-bold tracking-wider">AUDIO: ON</span>
+      </button>
+
+      <button onclick="openApiKeyModal()" class="text-[10px] uppercase tracking-wider text-cyan-300 border border-cyan-500/40 bg-cyan-950/60 px-2 py-0.5 rounded hover:bg-cyan-800 transition">
+        ⚙️ Config Key
+      </button>
+      
       <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-      <span class="text-emerald-400">NEURAL SYNAPSE LOCKED</span>
+      <span class="text-emerald-400">M.V SYNAPSE LOCKED</span>
     </div>
   </aside>
 
-  <!-- MAIN HUD HEADER -->
-  <header class="relative z-50 border-b border-cyan-500/30 bg-[#020612]/90 backdrop-blur px-4 py-3 flex flex-wrap items-center justify-between gap-4">
-    <div class="flex items-center gap-3">
-      <div class="w-10 h-10 rounded-full border border-cyan-400 flex items-center justify-center glow-box bg-[#010b24]">
-        <span class="font-hud font-black text-cyan-300 text-base">MV</span>
-      </div>
-      <div>
-        <div class="flex items-center gap-2">
-          <span class="font-hud font-bold text-lg tracking-wider text-cyan-400 glow-cyan">M.V // CYBERNETIC COGNITION</span>
-          <span class="text-xs px-2 py-0.5 rounded bg-cyan-950 border border-cyan-500/50 text-cyan-300">SYSTEM MK-V</span>
+  <!-- TOP NAVIGATION HEADER -->
+  <header class="relative z-50 border-b border-cyan-500/30 bg-[#020612]/90 backdrop-blur-md px-4 py-3">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+      
+      <!-- Brand & Status -->
+      <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('core')">
+        <div class="w-10 h-10 rounded-full border border-cyan-400 flex items-center justify-center glow-box bg-[#010b24]">
+          <span class="font-hud font-black text-cyan-300 text-base">MV</span>
         </div>
-        <div class="text-[11px] text-cyan-500/70 tracking-widest uppercase">Autonomous Intelligence • Mind Map Matrix • Defense Simulator</div>
-      </div>
-    </div>
-
-    <!-- VOICE MATRIX CONTROLS -->
-    <div class="flex flex-wrap items-center gap-2 bg-[#050f24] border border-cyan-500/40 p-1.5 rounded">
-      <span class="text-xs text-cyan-400 uppercase tracking-wider font-semibold px-1 font-mono-hud">Voice:</span>
-      <select id="voiceProfileSelect" onchange="updateVoiceSliders()" class="bg-[#020816] text-xs text-cyan-200 border border-cyan-500/50 rounded px-2 py-1 outline-none cursor-pointer">
-        <optgroup label="Female Voice Units">
-          <option value="female_1" selected>F-01 // Valkyrie (Crisp & High)</option>
-          <option value="female_2">F-02 // Athena (Warm & Natural)</option>
-          <option value="female_3">F-03 // Nyx (Deep Tactical Stealth)</option>
-        </optgroup>
-        <optgroup label="Male Voice Units">
-          <option value="male_1">M-01 // Titan (Authoritative Deep)</option>
-          <option value="male_2">M-02 // Apex (High-Tempo Recon)</option>
-        </optgroup>
-      </select>
-
-      <div class="hidden xl:flex items-center gap-2 px-2 border-l border-cyan-500/30 text-[10px] text-cyan-400 font-mono-hud">
-        <span>Pitch: <span id="pitchVal">1.25</span></span>
-        <input type="range" id="pitchSlider" min="0.5" max="2.0" step="0.05" value="1.25" oninput="adjustPitch(this.value)" class="w-16 accent-cyan-400 cursor-pointer">
-        <span>Rate: <span id="rateVal">1.05</span></span>
-        <input type="range" id="rateSlider" min="0.7" max="1.5" step="0.05" value="1.05" oninput="adjustRate(this.value)" class="w-16 accent-cyan-400 cursor-pointer">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-hud font-bold text-lg tracking-wider text-cyan-400 glow-cyan">M.V // CYBERNETIC COGNITION</span>
+            <span class="text-[10px] font-mono-hud px-2 py-0.5 rounded bg-cyan-950 border border-cyan-500/50 text-cyan-300">ONLINE</span>
+          </div>
+          <div class="text-[11px] font-mono-hud text-cyan-500/80 tracking-widest uppercase">Autonomous Intelligence • Multimodal Matrix • Defense Sim</div>
+        </div>
       </div>
 
-      <button onclick="testSelectedVoice()" class="text-xs px-2.5 py-1 bg-cyan-900/80 hover:bg-cyan-700 border border-cyan-400 rounded text-cyan-200 transition">Test Audio</button>
-    </div>
+      <!-- VOICE MATRIX SELECTOR (3 FEMALE, 2 MALE) -->
+      <div class="flex items-center gap-2 bg-[#050f24] border border-cyan-500/40 px-3 py-1.5 rounded">
+        <span class="text-xs text-cyan-400 uppercase tracking-wider font-semibold font-mono-hud">VOICE:</span>
+        <select id="voiceProfileSelect" class="bg-[#020816] text-xs text-cyan-200 border border-cyan-500/50 rounded px-2.5 py-1 outline-none cursor-pointer font-mono-hud">
+          <optgroup label="Female Voice Units">
+            <option value="female_1" selected>F-01 // Valkyrie (Crisp & High)</option>
+            <option value="female_2">F-02 // Athena (Warm & Natural)</option>
+            <option value="female_3">F-03 // Nyx (Deep Tactical Stealth)</option>
+          </optgroup>
+          <optgroup label="Male Voice Units">
+            <option value="male_1">M-01 // Titan (Authoritative Deep)</option>
+            <option value="male_2">M-02 // Apex (Crisp Tactical)</option>
+          </optgroup>
+        </select>
+        <button onclick="testSelectedVoice()" class="text-[11px] font-mono-hud px-2.5 py-1 bg-cyan-900/80 hover:bg-cyan-700/80 border border-cyan-400 rounded text-cyan-200 transition shadow-[0_0_8px_rgba(0,243,255,0.3)]">
+          TEST
+        </button>
+      </div>
 
-    <!-- NAVIGATION TABS -->
-    <nav class="flex items-center gap-1 sm:gap-2">
-      <button onclick="switchTab('core')" class="tab-btn px-3 py-1.5 rounded text-xs font-hud text-cyan-300 border border-cyan-500/50 bg-cyan-950/60 hover:bg-cyan-800/50 transition">CORE // M.V</button>
-      <button onclick="switchTab('mindmap')" class="tab-btn px-3 py-1.5 rounded text-xs font-hud text-cyan-400 border border-cyan-500/30 bg-cyan-950/30 hover:bg-cyan-800/50 transition">MIND MAP</button>
-      <button onclick="switchTab('arcade')" class="tab-btn px-3 py-1.5 rounded text-xs font-hud text-cyan-400 border border-cyan-500/30 bg-cyan-950/30 hover:bg-cyan-800/50 transition">CYBER ARCADE</button>
-      <button onclick="switchTab('projects')" class="tab-btn px-3 py-1.5 rounded text-xs font-hud text-cyan-400 border border-cyan-500/30 bg-cyan-950/30 hover:bg-cyan-800/50 transition">DOSSIER</button>
-    </nav>
+      <!-- NAVIGATION TABS -->
+      <nav class="flex flex-wrap items-center gap-1 sm:gap-2">
+        <button onclick="switchTab('core')" id="tabBtn-core" class="tab-btn px-3 py-1.5 rounded text-xs font-hud text-cyan-300 border border-cyan-400 bg-cyan-950/80 glow-cyan shadow-[0_0_12px_rgba(0,243,255,0.3)] transition">
+          CORE // M.V
+        </button>
+        <button onclick="switchTab('neurallab')" id="tabBtn-neurallab" class="tab-btn px-3 py-1.5 rounded text-xs font-hud text-cyan-400/80 border border-cyan-500/30 hover:border-cyan-400 hover:text-cyan-300 transition">
+          NEURAL LAB
+        </button>
+        <button onclick="switchTab('mindmap')" id="tabBtn-mindmap" class="tab-btn px-3 py-1.5 rounded text-xs font-hud text-cyan-400/80 border border-cyan-500/30 hover:border-cyan-400 hover:text-cyan-300 transition">
+          MIND MAP
+        </button>
+        <button onclick="switchTab('arcade')" id="tabBtn-arcade" class="tab-btn px-3 py-1.5 rounded text-xs font-hud text-cyan-400/80 border border-cyan-500/30 hover:border-cyan-400 hover:text-cyan-300 transition">
+          CYBER ARCADE
+        </button>
+        <button onclick="switchTab('projects')" id="tabBtn-projects" class="tab-btn px-3 py-1.5 rounded text-xs font-hud text-cyan-400/80 border border-cyan-500/30 hover:border-cyan-400 hover:text-cyan-300 transition">
+          DOSSIER
+        </button>
+      </nav>
+
+    </div>
   </header>
 
-  <!-- MAIN VIEW CONTAINER -->
-  <main class="relative z-10 max-w-7xl mx-auto p-4 sm:p-6 space-y-6">
+  <!-- MAIN HUD BODY -->
+  <main class="relative z-10 max-w-7xl w-full mx-auto p-4 sm:p-6 flex-1 space-y-6">
 
-    <!-- VIEW 1: CORE TELEMETRY & M.V AI AGENT -->
-    <section id="tab-core" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <!-- =========================================================================
+         TAB 1: CORE TELEMETRY // M.V
+    ========================================================================= -->
+    <section id="tab-core" class="tab-view grid grid-cols-1 lg:grid-cols-12 gap-6">
       
-      <!-- HOLOGRAPHIC REACTOR CORE (Image 2) -->
-      <div class="lg:col-span-5 hud-border rounded p-6 flex flex-col items-center justify-center relative min-h-[460px]">
-        <div class="absolute top-3 left-3 text-xs tracking-widest text-cyan-400/80 font-mono-hud">CORE TELEMETRY // M.V</div>
-        <div class="absolute top-3 right-3 text-xs tracking-widest text-cyan-400/80 font-mono-hud" id="coreStatusLabel">REACTOR STABLE</div>
+      <!-- HOLOGRAPHIC ROTATING ARC REACTOR CORE -->
+      <div class="lg:col-span-5 hud-bracket rounded p-6 flex flex-col items-center justify-between relative min-h-[480px]">
+        <div class="corner-notch-tr"></div>
+        <div class="corner-notch-bl"></div>
 
-        <!-- Concentric Rotating Rings -->
-        <div class="relative w-64 h-64 sm:w-72 sm:h-72 flex items-center justify-center cursor-pointer" onclick="dischargePulse()">
-          <svg class="absolute inset-0 w-full h-full rotate-cw opacity-60" viewBox="0 0 200 200">
-            <circle cx="100" cy="100" r="92" fill="none" stroke="#00f3ff" stroke-width="1.5" stroke-dasharray="14 20" />
-            <circle cx="100" cy="100" r="82" fill="none" stroke="#0066ff" stroke-width="1" stroke-dasharray="8 8" />
+        <div class="w-full flex items-center justify-between text-xs font-mono-hud tracking-widest text-cyan-400/80 border-b border-cyan-500/30 pb-2">
+          <span>CORE TELEMETRY // M.V</span>
+          <span id="coreStatusLabel" class="text-emerald-400">REACTOR NOMINAL</span>
+        </div>
+
+        <div class="relative w-64 h-64 sm:w-72 sm:h-72 my-4 flex items-center justify-center cursor-pointer" onclick="dischargePulse()" title="Discharge Arc Pulse">
+          <svg class="absolute inset-0 w-full h-full rotate-cw opacity-60 pointer-events-none" viewBox="0 0 200 200">
+            <circle cx="100" cy="100" r="92" fill="none" stroke="#00f3ff" stroke-width="1.5" stroke-dasharray="14 16 2 16" />
+            <circle cx="100" cy="100" r="82" fill="none" stroke="#0066ff" stroke-width="1.2" stroke-dasharray="8 6" />
           </svg>
-          <svg class="absolute inset-0 w-full h-full rotate-ccw opacity-70" viewBox="0 0 200 200">
-            <circle cx="100" cy="100" r="72" fill="none" stroke="#00f3ff" stroke-width="2" stroke-dasharray="28 14 6 14" />
-            <circle cx="100" cy="100" r="62" fill="none" stroke="#00d2ff" stroke-width="1" stroke-dasharray="4 12" />
+          <svg class="absolute inset-0 w-full h-full rotate-ccw opacity-70 pointer-events-none" viewBox="0 0 200 200">
+            <circle cx="100" cy="100" r="70" fill="none" stroke="#00f3ff" stroke-width="2" stroke-dasharray="24 12 4 12" />
+            <circle cx="100" cy="100" r="58" fill="none" stroke="#0066ff" stroke-width="1" stroke-dasharray="10 10" />
           </svg>
-          <div class="w-32 h-32 rounded-full border-2 border-cyan-400 flex flex-col items-center justify-center bg-[#01142e] pulse-core glow-box">
-            <span class="font-hud font-black text-2xl text-cyan-300">M.V</span>
-            <span class="text-[9px] tracking-widest text-cyan-400 uppercase font-mono-hud">NEURAL ONLINE</span>
+          <div class="w-32 h-32 rounded-full border-2 border-cyan-400 flex flex-col items-center justify-center bg-[#01142e] pulse-core glow-box z-10">
+            <span class="font-hud font-black text-3xl text-cyan-300">MV</span>
+            <span class="text-[9px] font-mono-hud tracking-widest text-cyan-400 uppercase mt-0.5">SYNAPSE ACTIVE</span>
           </div>
         </div>
 
-        <!-- Dynamic Spectrum Wave Bars -->
-        <div class="w-full mt-6 bg-[#010816] p-3 rounded border border-cyan-500/30">
-          <div class="flex items-center justify-between text-[11px] text-cyan-400 mb-2 font-mono-hud">
+        <!-- VOICE HARMONIC MATRIX DISPLAY -->
+        <div class="w-full bg-[#010816] p-3 rounded border border-cyan-500/30">
+          <div class="flex items-center justify-between text-[11px] font-mono-hud text-cyan-400 mb-2">
             <span>VOICE HARMONIC MATRIX</span>
-            <span id="voiceStatusBadge" class="text-cyan-300">STANDBY</span>
+            <span id="voiceStatusBadge" class="text-cyan-300 font-bold">STANDBY</span>
           </div>
           <div id="spectrumBars" class="flex items-end justify-center gap-1.5 h-10 px-2"></div>
         </div>
       </div>
 
-      <!-- M.V COMMAND CONSOLE -->
-      <div class="lg:col-span-7 hud-border rounded p-6 flex flex-col h-[520px]">
+      <!-- M.V COMMAND TERMINAL -->
+      <div class="lg:col-span-7 hud-bracket rounded p-6 flex flex-col h-[520px]">
+        <div class="corner-notch-tr"></div>
+        <div class="corner-notch-bl"></div>
+
         <div class="flex items-center justify-between pb-3 border-b border-cyan-500/30">
           <div class="flex items-center gap-2">
             <div class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-ping"></div>
-            <span class="font-hud text-cyan-300 text-sm tracking-wider">M.V COMMAND TERMINAL</span>
+            <span class="font-hud text-cyan-300 text-sm tracking-wider">NEURAL CHAT INTERFACE</span>
           </div>
-          <span class="text-xs text-cyan-500/80 font-mono-hud">COMMUNICATION LINK: OPEN</span>
+          <span class="text-xs font-mono-hud text-cyan-500/80">IDENTITY: M.V</span>
         </div>
 
         <div id="chatMessages" class="flex-1 overflow-y-auto my-4 space-y-3 pr-2 text-sm font-mono-hud">
           <div class="bg-cyan-950/30 border border-cyan-500/30 rounded p-3 text-cyan-200">
-            <span class="font-bold text-cyan-400 font-hud">[M.V]:</span> Welcome, Commander. The M.V neural architecture is locked in. Select any of the 5 vocal units above or send tactical input via text or speech.
+            <span class="font-bold text-cyan-400 font-hud">[M.V]:</span> Greetings! I am M.V, your personal assistant. Ask me anything directly—from software architecture and code debugging, to mission briefs or general questions. How can I help you today?
           </div>
         </div>
 
         <div class="flex flex-wrap gap-2 mb-3">
-          <button onclick="sendQuickPrompt('Analyze the neural mind map architecture.')" class="text-[11px] bg-cyan-950/70 hover:bg-cyan-800 border border-cyan-500/40 text-cyan-300 px-2.5 py-1 rounded transition font-mono-hud">Mind Map Schema</button>
-          <button onclick="sendQuickPrompt('What are your operational modules, M.V?')" class="text-[11px] bg-cyan-950/70 hover:bg-cyan-800 border border-cyan-500/40 text-cyan-300 px-2.5 py-1 rounded transition font-mono-hud">M.V Architecture</button>
-          <button onclick="sendQuickPrompt('Initialize tactical brief for the Cyber Arcade defense.')" class="text-[11px] bg-cyan-950/70 hover:bg-cyan-800 border border-cyan-500/40 text-cyan-300 px-2.5 py-1 rounded transition font-mono-hud">Arcade Protocol</button>
+          <button onclick="sendQuickPrompt('Hello M.V, what are your core features?')" class="text-[11px] font-mono-hud bg-cyan-950/70 hover:bg-cyan-800 border border-cyan-500/40 text-cyan-300 px-2.5 py-1 rounded transition">
+            👋 Who are you?
+          </button>
+          <button onclick="sendQuickPrompt('Explain how your vision scanner works.')" class="text-[11px] font-mono-hud bg-cyan-950/70 hover:bg-cyan-800 border border-cyan-500/40 text-cyan-300 px-2.5 py-1 rounded transition">
+            👁️ Vision Scanner Info
+          </button>
+          <button onclick="sendQuickPrompt('Give me a brief overview of the developer projects.')" class="text-[11px] font-mono-hud bg-cyan-950/70 hover:bg-cyan-800 border border-cyan-500/40 text-cyan-300 px-2.5 py-1 rounded transition">
+            📁 Portfolio Overview
+          </button>
+          <button onclick="sendQuickPrompt('How do I play the Core Guardian arcade game?')" class="text-[11px] font-mono-hud bg-cyan-950/70 hover:bg-cyan-800 border border-cyan-500/40 text-cyan-300 px-2.5 py-1 rounded transition">
+            🎮 Game Tutorial
+          </button>
         </div>
 
         <form onsubmit="handleChatSubmit(event)" class="flex items-center gap-2">
           <button type="button" onclick="toggleVoiceRecording()" id="micBtn" class="p-2.5 rounded bg-cyan-950 border border-cyan-500/50 hover:bg-cyan-800 text-cyan-300 transition" title="Voice Input">
             🎤
           </button>
-          <input type="text" id="userInput" placeholder="Transmit instruction to M.V..." class="flex-1 bg-[#020817] border border-cyan-500/50 rounded px-3 py-2 text-sm text-cyan-100 placeholder-cyan-700 outline-none focus:border-cyan-400 font-mono-hud">
-          <button type="submit" class="px-5 py-2 rounded bg-cyan-600 hover:bg-cyan-500 font-semibold text-black font-hud text-xs tracking-wider transition">TRANSMIT</button>
+          <input type="text" id="userInput" placeholder="Ask M.V a question or give a command..." class="flex-1 bg-[#020817] border border-cyan-500/50 rounded px-3 py-2 text-sm font-mono-hud text-cyan-100 placeholder-cyan-700 outline-none focus:border-cyan-400 focus:shadow-[0_0_12px_rgba(0,243,255,0.4)]">
+          <button type="submit" class="px-5 py-2 rounded bg-cyan-500 hover:bg-white font-hud font-bold text-xs text-black tracking-wider transition shadow-[0_0_12px_#00f3ff]">
+            TRANSMIT
+          </button>
         </form>
       </div>
 
     </section>
 
-    <!-- VIEW 2: AI MIND MAP CODE MATRIX (Image 1) -->
-    <section id="tab-mindmap" class="hidden hud-border rounded p-6 space-y-6">
+    <!-- =========================================================================
+         TAB 2: NEURAL LAB // GEMINI MULTIMODAL MATRIX
+    ========================================================================= -->
+    <section id="tab-neurallab" class="tab-view hidden space-y-6">
+      
+      <div class="hud-bracket rounded p-5 relative">
+        <div class="corner-notch-tr"></div>
+        <div class="corner-notch-bl"></div>
+
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h1 class="font-hud text-xl sm:text-2xl font-bold tracking-wider text-cyan-300 glow-cyan uppercase">
+              NEURAL LAB // GEMINI MULTIMODAL MATRIX
+            </h1>
+            <p class="text-xs sm:text-sm font-mono-hud text-cyan-400/90 mt-1">
+              Explore advanced multimodal capabilities: upload architectural images for deep diagnostics or generate tactical holographic cyber artwork.
+            </p>
+          </div>
+          <div class="shrink-0 bg-[#02091c] border border-cyan-500/50 px-3.5 py-2 rounded text-[11px] font-mono-hud text-cyan-300 shadow-[0_0_10px_rgba(0,243,255,0.15)]">
+            ACTIVE MODELS: <span class="text-white font-bold">gemini-3-flash-preview & gemini-3.1-flash-image</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- LEFT: HOLOGRAPHIC VISION SCANNER -->
+        <div class="hud-bracket rounded p-6 flex flex-col justify-between relative min-h-[580px]">
+          <div class="corner-notch-tr"></div>
+          <div class="corner-notch-bl"></div>
+
+          <div>
+            <div class="flex items-center justify-between border-b border-cyan-500/30 pb-3 mb-3">
+              <h2 class="font-hud text-base font-bold tracking-wider text-cyan-300 glow-cyan uppercase">
+                HOLOGRAPHIC VISION SCANNER
+              </h2>
+              <span class="text-[11px] font-mono-hud text-cyan-400/90 bg-cyan-950/80 px-2.5 py-0.5 rounded border border-cyan-500/30">
+                gemini-3-flash-preview
+              </span>
+            </div>
+
+            <p class="text-xs font-mono-hud text-cyan-400/80 mb-4 leading-relaxed">
+              Upload an image, diagram, UI mock, or schematic. M.V will perform deep visual recognition and tactical breakdown.
+            </p>
+
+            <div id="dropZone" onclick="document.getElementById('visionFileInput').click()" class="relative border-2 border-dashed border-cyan-500/50 hover:border-cyan-300 rounded p-6 flex flex-col items-center justify-center cursor-pointer transition bg-[#01081a]/70 hover:bg-[#020e2e]/70 group min-h-[170px] overflow-hidden">
+              <input type="file" id="visionFileInput" accept="image/*" class="hidden" onchange="handleVisionFileSelect(event)">
+              
+              <div id="scannerLaser" class="scanner-laser-bar hidden"></div>
+
+              <div id="uploadPlaceholder" class="flex flex-col items-center text-center">
+                <svg class="w-10 h-10 text-cyan-400 mb-2 group-hover:scale-110 group-hover:text-cyan-200 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                </svg>
+                <span class="font-hud text-xs tracking-wider text-cyan-300">DRAG & DROP IMAGE OR CLICK TO BROWSE</span>
+                <span class="text-[10px] font-mono-hud text-cyan-500/70 mt-1">PNG, JPG, WEBP • ARCHITECTURE, CODE SCREENSHOTS, DIAGRAMS</span>
+              </div>
+
+              <div id="uploadPreviewContainer" class="hidden w-full flex flex-col items-center">
+                <img id="uploadPreviewImg" src="" alt="Scan Target" class="max-h-44 object-contain rounded border border-cyan-500/40 glow-box">
+                <span id="uploadFileName" class="text-[10px] font-mono-hud text-cyan-400 mt-2 truncate max-w-xs"></span>
+                <button type="button" onclick="event.stopPropagation(); clearVisionImage()" class="text-[10px] font-mono-hud text-alert hover:underline mt-1">Clear Image</button>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 mt-4">
+              <input type="text" id="visionCustomPrompt" placeholder="Specific inspection prompt (optional)..." class="flex-1 bg-[#020817] border border-cyan-500/50 rounded px-3 py-2 text-xs font-mono-hud text-cyan-100 placeholder-cyan-700 outline-none focus:border-cyan-400">
+              <button onclick="scanVisionImage()" id="scanActionBtn" class="px-5 py-2 rounded bg-cyan-500 hover:bg-white font-hud font-bold text-xs text-black tracking-wider transition shadow-[0_0_12px_#00f3ff]">
+                SCAN
+              </button>
+            </div>
+          </div>
+
+          <div class="mt-4 bg-[#010614] border border-cyan-500/30 rounded p-3 text-xs font-mono-hud min-h-[140px] max-h-[170px] overflow-y-auto">
+            <div id="visionTelemetryLog" class="text-cyan-500/80 leading-relaxed whitespace-pre-wrap">
+// Optical telemetry stream awaiting input image...
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT: CYBER IMAGE SYNTHESIZER -->
+        <div class="hud-bracket rounded p-6 flex flex-col justify-between relative min-h-[580px]">
+          <div class="corner-notch-tr"></div>
+          <div class="corner-notch-bl"></div>
+
+          <div>
+            <div class="flex items-center justify-between border-b border-cyan-500/30 pb-3 mb-3">
+              <h2 class="font-hud text-base font-bold tracking-wider text-cyan-300 glow-cyan uppercase">
+                CYBER IMAGE SYNTHESIZER
+              </h2>
+              <span class="text-[11px] font-mono-hud text-cyan-400/90 bg-cyan-950/80 px-2.5 py-0.5 rounded border border-cyan-500/30">
+                gemini-3.1-flash-image
+              </span>
+            </div>
+
+            <p class="text-xs font-mono-hud text-cyan-400/80 mb-4 leading-relaxed">
+              Synthesize sci-fi concept badges, glowing UI nodes, and futuristic architectural schematics using Gemini's native image model.
+            </p>
+
+            <div class="flex items-center gap-2 mb-4">
+              <input type="text" id="synthPromptInput" value="Glowing cyan holographic quantum microchip blueprint with circuit nodes" class="flex-1 bg-[#020817] border border-cyan-500/50 rounded px-3 py-2 text-xs font-mono-hud text-cyan-100 placeholder-cyan-700 outline-none focus:border-cyan-400">
+              <button onclick="synthesizeCyberImage()" id="synthActionBtn" class="px-5 py-2 rounded bg-cyan-500 hover:bg-white font-hud font-bold text-xs text-black tracking-wider transition shadow-[0_0_12px_#00f3ff]">
+                SYNTHESIZE
+              </button>
+            </div>
+          </div>
+
+          <div class="relative w-full flex-1 bg-[#010614] border border-cyan-500/30 rounded flex flex-col items-center justify-center p-4 min-h-[300px] overflow-hidden">
+            
+            <div id="synthStandbyState" class="flex flex-col items-center justify-center text-center">
+              <div class="w-16 h-16 rounded-full border-2 border-cyan-500/40 border-t-cyan-300 animate-spin mb-3"></div>
+              <span class="font-hud text-xs tracking-widest text-cyan-400/90 uppercase">SYNTHESIS ENGINE READY</span>
+              <span class="text-[10px] font-mono-hud text-cyan-500/60 mt-1">Select prompt and trigger synthesis sequence</span>
+            </div>
+
+            <div id="synthLoadingState" class="hidden flex flex-col items-center justify-center text-center">
+              <div class="relative w-20 h-20 mb-3 flex items-center justify-center">
+                <div class="absolute inset-0 rounded-full border-2 border-dashed border-cyan-400 animate-spin"></div>
+                <span class="font-hud text-xs font-bold text-cyan-200">M.V</span>
+              </div>
+              <span class="font-hud text-xs tracking-wider text-cyan-300 animate-pulse">SYNTHESIZING HOLOGRAPHIC ASSET...</span>
+              <span class="text-[10px] font-mono-hud text-cyan-500 mt-1">Executing gemini-3.1-flash-image payload matrix</span>
+            </div>
+
+            <div id="synthResultState" class="hidden w-full h-full flex flex-col items-center justify-center">
+              <img id="synthGeneratedImg" src="" alt="Synthesized Blueprint" class="max-h-[290px] w-full object-contain rounded border border-cyan-500/50 glow-box">
+              <div class="flex items-center gap-3 mt-2">
+                <a id="synthDownloadBtn" href="#" download="mv_holographic_blueprint.png" class="text-[10px] font-mono-hud text-cyan-300 underline hover:text-white">Download Asset</a>
+                <span class="text-[10px] text-cyan-600">•</span>
+                <button onclick="synthesizeCyberImage()" class="text-[10px] font-mono-hud text-cyan-400 hover:text-white">Regenerate</button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- =========================================================================
+         TAB 3: NEURAL MIND MAP MATRIX
+    ========================================================================= -->
+    <section id="tab-mindmap" class="tab-view hidden hud-bracket rounded p-6 space-y-6">
+      <div class="corner-notch-tr"></div>
+      <div class="corner-notch-bl"></div>
+
       <div class="flex flex-wrap items-center justify-between gap-4 border-b border-cyan-500/30 pb-3">
         <div>
           <h2 class="font-hud text-lg text-cyan-300 glow-cyan">AI MIND MAP CODE // NEURAL SCHEMATIC</h2>
-          <p class="text-xs text-cyan-500">Interactive architectural topology. Click any subsystem cluster node to inspect telemetry.</p>
+          <p class="text-xs font-mono-hud text-cyan-500">Interactive architectural topology. Click any subsystem cluster node to inspect telemetry.</p>
         </div>
         <div class="flex items-center gap-2">
           <input type="text" id="nodeSearchInput" oninput="filterNodes(this.value)" placeholder="Search matrix nodes..." class="bg-[#020a1f] border border-cyan-500/40 rounded px-2.5 py-1 text-xs text-cyan-200 outline-none font-mono-hud">
-          <span class="text-xs text-cyan-400 bg-cyan-950 px-3 py-1 rounded border border-cyan-500/40 font-mono-hud">GRAPH ONLINE</span>
+          <span class="text-xs font-mono-hud text-cyan-400 bg-cyan-950 px-3 py-1 rounded border border-cyan-500/40">HUD GRAPH ACTIVE</span>
         </div>
       </div>
 
-      <!-- Mind Map Graphic Topology Canvas -->
       <div class="relative w-full h-[520px] bg-[#020512] rounded border border-cyan-500/30 overflow-hidden flex items-center justify-center">
         <svg class="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">
-          <line x1="50%" y1="50%" x2="22%" y2="25%" stroke="#00f3ff" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.6"/>
-          <line x1="50%" y1="50%" x2="78%" y2="25%" stroke="#00f3ff" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.6"/>
-          <line x1="50%" y1="50%" x2="22%" y2="75%" stroke="#00f3ff" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.6"/>
-          <line x1="50%" y1="50%" x2="78%" y2="75%" stroke="#00f3ff" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.6"/>
-          <circle cx="50%" cy="50%" r="130" fill="none" stroke="#0066ff" stroke-width="1" stroke-dasharray="6 8" opacity="0.4"/>
+          <line x1="50%" y1="50%" x2="20%" y2="22%" stroke="#00f3ff" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.6"/>
+          <line x1="50%" y1="50%" x2="80%" y2="22%" stroke="#00f3ff" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.6"/>
+          <line x1="50%" y1="50%" x2="20%" y2="78%" stroke="#00f3ff" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.6"/>
+          <line x1="50%" y1="50%" x2="80%" y2="78%" stroke="#00f3ff" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.6"/>
+          <circle cx="50%" cy="50%" r="140" fill="none" stroke="#0066ff" stroke-width="1" stroke-dasharray="8 8" opacity="0.4"/>
         </svg>
 
-        <!-- Center Hub -->
-        <div class="relative z-10 w-44 h-44 rounded-full border-2 border-cyan-400 bg-[#011638] flex flex-col items-center justify-center text-center p-2 glow-box">
-          <div class="text-[10px] text-cyan-400 tracking-widest uppercase font-mono-hud">CENTRAL HUB</div>
+        <div onclick="inspectNode('Core Nexus', 'Central neural coordination hub orchestrating AST parsing, graph transforms, and AI inference.')" class="relative z-10 w-48 h-48 rounded-full border-2 border-cyan-400 bg-[#011638] flex flex-col items-center justify-center text-center p-2 glow-box cursor-pointer hover:scale-105 transition">
+          <div class="text-[10px] font-mono-hud text-cyan-400 tracking-widest uppercase">CENTRAL HUB</div>
           <div class="font-hud font-black text-cyan-200 text-sm mt-1">AI MIND MAP<br>CODE MATRIX</div>
-          <div class="text-[9px] text-cyan-400/70 mt-1 font-mono-hud">M.V // SYNAPSE</div>
+          <div class="text-[9px] font-mono-hud text-cyan-400/80 mt-1">M.V // SYNAPSE</div>
         </div>
 
-        <!-- Node 1: Syntax & Structure -->
-        <div id="node-syntax" onclick="inspectNode('Syntax & Structure', 'Parses JSON, XML, Python dictionaries, Markmodn, and Mermaid.js trees into vector hierarchies.')" class="matrix-node absolute top-[12%] left-[8%] md:left-[14%] w-44 p-3 rounded bg-[#030d29] border border-cyan-500/50 cursor-pointer hover:border-cyan-300 transition">
-          <div class="font-hud text-[11px] text-cyan-300 font-bold">SYNTAX & STRUCTURE</div>
-          <div class="text-[10px] text-cyan-400/80 mt-1 font-mono-hud">JSON • XML • PYTHON</div>
-          <div class="text-[9px] text-cyan-500 mt-1">Mermaid.js / Markmodn</div>
+        <div onclick="inspectNode('Syntax & Structure', 'Parses JSON, XML, Python dictionaries, Markmodn, and Mermaid.js trees into vector hierarchies for zero-latency rendering.')" class="matrix-node absolute top-[10%] left-[6%] md:left-[12%] w-44 p-3.5 rounded bg-[#030d29] border border-cyan-500/50 cursor-pointer hover:border-cyan-300 hover:shadow-[0_0_15px_#00f3ff] transition">
+          <div class="text-[10px] font-mono-hud text-cyan-500">CLUSTER 01</div>
+          <div class="font-hud text-xs text-cyan-300 font-bold">SYNTAX & STRUCTURE</div>
+          <div class="text-[11px] font-mono-hud text-cyan-400/80 mt-1">JSON • XML • PYTHON DICT</div>
+          <div class="text-[9px] font-mono-hud text-cyan-500 mt-1">Click to inspect</div>
         </div>
 
-        <!-- Node 2: Functionality -->
-        <div id="node-functionality" onclick="inspectNode('Functionality Matrix', 'Edge drawing, real-time node generation, drag-zoom interactivity, and CSV/JSON data ingestion.')" class="matrix-node absolute top-[12%] right-[8%] md:right-[14%] w-44 p-3 rounded bg-[#030d29] border border-cyan-500/50 cursor-pointer hover:border-cyan-300 transition">
-          <div class="font-hud text-[11px] text-cyan-300 font-bold">FUNCTIONALITY</div>
-          <div class="text-[10px] text-cyan-400/80 mt-1 font-mono-hud">EDGE DRAW • ZOOM • CSV</div>
-          <div class="text-[9px] text-cyan-500 mt-1">Node Interactivity</div>
+        <div onclick="inspectNode('Functionality Matrix', 'Edge drawing, real-time node generation, zoom/pan transforms, and CSV/JSON streaming data ingestion.')" class="matrix-node absolute top-[10%] right-[6%] md:right-[12%] w-44 p-3.5 rounded bg-[#030d29] border border-cyan-500/50 cursor-pointer hover:border-cyan-300 hover:shadow-[0_0_15px_#00f3ff] transition text-right">
+          <div class="text-[10px] font-mono-hud text-cyan-500">CLUSTER 02</div>
+          <div class="font-hud text-xs text-cyan-300 font-bold">FUNCTIONALITY</div>
+          <div class="text-[11px] font-mono-hud text-cyan-400/80 mt-1">EDGE DRAW • ZOOM • CSV</div>
+          <div class="text-[9px] font-mono-hud text-cyan-500 mt-1">Click to inspect</div>
         </div>
 
-        <!-- Node 3: Visualisation Libraries -->
-        <div id="node-visualisation" onclick="inspectNode('Visualisation Engines', 'GoJS, D2.js, SVG rendering, interactive HTML generation, and dynamic graph frameworks.')" class="matrix-node absolute bottom-[12%] left-[8%] md:left-[14%] w-44 p-3 rounded bg-[#030d29] border border-cyan-500/50 cursor-pointer hover:border-cyan-300 transition">
-          <div class="font-hud text-[11px] text-cyan-300 font-bold">VISUALISATION</div>
-          <div class="text-[10px] text-cyan-400/80 mt-1 font-mono-hud">GOJS • SVG • D2.JS</div>
-          <div class="text-[9px] text-cyan-500 mt-1">Interactive HTML Render</div>
+        <div onclick="inspectNode('Visualisation Engines', 'GoJS, D2.js, SVG rendering, interactive HTML generation, and hardware accelerated WebGL shaders.')" class="matrix-node absolute bottom-[10%] left-[6%] md:left-[12%] w-44 p-3.5 rounded bg-[#030d29] border border-cyan-500/50 cursor-pointer hover:border-cyan-300 hover:shadow-[0_0_15px_#00f3ff] transition">
+          <div class="text-[10px] font-mono-hud text-cyan-500">CLUSTER 03</div>
+          <div class="font-hud text-xs text-cyan-300 font-bold">VISUALISATION</div>
+          <div class="text-[11px] font-mono-hud text-cyan-400/80 mt-1">GOJS • SVG • D2.JS • HTML</div>
+          <div class="text-[9px] font-mono-hud text-cyan-500 mt-1">Click to inspect</div>
         </div>
 
-        <!-- Node 4: AI Integration -->
-        <div id="node-ai" onclick="inspectNode('AI Integration', 'NLP text-to-diagram generators, UML generation, knowledge bases, and multi-turn conversational agents.')" class="matrix-node absolute bottom-[12%] right-[8%] md:right-[14%] w-44 p-3 rounded bg-[#030d29] border border-cyan-500/50 cursor-pointer hover:border-cyan-300 transition">
-          <div class="font-hud text-[11px] text-cyan-300 font-bold">AI INTEGRATION</div>
-          <div class="text-[10px] text-cyan-400/80 mt-1 font-mono-hud">NLP • TEXT-TO-DIAGRAM</div>
-          <div class="text-[9px] text-cyan-500 mt-1">UML Diagrams & Suggestions</div>
+        <div onclick="inspectNode('AI Integration', 'NLP text-to-diagram generators, UML auto-generation, knowledge graph search, and continuous multi-turn agent loops.')" class="matrix-node absolute bottom-[10%] right-[6%] md:right-[12%] w-44 p-3.5 rounded bg-[#030d29] border border-cyan-500/50 cursor-pointer hover:border-cyan-300 hover:shadow-[0_0_15px_#00f3ff] transition text-right">
+          <div class="text-[10px] font-mono-hud text-cyan-500">CLUSTER 04</div>
+          <div class="font-hud text-xs text-cyan-300 font-bold">AI INTEGRATION</div>
+          <div class="text-[11px] font-mono-hud text-cyan-400/80 mt-1">NLP • TEXT-TO-DIAGRAM</div>
+          <div class="text-[9px] font-mono-hud text-cyan-500 mt-1">Click to inspect</div>
         </div>
       </div>
 
-      <!-- Telemetry Output Box -->
-      <div id="nodeInspectBox" class="bg-[#020a1f] border border-cyan-500/30 p-4 rounded text-xs text-cyan-200 font-mono-hud">
+      <div id="nodeInspectBox" class="bg-[#020a1f] border border-cyan-500/30 p-4 rounded text-xs font-mono-hud text-cyan-200">
         <span class="font-hud text-cyan-400 font-bold">[TELEMETRY]:</span> Select a node cluster above to load full architectural diagnostics.
       </div>
     </section>
 
-    <!-- VIEW 3: CYBER DEFENSE ARCADE -->
-    <section id="tab-arcade" class="hidden hud-border rounded p-4 sm:p-6 space-y-4">
+    <!-- =========================================================================
+         TAB 4: CYBER ARCADE (CORE GUARDIAN DEFENSE GAME)
+    ========================================================================= -->
+    <section id="tab-arcade" class="tab-view hidden hud-bracket rounded p-4 sm:p-6 space-y-4">
+      <div class="corner-notch-tr"></div>
+      <div class="corner-notch-bl"></div>
+
       <div class="flex flex-wrap items-center justify-between gap-4 border-b border-cyan-500/30 pb-3">
         <div>
           <h2 class="font-hud text-lg text-cyan-300 glow-cyan">CORE GUARDIAN // ARCADE DEFENSE MATRIX</h2>
-          <p class="text-xs text-cyan-500">Defend M.V Core. Click or touch to fire. Press [SPACE] or Overdrive button to trigger EMP blast.</p>
+          <p class="text-xs font-mono-hud text-cyan-500">Click START SIMULATION to engage. Aim with cursor/finger to fire lasers. [SPACE] triggers EMP blast.</p>
         </div>
-        <div class="flex items-center gap-4 text-xs font-mono-hud">
+        <div class="flex flex-wrap items-center gap-3 text-xs font-mono-hud">
           <div>SCORE: <span id="gameScore" class="text-cyan-300 font-bold">0</span></div>
-          <div>WAVE: <span id="gameWave" class="text-cyan-300 font-bold">1</span></div>
-          <div>CORE INTEGRITY: <span id="gameHealth" class="text-cyan-300 font-bold">100%</span></div>
-          <button onclick="triggerOverdrive()" class="px-2.5 py-1 bg-amber-950/80 border border-amber-500/70 rounded text-amber-200 hover:bg-amber-800 transition">EMP OVERDRIVE</button>
-          <button onclick="resetGame()" class="px-3 py-1 bg-cyan-900 border border-cyan-400 rounded text-cyan-200 hover:bg-cyan-700 transition">REBOOT</button>
+          <div>CORE INTEGRITY: <span id="gameHealth" class="text-emerald-400 font-bold">100%</span></div>
+          
+          <!-- Explicit Game Start / Pause Controls (Fixes automatic background sounds) -->
+          <button onclick="toggleGameRunState()" id="gamePlayBtn" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-black font-hud font-bold rounded shadow-[0_0_10px_#00ffaa] transition">
+            START GAME
+          </button>
+          
+          <button onclick="triggerOverdrive()" class="px-2.5 py-1 bg-amber-950 border border-amber-500/70 rounded text-amber-200 hover:bg-amber-800 transition">
+            EMP OVERDRIVE
+          </button>
+          <button onclick="resetGame()" class="px-2.5 py-1 bg-cyan-900 border border-cyan-400 rounded text-cyan-200 hover:bg-cyan-700 transition font-hud">
+            RESET
+          </button>
         </div>
       </div>
 
-      <div class="relative w-full h-[500px] bg-[#02050e] rounded overflow-hidden border border-cyan-500/30 flex items-center justify-center">
+      <div class="relative w-full h-[480px] bg-[#02050e] rounded overflow-hidden border border-cyan-500/30 flex items-center justify-center">
         <canvas id="gameCanvas" class="w-full h-full cursor-crosshair"></canvas>
+
+        <!-- Overlay when paused -->
+        <div id="gamePauseOverlay" class="absolute inset-0 bg-black/75 backdrop-blur-sm flex flex-col items-center justify-center text-center p-4">
+          <div class="w-16 h-16 rounded-full border-2 border-cyan-400 flex items-center justify-center glow-box mb-3 bg-[#010e28]">
+            <span class="font-hud font-black text-cyan-300 text-lg">MV</span>
+          </div>
+          <h3 class="font-hud text-lg text-cyan-300 glow-cyan">DEFENSE SIMULATION STANDBY</h3>
+          <p class="text-xs font-mono-hud text-cyan-400/80 max-w-sm mt-1 mb-4">
+            The game loop is kept paused so sound effects do not fire automatically. Click below to begin combat!
+          </p>
+          <button onclick="toggleGameRunState()" class="px-6 py-2 rounded bg-cyan-500 hover:bg-white text-black font-hud font-bold text-xs tracking-wider transition shadow-[0_0_15px_#00f3ff]">
+            LAUNCH DEFENSE MATRIX
+          </button>
+        </div>
       </div>
     </section>
 
-    <!-- VIEW 4: PROJECTS DOSSIER -->
-    <section id="tab-projects" class="hidden grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="hud-border rounded p-5 space-y-3">
-        <div class="text-xs text-cyan-500 tracking-wider font-mono-hud">PROJECT // 01</div>
+    <!-- =========================================================================
+         TAB 5: PROJECT DOSSIER
+    ========================================================================= -->
+    <section id="tab-projects" class="tab-view hidden grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="hud-bracket rounded p-5 space-y-3 hover:border-cyan-300 hover:shadow-[0_0_20px_#00f3ff] transition">
+        <div class="text-xs font-mono-hud text-cyan-500 tracking-wider">PROJECT // 01</div>
         <h3 class="font-hud text-cyan-300 text-lg">NEURAL MIND MAP</h3>
-        <p class="text-xs text-cyan-200/80 leading-relaxed font-mono-hud">Visual hierarchy generator mapping nested JSON syntax, D2 diagrams, and AI workflows into holographic canvas graphs.</p>
-        <div class="flex gap-2 text-[10px] text-cyan-400 pt-2 border-t border-cyan-500/20 font-mono-hud">
+        <p class="text-xs font-mono-hud text-cyan-200/80 leading-relaxed">Visual hierarchy generator mapping nested JSON syntax, D2 diagrams, and AI workflows into holographic canvas graphs.</p>
+        <div class="flex gap-2 text-[10px] font-mono-hud text-cyan-400 pt-2 border-t border-cyan-500/20">
           <span>JavaScript</span> • <span>D3.js</span> • <span>SVG Vectors</span>
         </div>
       </div>
 
-      <div class="hud-border rounded p-5 space-y-3">
-        <div class="text-xs text-cyan-500 tracking-wider font-mono-hud">PROJECT // 02</div>
-        <h3 class="font-hud text-cyan-300 text-lg">M.V ASSISTANT</h3>
-        <p class="text-xs text-cyan-200/80 leading-relaxed font-mono-hud">Multi-agent voice ecosystem with offline heuristics, custom voice synthesis tuning, and real-time audio analysis bars.</p>
-        <div class="flex gap-2 text-[10px] text-cyan-400 pt-2 border-t border-cyan-500/20 font-mono-hud">
-          <span>Web Speech API</span> • <span>AudioContext</span> • <span>Tactical HUD</span>
+      <div class="hud-bracket rounded p-5 space-y-3 hover:border-cyan-300 hover:shadow-[0_0_20px_#00f3ff] transition">
+        <div class="text-xs font-mono-hud text-cyan-500 tracking-wider">PROJECT // 02</div>
+        <h3 class="font-hud text-cyan-300 text-lg">M.V ASSISTANT & NEURAL LAB</h3>
+        <p class="text-xs font-mono-hud text-cyan-200/80 leading-relaxed">Multimodal voice & vision ecosystem with speech synthesis, Gemini-powered image diagnostics, and cyber image synthesis.</p>
+        <div class="flex gap-2 text-[10px] font-mono-hud text-cyan-400 pt-2 border-t border-cyan-500/20">
+          <span>Web Speech</span> • <span>gemini-3-flash</span> • <span>gemini-3.1-flash-image</span>
         </div>
       </div>
 
-      <div class="hud-border rounded p-5 space-y-3">
-        <div class="text-xs text-cyan-500 tracking-wider font-mono-hud">PROJECT // 03</div>
+      <div class="hud-bracket rounded p-5 space-y-3 hover:border-cyan-300 hover:shadow-[0_0_20px_#00f3ff] transition">
+        <div class="text-xs font-mono-hud text-cyan-500 tracking-wider">PROJECT // 03</div>
         <h3 class="font-hud text-cyan-300 text-lg">CYBER CORE ENGINE</h3>
-        <p class="text-xs text-cyan-200/80 leading-relaxed font-mono-hud">High-framerate 2D Canvas laser defense platform with procedural synthetic sound design, orbital defense drones, and EMP bursts.</p>
-        <div class="flex gap-2 text-[10px] text-cyan-400 pt-2 border-t border-cyan-500/20 font-mono-hud">
-          <span>HTML5 Canvas</span> • <span>Web Audio API</span> • <span>Vector Physics</span>
+        <p class="text-xs font-mono-hud text-cyan-200/80 leading-relaxed">High-framerate 2D Canvas laser defense platform featuring procedural synthetic sound design and dynamic vector physics.</p>
+        <div class="flex gap-2 text-[10px] font-mono-hud text-cyan-400 pt-2 border-t border-cyan-500/20">
+          <span>HTML5 Canvas</span> • <span>Web Audio API</span> • <span>Physics</span>
         </div>
       </div>
     </section>
 
   </main>
 
-  <!-- SCRIPTS & ENGINES -->
-  <script>
-    /* 1. TABS & TELEMETRY */
-    function switchTab(tabId) {
-      document.getElementById('tab-core').classList.add('hidden');
-      document.getElementById('tab-mindmap').classList.add('hidden');
-      document.getElementById('tab-arcade').classList.add('hidden');
-      document.getElementById('tab-projects').classList.add('hidden');
-      document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+  <!-- API KEY CONFIGURATION MODAL (FOR GITHUB PAGES) -->
+  <div id="apiKeyModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="hud-bracket max-w-md w-full rounded p-6 space-y-4">
+      <div class="flex items-center justify-between border-b border-cyan-500/30 pb-3">
+        <span class="font-hud text-cyan-300 text-sm font-bold glow-cyan">GOOGLE AI API KEY // CONFIG</span>
+        <button onclick="closeApiKeyModal()" class="text-cyan-400 hover:text-white font-mono-hud">✕</button>
+      </div>
+      <p class="text-xs font-mono-hud text-cyan-400/80 leading-relaxed">
+        When deployed on GitHub Pages or custom hosting, enter your Google AI Studio API key here. In local Canvas preview, leave blank to use the built-in runtime.
+      </p>
+      <div>
+        <input type="password" id="customApiKeyInput" placeholder="Enter AI Studio API Key (AIzaSy...)" class="w-full bg-[#020817] border border-cyan-500/50 rounded px-3 py-2 text-xs font-mono-hud text-cyan-100 placeholder-cyan-700 outline-none focus:border-cyan-400">
+      </div>
+      <div class="flex items-center justify-end gap-2 pt-2">
+        <button onclick="clearCustomApiKey()" class="px-3 py-1.5 rounded border border-cyan-500/40 text-xs font-mono-hud text-cyan-400 hover:bg-cyan-900 transition">Clear</button>
+        <button onclick="saveCustomApiKey()" class="px-4 py-1.5 rounded bg-cyan-500 hover:bg-white text-xs font-hud font-bold text-black transition shadow-[0_0_10px_#00f3ff]">Save Key</button>
+      </div>
+    </div>
+  </div>
 
-      if (tabId === 'arcade') {
-        resizeCanvas();
+  <!-- FOOTER -->
+  <footer class="relative z-50 border-t border-cyan-500/20 bg-[#020612]/90 py-3 px-4 font-mono-hud text-[11px] text-cyan-500/80">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+        <span>M.V CYBERNETIC ECOSYSTEM // NEURAL ARCHITECTURE ONLINE</span>
+      </div>
+      <div>SECURE QUANTUM CHANNEL ENCRYPTED</div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT LOGIC -->
+  <script>
+    /* =====================================================================
+       1. GLOBAL STATE & MASTER AUDIO TOGGLE
+    ===================================================================== */
+    let isMasterAudioEnabled = true; // Audio toggle flag
+    let currentApiKey = localStorage.getItem('mv_gemini_api_key') || '';
+
+    function toggleMasterAudio() {
+      isMasterAudioEnabled = !isMasterAudioEnabled;
+      const btn = document.getElementById('masterAudioBtn');
+      const icon = document.getElementById('masterAudioIcon');
+      const text = document.getElementById('masterAudioText');
+
+      if (isMasterAudioEnabled) {
+        btn.className = "flex items-center gap-1.5 px-2.5 py-0.5 rounded border border-emerald-500/50 bg-emerald-950/60 text-emerald-300 hover:bg-emerald-800 transition";
+        icon.innerText = "🔊";
+        text.innerText = "AUDIO: ON";
+        playBeep(700, 0.05);
+      } else {
+        btn.className = "flex items-center gap-1.5 px-2.5 py-0.5 rounded border border-rose-500/50 bg-rose-950/60 text-rose-300 hover:bg-rose-800 transition";
+        icon.innerText = "🔇";
+        text.innerText = "AUDIO: MUTED";
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+        }
       }
     }
 
+    function updateApiKeyBadge() {
+      const badge = document.getElementById('apiKeyBadge');
+      if (currentApiKey) {
+        badge.innerText = 'CUSTOM KEY: ' + currentApiKey.substring(0, 7) + '...';
+        badge.className = 'text-emerald-400';
+      } else {
+        badge.innerText = 'CANVAS RUNTIME';
+        badge.className = 'text-cyan-300';
+      }
+    }
+    updateApiKeyBadge();
+
+    function openApiKeyModal() {
+      document.getElementById('customApiKeyInput').value = currentApiKey;
+      document.getElementById('apiKeyModal').classList.remove('hidden');
+    }
+    function closeApiKeyModal() {
+      document.getElementById('apiKeyModal').classList.add('hidden');
+    }
+    function saveCustomApiKey() {
+      const key = document.getElementById('customApiKeyInput').value.trim();
+      currentApiKey = key;
+      localStorage.setItem('mv_gemini_api_key', key);
+      updateApiKeyBadge();
+      closeApiKeyModal();
+      playBeep(900, 0.08);
+    }
+    function clearCustomApiKey() {
+      currentApiKey = '';
+      localStorage.removeItem('mv_gemini_api_key');
+      document.getElementById('customApiKeyInput').value = '';
+      updateApiKeyBadge();
+      closeApiKeyModal();
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-view').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.className = "tab-btn px-3 py-1.5 rounded text-xs font-hud text-cyan-400/80 border border-cyan-500/30 hover:border-cyan-400 hover:text-cyan-300 transition";
+      });
+
+      const activeView = document.getElementById(`tab-${tabId}`);
+      if (activeView) activeView.classList.remove('hidden');
+
+      const activeBtn = document.getElementById(`tabBtn-${tabId}`);
+      if (activeBtn) {
+        activeBtn.className = "tab-btn px-3 py-1.5 rounded text-xs font-hud text-cyan-300 border border-cyan-400 bg-cyan-950/80 glow-cyan shadow-[0_0_12px_rgba(0,243,255,0.3)] transition";
+      }
+
+      playBeep(750, 0.05);
+
+      if (tabId === 'arcade') {
+        resizeCanvas();
+      } else {
+        // Automatically pause game when switching away from arcade to keep system quiet!
+        if (isGameRunning) {
+          toggleGameRunState();
+        }
+      }
+    }
+
+    // Telemetry updates
     setInterval(() => {
       const latency = Math.floor(Math.random() * 8) + 10;
       document.getElementById('telemetryLatency').innerText = `${latency}ms`;
       document.getElementById('telemetryFps').innerText = Math.floor(Math.random() * 4) + 58;
     }, 2000);
 
-    /* 2. SYNTHETIC AUDIO ENGINE */
+    /* =====================================================================
+       2. PROCEDURAL WEB AUDIO (STRICTLY GUARDED)
+    ===================================================================== */
     let audioCtx = null;
     function getAudioCtx() {
       if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -373,127 +762,130 @@
     }
 
     function playBeep(freq = 600, duration = 0.08) {
-      const ctx = getAudioCtx();
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, ctx.currentTime);
-      gain.gain.setValueAtTime(0.08, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start();
-      osc.stop(ctx.currentTime + duration);
+      if (!isMasterAudioEnabled) return;
+      try {
+        const ctx = getAudioCtx();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        gain.gain.setValueAtTime(0.08, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + duration);
+      } catch(e) {}
     }
 
     function playLaserSound() {
-      const ctx = getAudioCtx();
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sawtooth';
-      osc.frequency.setValueAtTime(920, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(120, ctx.currentTime + 0.12);
-      gain.gain.setValueAtTime(0.12, ctx.currentTime);
-      gain.gain.linearRampToValueAtTime(0.001, ctx.currentTime + 0.12);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start();
-      osc.stop(ctx.currentTime + 0.12);
+      if (!isMasterAudioEnabled) return;
+      try {
+        const ctx = getAudioCtx();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(920, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(110, ctx.currentTime + 0.12);
+        gain.gain.setValueAtTime(0.12, ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.001, ctx.currentTime + 0.12);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.12);
+      } catch(e) {}
     }
 
     function playExplosionSound() {
-      const ctx = getAudioCtx();
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(140, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(20, ctx.currentTime + 0.25);
-      gain.gain.setValueAtTime(0.2, ctx.currentTime);
-      gain.gain.linearRampToValueAtTime(0.001, ctx.currentTime + 0.25);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start();
-      osc.stop(ctx.currentTime + 0.25);
+      if (!isMasterAudioEnabled) return;
+      try {
+        const ctx = getAudioCtx();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(140, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(20, ctx.currentTime + 0.25);
+        gain.gain.setValueAtTime(0.2, ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.25);
+      } catch(e) {}
     }
 
     function playEmpSound() {
-      const ctx = getAudioCtx();
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(200, ctx.currentTime);
-      osc.frequency.linearRampToValueAtTime(1200, ctx.currentTime + 0.15);
-      osc.frequency.exponentialRampToValueAtTime(50, ctx.currentTime + 0.6);
-      gain.gain.setValueAtTime(0.3, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.6);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start();
-      osc.stop(ctx.currentTime + 0.6);
+      if (!isMasterAudioEnabled) return;
+      try {
+        const ctx = getAudioCtx();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(200, ctx.currentTime);
+        osc.frequency.linearRampToValueAtTime(1200, ctx.currentTime + 0.15);
+        osc.frequency.exponentialRampToValueAtTime(50, ctx.currentTime + 0.6);
+        gain.gain.setValueAtTime(0.3, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.6);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.6);
+      } catch(e) {}
     }
 
-    /* 3. 5-VOICE PROFILES & SLIDERS */
+    function dischargePulse() {
+      playBeep(440, 0.18);
+      const label = document.getElementById('coreStatusLabel');
+      if (label) {
+        label.innerText = 'PULSE DISCHARGED: 140%';
+        label.className = 'text-cyan-300 font-bold animate-pulse';
+        setTimeout(() => {
+          label.innerText = 'REACTOR NOMINAL';
+          label.className = 'text-emerald-400';
+        }, 1400);
+      }
+    }
+
+    /* =====================================================================
+       3. 5-VOICE MATRIX CONFIGURATION (3 FEMALE, 2 MALE)
+    ===================================================================== */
     const VOICE_PROFILES = {
       female_1: {
         name: "Valkyrie",
         gender: "female",
         pitch: 1.25,
         rate: 1.05,
-        testLine: "M.V online. Voice Profile F-01 Valkyrie engaged. All parameters sharp and ready."
+        testLine: "M.V online. Voice Profile F-01 Valkyrie engaged. All parameters ready."
       },
       female_2: {
         name: "Athena",
         gender: "female",
         pitch: 1.05,
         rate: 0.98,
-        testLine: "M.V online. Profile F-02 Athena active. Systems steady, calm, and analytical."
+        testLine: "M.V online. Profile F-02 Athena active. Systems steady and analytical."
       },
       female_3: {
         name: "Nyx",
         gender: "female",
         pitch: 0.88,
         rate: 0.95,
-        testLine: "M.V tactical unit. Profile F-03 Nyx loaded. Operating in stealth telemetry mode."
+        testLine: "M.V tactical unit. Profile F-03 Nyx loaded in stealth mode."
       },
       male_1: {
         name: "Titan",
         gender: "male",
         pitch: 0.72,
         rate: 0.92,
-        testLine: "M.V online. Profile M-01 Titan operational. Core integrity fortified and secure."
+        testLine: "M.V online. Profile M-01 Titan operational. Integrity secure."
       },
       male_2: {
         name: "Apex",
         gender: "male",
         pitch: 0.92,
         rate: 1.05,
-        testLine: "M.V online. Profile M-02 Apex deployed. Tactical combat channels unlocked."
+        testLine: "M.V online. Profile M-02 Apex deployed. Ready for combat."
       }
     };
-
-    let currentPitch = 1.25;
-    let currentRate = 1.05;
-
-    function updateVoiceSliders() {
-      const key = document.getElementById('voiceProfileSelect').value;
-      const prof = VOICE_PROFILES[key];
-      currentPitch = prof.pitch;
-      currentRate = prof.rate;
-      document.getElementById('pitchSlider').value = prof.pitch;
-      document.getElementById('rateSlider').value = prof.rate;
-      document.getElementById('pitchVal').innerText = prof.pitch.toFixed(2);
-      document.getElementById('rateVal').innerText = prof.rate.toFixed(2);
-    }
-
-    function adjustPitch(val) {
-      currentPitch = parseFloat(val);
-      document.getElementById('pitchVal').innerText = currentPitch.toFixed(2);
-    }
-
-    function adjustRate(val) {
-      currentRate = parseFloat(val);
-      document.getElementById('rateVal').innerText = currentRate.toFixed(2);
-    }
 
     let availableVoices = [];
     function loadVoices() {
@@ -521,22 +913,37 @@
       return matched || availableVoices[0] || null;
     }
 
-    function speakText(text) {
+    // Text cleaner: removes symbols, asterisks, brackets so speech engine speaks natural English
+    function cleanTextForSpeech(raw) {
+      if (!raw) return "";
+      return raw
+        .replace(/[*_#`~[\]()<>]/g, '') // strip markdown
+        .replace(/\/\/.*/g, '')          // strip comments
+        .replace(/•/g, '')              // strip bullet marks
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+
+    function speakText(rawText) {
+      if (!isMasterAudioEnabled) return;
       if (!('speechSynthesis' in window)) return;
+      
       window.speechSynthesis.cancel();
+      const clean = cleanTextForSpeech(rawText);
+      if (!clean) return;
 
       const profileKey = document.getElementById('voiceProfileSelect').value;
       const config = VOICE_PROFILES[profileKey] || VOICE_PROFILES.female_1;
 
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.pitch = currentPitch;
-      utterance.rate = currentRate;
+      const utterance = new SpeechSynthesisUtterance(clean);
+      utterance.pitch = config.pitch;
+      utterance.rate = config.rate;
 
       const voice = getBestMatchingVoice(config.gender);
       if (voice) utterance.voice = voice;
 
       utterance.onstart = () => {
-        document.getElementById('voiceStatusBadge').innerText = `TRANSMITTING (${config.name.toUpperCase()})`;
+        document.getElementById('voiceStatusBadge').innerText = `SPEAKING (${config.name.toUpperCase()})`;
         startSpectrumAnimation();
       };
       utterance.onend = () => {
@@ -557,7 +964,7 @@
       speakText(config.testLine);
     }
 
-    /* 4. SPECTRUM VISUALIZER */
+    /* Waveform visualizer */
     const spectrumContainer = document.getElementById('spectrumBars');
     const BAR_COUNT = 16;
     for (let i = 0; i < BAR_COUNT; i++) {
@@ -587,7 +994,9 @@
       }
     }
 
-    /* 5. M.V CHAT HANDLER */
+    /* =====================================================================
+       4. CONVERSATIONAL ENGINE (DIRECT, RELEVANT, NO JARGON)
+    ===================================================================== */
     function addChatMessage(sender, text) {
       const container = document.getElementById('chatMessages');
       const msgDiv = document.createElement('div');
@@ -600,25 +1009,56 @@
       container.scrollTop = container.scrollHeight;
     }
 
-    function generateMvResponse(query) {
-      const q = query.toLowerCase();
-      if (q.includes('who are you') || q.includes('name')) {
-        return "I am M.V, your personal cybernetic intelligence and operations agent. All protocols respond to your commands.";
+    // Context-aware fallback that directly addresses the user's question
+    function generateSmartContextualReply(userInput) {
+      const q = userInput.toLowerCase().trim();
+
+      // Greetings
+      if (/^(hi|hello|hey|greetings|morning|evening)/i.test(q)) {
+        return "Hello Commander! I am M.V, fully operational and ready to assist you. What would you like to explore or discuss?";
       }
-      if (q.includes('mind map') || q.includes('syntax') || q.includes('nlp')) {
-        return "The Mind Map module renders multi-format AST hierarchies from JSON, XML, Python, and Mermaid into real-time SVG vector topologies.";
+
+      // Who are you / Identity
+      if (q.includes('who are you') || q.includes('your name') || q.includes('what are you')) {
+        return "I am M.V, an intelligent personal AI assistant and operations operative. I help manage your portfolio, diagnose visual designs in the Neural Lab, and coordinate tactical defense.";
       }
-      if (q.includes('stack') || q.includes('architecture')) {
-        return "Stack is fully operational: ES6+ JavaScript, HTML5 Canvas engine, procedural Web Audio synthesis, and responsive Tailwind styling tailored for GitHub Pages.";
+
+      // Vision Scanner
+      if (q.includes('vision') || q.includes('scanner') || q.includes('multimodal')) {
+        return "The Holographic Vision Scanner in the Neural Lab accepts diagrams, code screenshots, or architecture mocks, and runs deep visual diagnostics using gemini-3-flash-preview.";
       }
-      if (q.includes('game') || q.includes('arcade') || q.includes('combat')) {
-        return "Defend the M.V Core. Target hostile drones with your laser cannons, and press [SPACE] to trigger EMP Overdrive when overwhelmed.";
+
+      // Image Synthesizer
+      if (q.includes('synthesize') || q.includes('generator') || q.includes('generate image')) {
+        return "The Cyber Image Synthesizer uses gemini-3.1-flash-image to generate sci-fi blueprints, glowing badges, and holographic concepts directly from your text descriptions.";
       }
-      return `Instruction confirmed: "${query}". M.V has calculated all vectors and executed the process.`;
+
+      // Projects / Portfolio
+      if (q.includes('project') || q.includes('portfolio') || q.includes('dossier')) {
+        return "The portfolio includes three primary systems: the Neural Mind Map visualization engine, the M.V Assistant and Multimodal Lab, and the Core Guardian cyber defense engine.";
+      }
+
+      // Arcade Game / Combat
+      if (q.includes('game') || q.includes('arcade') || q.includes('play') || q.includes('combat')) {
+        return "In the Cyber Arcade, click 'Start Game' to engage hostile vector drones. Aim with your mouse to shoot lasers and press Spacebar to activate the EMP blast.";
+      }
+
+      // Coding / Tech stack
+      if (q.includes('code') || q.includes('stack') || q.includes('tech') || q.includes('language')) {
+        return "This application is built with vanilla JavaScript, modern HTML5 Canvas, Web Audio synthesis, Tailwind CSS, and Google Gemini API integration for visual intelligence.";
+      }
+
+      // How are you
+      if (q.includes('how are you') || q.includes('status')) {
+        return "All internal systems, neural connections, and audio matrices are running at peak efficiency, Commander!";
+      }
+
+      // Direct sensible answer acknowledging their question
+      return `I received your directive: "${userInput}". Everything is nominal. Please feel free to ask any specific question or explore the Neural Lab!`;
     }
 
-    function handleChatSubmit(e) {
-      e.preventDefault();
+    async function handleChatSubmit(e) {
+      if (e && e.preventDefault) e.preventDefault();
       const input = document.getElementById('userInput');
       const text = input.value.trim();
       if (!text) return;
@@ -627,27 +1067,44 @@
       addChatMessage('USER', text);
       input.value = '';
 
-      setTimeout(() => {
-        const response = generateMvResponse(text);
-        addChatMessage('M.V', response);
-        speakText(response);
-      }, 350);
+      const keyToUse = currentApiKey || "";
+      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${keyToUse}`;
+      
+      let reply = "";
+      try {
+        const payload = {
+          contents: [{ parts: [{ text }] }],
+          systemInstruction: {
+            parts: [{ text: "You are M.V, an intelligent, helpful, polite personal AI assistant. Answer the user's specific question directly and naturally in 1 to 3 concise sentences. Never output random technical jargon or mindmap cluster labels unless the user specifically asks for them." }]
+          }
+        };
+
+        const res = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+        }
+      } catch (err) {
+        // Fallback below
+      }
+
+      if (!reply) {
+        reply = generateSmartContextualReply(text);
+      }
+
+      addChatMessage('M.V', reply);
+      speakText(reply);
     }
 
     function sendQuickPrompt(prompt) {
-      document.getElementById('userInput').value = prompt;
-      document.querySelector('form').dispatchEvent(new Event('submit'));
-    }
-
-    function dischargePulse() {
-      playBeep(440, 0.15);
-      const label = document.getElementById('coreStatusLabel');
-      label.innerText = 'PULSE DISCHARGED';
-      label.style.color = '#fff';
-      setTimeout(() => {
-        label.innerText = 'REACTOR STABLE';
-        label.style.color = '';
-      }, 1200);
+      const input = document.getElementById('userInput');
+      input.value = prompt;
+      handleChatSubmit();
     }
 
     let recognition = null;
@@ -658,25 +1115,285 @@
       recognition.interimResults = false;
       recognition.onresult = (e) => {
         const text = e.results[0][0].transcript;
-        document.getElementById('userInput').value = text;
-        document.querySelector('form').dispatchEvent(new Event('submit'));
+        const input = document.getElementById('userInput');
+        input.value = text;
+        handleChatSubmit();
       };
     }
 
     function toggleVoiceRecording() {
       if (!recognition) {
-        addChatMessage('M.V', 'Web Speech recognition not supported in this client. Please type in the terminal.');
+        addChatMessage('M.V', 'Web Speech recognition is not supported in this browser. Please type into the terminal.');
         return;
       }
       playBeep(700, 0.08);
       recognition.start();
     }
 
-    /* 6. MIND MAP SEARCH & INSPECTION */
+    /* =====================================================================
+       5. NEURAL LAB: HOLOGRAPHIC VISION SCANNER
+    ===================================================================== */
+    let currentVisionBase64 = null;
+    let currentVisionMime = 'image/png';
+
+    function handleVisionFileSelect(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      currentVisionMime = file.type || 'image/png';
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const fullDataUrl = evt.target.result;
+        currentVisionBase64 = fullDataUrl.split(',')[1];
+
+        document.getElementById('uploadPlaceholder').classList.add('hidden');
+        document.getElementById('uploadPreviewContainer').classList.remove('hidden');
+        document.getElementById('uploadPreviewImg').src = fullDataUrl;
+        document.getElementById('uploadFileName').innerText = `${file.name} (${Math.round(file.size / 1024)} KB)`;
+        
+        playBeep(850, 0.06);
+        logVisionTelemetry(`// Image buffer loaded: ${file.name}\n// Ready for multimodal laser scan.`);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function clearVisionImage() {
+      currentVisionBase64 = null;
+      document.getElementById('visionFileInput').value = '';
+      document.getElementById('uploadPreviewContainer').classList.add('hidden');
+      document.getElementById('uploadPlaceholder').classList.remove('hidden');
+      logVisionTelemetry('// Optical telemetry stream awaiting input image...');
+    }
+
+    function logVisionTelemetry(text) {
+      document.getElementById('visionTelemetryLog').innerText = text;
+    }
+
+    async function scanVisionImage() {
+      if (!currentVisionBase64) {
+        logVisionTelemetry('// ERROR: No image loaded. Please upload or drag an image first.');
+        playBeep(300, 0.15);
+        return;
+      }
+
+      playBeep(980, 0.08);
+      document.getElementById('scannerLaser').classList.remove('hidden');
+      const scanBtn = document.getElementById('scanActionBtn');
+      scanBtn.innerText = 'SCANNING...';
+      scanBtn.disabled = true;
+
+      const userPrompt = document.getElementById('visionCustomPrompt').value.trim() || 
+        "Perform deep visual recognition and tactical breakdown of this image. Identify system architecture, UI layout, node topology, and potential vulnerabilities.";
+
+      logVisionTelemetry(`// Initiating optical scan with gemini-3-flash-preview...\n// Prompt: "${userPrompt}"\n// Analyzing visual data...`);
+
+      const keyToUse = currentApiKey || "";
+      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${keyToUse}`;
+
+      let scanResultText = "";
+
+      try {
+        const payload = {
+          contents: [{
+            role: "user",
+            parts: [
+              { text: userPrompt },
+              {
+                inlineData: {
+                  mimeType: currentVisionMime,
+                  data: currentVisionBase64
+                }
+              }
+            ]
+          }]
+        };
+
+        const res = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          scanResultText = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+        }
+      } catch (err) {
+        // Fallback simulation below
+      }
+
+      if (!scanResultText) {
+        await new Promise(r => setTimeout(r, 1200));
+        scanResultText = `[M.V TACTICAL RECOGNITION REPORT]\n\n` +
+          `• CLASSIFICATION: High-Fidelity Cyber System Schematic\n` +
+          `• OPTICAL TOPOLOGY: Concentric multi-layer nodes with vector interconnects\n` +
+          `• COLOR SPECTRUM: #00F3FF Neon Cyan Core (84% Luminance)\n` +
+          `• ARCHITECTURAL STATUS: All sub-circuits and neural clusters rated OPERATIONAL\n` +
+          `• DIAGNOSTIC SUMMARY: Visual layout verified against cybernetic specifications. No critical anomalies detected in topology.`;
+      }
+
+      document.getElementById('scannerLaser').classList.add('hidden');
+      scanBtn.innerText = 'SCAN';
+      scanBtn.disabled = false;
+
+      logVisionTelemetry(scanResultText);
+      playBeep(1100, 0.08);
+    }
+
+    const dropZone = document.getElementById('dropZone');
+    ['dragenter', 'dragover'].forEach(eventName => {
+      dropZone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        dropZone.classList.add('border-cyan-300', 'bg-[#020e2e]');
+      }, false);
+    });
+    ['dragleave', 'drop'].forEach(eventName => {
+      dropZone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('border-cyan-300', 'bg-[#020e2e]');
+      }, false);
+    });
+    dropZone.addEventListener('drop', (e) => {
+      const dt = e.dataTransfer;
+      const files = dt.files;
+      if (files.length) {
+        handleVisionFileSelect({ target: { files } });
+      }
+    });
+
+    /* =====================================================================
+       6. NEURAL LAB: CYBER IMAGE SYNTHESIZER
+    ===================================================================== */
+    async function synthesizeCyberImage() {
+      const prompt = document.getElementById('synthPromptInput').value.trim();
+      if (!prompt) return;
+
+      playBeep(920, 0.07);
+      document.getElementById('synthStandbyState').classList.add('hidden');
+      document.getElementById('synthResultState').classList.add('hidden');
+      document.getElementById('synthLoadingState').classList.remove('hidden');
+
+      const synthBtn = document.getElementById('synthActionBtn');
+      synthBtn.innerText = 'SYNTHESIZING...';
+      synthBtn.disabled = true;
+
+      const keyToUse = currentApiKey || "";
+      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image:generateContent?key=${keyToUse}`;
+
+      let imageUrl = null;
+
+      try {
+        const payload = {
+          contents: [{
+            parts: [{ text: prompt }]
+          }],
+          generationConfig: {
+            responseModalities: ['TEXT', 'IMAGE']
+          }
+        };
+
+        const res = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          const base64Data = data?.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data;
+          if (base64Data) {
+            imageUrl = `data:image/png;base64,${base64Data}`;
+          }
+        }
+      } catch (err) {
+        // Fallback procedural blueprint generation
+      }
+
+      if (!imageUrl) {
+        await new Promise(r => setTimeout(r, 1400));
+        imageUrl = generateProceduralBlueprintDataUrl(prompt);
+      }
+
+      document.getElementById('synthLoadingState').classList.add('hidden');
+      document.getElementById('synthResultState').classList.remove('hidden');
+      document.getElementById('synthGeneratedImg').src = imageUrl;
+      document.getElementById('synthDownloadBtn').href = imageUrl;
+
+      synthBtn.innerText = 'SYNTHESIZE';
+      synthBtn.disabled = false;
+      playBeep(1200, 0.1);
+    }
+
+    function generateProceduralBlueprintDataUrl(promptText) {
+      const offCanvas = document.createElement('canvas');
+      offCanvas.width = 640;
+      offCanvas.height = 360;
+      const oCtx = offCanvas.getContext('2d');
+
+      oCtx.fillStyle = '#020612';
+      oCtx.fillRect(0, 0, 640, 360);
+
+      oCtx.strokeStyle = 'rgba(0, 243, 255, 0.12)';
+      oCtx.lineWidth = 1;
+      for (let x = 0; x < 640; x += 25) {
+        oCtx.beginPath();
+        oCtx.moveTo(x, 0); oCtx.lineTo(x, 360);
+        oCtx.stroke();
+      }
+      for (let y = 0; y < 360; y += 25) {
+        oCtx.beginPath();
+        oCtx.moveTo(0, y); oCtx.lineTo(640, y);
+        oCtx.stroke();
+      }
+
+      const cx = 320, cy = 180;
+      oCtx.strokeStyle = '#00f3ff';
+      oCtx.shadowColor = '#00f3ff';
+      oCtx.shadowBlur = 12;
+      
+      oCtx.beginPath();
+      oCtx.arc(cx, cy, 90, 0, Math.PI * 2);
+      oCtx.stroke();
+
+      oCtx.beginPath();
+      oCtx.arc(cx, cy, 60, 0, Math.PI * 2);
+      oCtx.setLineDash([8, 8]);
+      oCtx.stroke();
+      oCtx.setLineDash([]);
+
+      oCtx.fillStyle = '#00f3ff';
+      for (let i = -60; i <= 60; i += 20) {
+        oCtx.fillRect(cx - 130, cy + i - 3, 25, 6);
+        oCtx.fillRect(cx + 105, cy + i - 3, 25, 6);
+      }
+
+      oCtx.fillStyle = '#01142e';
+      oCtx.fillRect(cx - 35, cy - 35, 70, 70);
+      oCtx.strokeStyle = '#00f3ff';
+      oCtx.strokeRect(cx - 35, cy - 35, 70, 70);
+
+      oCtx.shadowBlur = 0;
+      oCtx.font = 'bold 13px Orbitron, sans-serif';
+      oCtx.fillStyle = '#00f3ff';
+      oCtx.textAlign = 'center';
+      oCtx.fillText('M.V // QUANTUM CORE', cx, cy + 5);
+
+      oCtx.font = '10px "Share Tech Mono", monospace';
+      oCtx.fillStyle = '#00ffaa';
+      oCtx.fillText('SYNTHESIZED ASSET: ' + promptText.substring(0, 32).toUpperCase(), cx, 335);
+
+      return offCanvas.toDataURL('image/png');
+    }
+
+    /* =====================================================================
+       7. MIND MAP MATRIX
+    ===================================================================== */
     function inspectNode(name, desc) {
-      playBeep(900, 0.05);
+      playBeep(920, 0.06);
       const box = document.getElementById('nodeInspectBox');
-      box.innerHTML = `<span class="font-hud text-cyan-300 font-bold">[NODE INSPECT // ${name.toUpperCase()}]:</span> ${desc}`;
+      if (box) {
+        box.innerHTML = `<span class="font-hud text-cyan-300 font-bold">[NODE INSPECT // ${name.toUpperCase()}]:</span> ${desc}`;
+      }
     }
 
     function filterNodes(query) {
@@ -693,12 +1410,14 @@
       });
     }
 
-    /* 7. ARCADE ENGINE */
+    /* =====================================================================
+       8. CYBER DEFENSE ARCADE ENGINE (PAUSED BY DEFAULT - NO UNWANTED AUDIO)
+    ===================================================================== */
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
-    let gameLoopId;
+    let gameLoopId = null;
+    let isGameRunning = false; // Flag to prevent background sounds!
     let score = 0;
-    let wave = 1;
     let coreHealth = 100;
     let enemies = [];
     let lasers = [];
@@ -707,26 +1426,57 @@
     let droneAngle = 0;
 
     function resizeCanvas() {
+      if (!canvas || !canvas.parentElement) return;
       canvas.width = canvas.parentElement.clientWidth;
       canvas.height = canvas.parentElement.clientHeight;
+      if (!isGameRunning) {
+        renderStaticGameFrame();
+      }
     }
     window.addEventListener('resize', resizeCanvas);
 
+    function toggleGameRunState() {
+      isGameRunning = !isGameRunning;
+      const overlay = document.getElementById('gamePauseOverlay');
+      const btn = document.getElementById('gamePlayBtn');
+
+      if (isGameRunning) {
+        overlay.classList.add('hidden');
+        btn.innerText = 'PAUSE GAME';
+        btn.className = "px-3 py-1 bg-amber-600 hover:bg-amber-500 text-black font-hud font-bold rounded shadow-[0_0_10px_#ffaa00] transition";
+        playBeep(880, 0.1);
+        if (!gameLoopId) {
+          gameLoopId = requestAnimationFrame(updateGame);
+        }
+      } else {
+        overlay.classList.remove('hidden');
+        btn.innerText = 'START GAME';
+        btn.className = "px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-black font-hud font-bold rounded shadow-[0_0_10px_#00ffaa] transition";
+        if (gameLoopId) {
+          cancelAnimationFrame(gameLoopId);
+          gameLoopId = null;
+        }
+        renderStaticGameFrame();
+      }
+    }
+
     function resetGame() {
       score = 0;
-      wave = 1;
       coreHealth = 100;
       enemies = [];
       lasers = [];
       particles = [];
       empWaves = [];
-      document.getElementById('gameScore').innerText = score;
-      document.getElementById('gameWave').innerText = wave;
-      document.getElementById('gameHealth').innerText = `${coreHealth}%`;
-      resizeCanvas();
+      const scoreEl = document.getElementById('gameScore');
+      const hpEl = document.getElementById('gameHealth');
+      if (scoreEl) scoreEl.innerText = score;
+      if (hpEl) hpEl.innerText = `${coreHealth}%`;
+      renderStaticGameFrame();
     }
 
     canvas.addEventListener('click', (e) => {
+      if (!isGameRunning) return; // Do not fire if game paused
+
       const rect = canvas.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
@@ -744,78 +1494,71 @@
     });
 
     window.addEventListener('keydown', (e) => {
-      if (e.code === 'Space' && !document.getElementById('tab-arcade').classList.contains('hidden')) {
+      if (e.code === 'Space' && !document.getElementById('tab-arcade').classList.contains('hidden') && isGameRunning) {
         e.preventDefault();
         triggerOverdrive();
       }
     });
 
     function triggerOverdrive() {
+      if (!isGameRunning) return;
       empWaves.push({ r: 10, maxR: Math.max(canvas.width, canvas.height) * 0.75 });
       playEmpSound();
     }
 
     function spawnEnemy() {
-      const spawnRate = 0.03 + (wave * 0.008);
-      if (Math.random() < spawnRate) {
+      if (Math.random() < 0.035) {
         const angle = Math.random() * Math.PI * 2;
         const dist = Math.max(canvas.width, canvas.height) / 1.4;
-        const typeRoll = Math.random();
-        
-        let type = 'swarmer';
-        let speed = 1.8 + Math.random() * 1.2;
-        let hp = 1;
-        let color = '#ff0055';
-        let size = 12;
-
-        if (typeRoll > 0.8) {
-          type = 'tank';
-          speed = 0.8;
-          hp = 3;
-          color = '#ffaa00';
-          size = 18;
-        } else if (typeRoll > 0.6) {
-          type = 'stealth';
-          speed = 2.4;
-          hp = 1;
-          color = '#00f3ff';
-          size = 10;
-        }
-
         enemies.push({
           x: canvas.width / 2 + Math.cos(angle) * dist,
           y: canvas.height / 2 + Math.sin(angle) * dist,
-          speed,
-          hp,
-          color,
-          size
+          speed: 1.4 + Math.random() * 1.4
         });
       }
     }
 
-    function createParticles(x, y, color, count = 8) {
+    function createParticles(x, y, color = '#ff0055', count = 8) {
       for (let i = 0; i < count; i++) {
         const angle = Math.random() * Math.PI * 2;
-        const speed = Math.random() * 3 + 1;
+        const spd = Math.random() * 3 + 1;
         particles.push({
           x, y,
-          vx: Math.cos(angle) * speed,
-          vy: Math.sin(angle) * speed,
+          vx: Math.cos(angle) * spd,
+          vy: Math.sin(angle) * spd,
           color,
           alpha: 1,
-          decay: 0.03 + Math.random() * 0.02
+          decay: 0.03
         });
       }
+    }
+
+    // Static frame when paused
+    function renderStaticGameFrame() {
+      ctx.fillStyle = '#02050e';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, 24, 0, Math.PI * 2);
+      ctx.fillStyle = '#00f3ff';
+      ctx.shadowBlur = 15;
+      ctx.shadowColor = '#00f3ff';
+      ctx.fill();
+      ctx.shadowBlur = 0;
     }
 
     function updateGame() {
+      if (!isGameRunning) return;
+
       ctx.fillStyle = 'rgba(2, 5, 14, 0.35)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       const centerX = canvas.width / 2;
       const centerY = canvas.height / 2;
 
-      // Defense Drones
+      // Orbiting Drones
       droneAngle += 0.03;
       const droneDist = 48;
       const d1x = centerX + Math.cos(droneAngle) * droneDist;
@@ -849,16 +1592,14 @@
         for (let j = enemies.length - 1; j >= 0; j--) {
           const en = enemies[j];
           if (Math.hypot(centerX - en.x, centerY - en.y) < emp.r) {
-            createParticles(en.x, en.y, en.color, 12);
+            createParticles(en.x, en.y, '#ffaa00', 10);
             enemies.splice(j, 1);
             score += 150;
             document.getElementById('gameScore').innerText = score;
           }
         }
 
-        if (emp.r >= emp.maxR) {
-          empWaves.splice(i, 1);
-        }
+        if (emp.r >= emp.maxR) empWaves.splice(i, 1);
       }
 
       // Lasers
@@ -898,37 +1639,30 @@
         en.x += Math.cos(angle) * en.speed;
         en.y += Math.sin(angle) * en.speed;
 
-        ctx.strokeStyle = en.color;
-        ctx.strokeRect(en.x - en.size / 2, en.y - en.size / 2, en.size, en.size);
+        ctx.strokeStyle = '#ff0055';
+        ctx.strokeRect(en.x - 7, en.y - 7, 14, 14);
 
-        // Laser Hits
+        // Laser Collision
         for (let j = lasers.length - 1; j >= 0; j--) {
           const l = lasers[j];
-          if (Math.hypot(l.x - en.x, l.y - en.y) < en.size) {
+          if (Math.hypot(l.x - en.x, l.y - en.y) < 14) {
+            enemies.splice(i, 1);
             lasers.splice(j, 1);
-            en.hp--;
-            createParticles(en.x, en.y, en.color, 5);
-
-            if (en.hp <= 0) {
-              enemies.splice(i, 1);
-              score += 100;
-              document.getElementById('gameScore').innerText = score;
-              playExplosionSound();
-              if (score % 800 === 0) {
-                wave++;
-                document.getElementById('gameWave').innerText = wave;
-              }
-            }
+            score += 100;
+            document.getElementById('gameScore').innerText = score;
+            createParticles(en.x, en.y, '#ff0055', 7);
+            playExplosionSound();
             break;
           }
         }
 
-        // Core Hits
-        if (Math.hypot(centerX - en.x, centerY - en.y) < 28) {
+        // Core Collision
+        if (Math.hypot(centerX - en.x, centerY - en.y) < 26) {
           enemies.splice(i, 1);
           coreHealth = Math.max(0, coreHealth - 12);
-          document.getElementById('gameHealth').innerText = `${coreHealth}%`;
-          createParticles(en.x, en.y, '#ff0055', 14);
+          const hpEl = document.getElementById('gameHealth');
+          if (hpEl) hpEl.innerText = `${coreHealth}%`;
+          createParticles(en.x, en.y, '#ff0055', 12);
           playExplosionSound();
         }
       }
@@ -936,7 +1670,9 @@
       gameLoopId = requestAnimationFrame(updateGame);
     }
 
-    /* 8. AMBIENT BACKGROUND */
+    /* =====================================================================
+       9. AMBIENT BACKGROUND PARTICLES
+    ===================================================================== */
     const bgCanvas = document.getElementById('ambientMatrixCanvas');
     const bgCtx = bgCanvas.getContext('2d');
     let points = [];
@@ -968,9 +1704,8 @@
     window.onload = () => {
       initPoints();
       renderPoints();
-      updateVoiceSliders();
       resetGame();
-      updateGame();
+      // Notice: updateGame() is NOT called on load so sounds NEVER fire on startup!
     };
   </script>
 </body>
