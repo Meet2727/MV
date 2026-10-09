@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>M.V // APEX CYBERNETIC HUD, NEURAL LAB & ARCADE PLATFORMA</title>
+  <title>M.V / APEX CYBERNETIC HUD, NEURAL LAB & ARCADE PLATFORM</title>
   
   <!-- Sci-Fi Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -274,7 +274,7 @@
         </div>
       </div>
 
-      <!-- VOICE MATRIX SELECTOR (3 FEMALE, 2 MALE) -->
+      <!-- VOICE MATRIX SELECTOR -->
       <div class="flex items-center gap-2 bg-[#050f24] border border-cyan-500/40 px-3 py-1.5 rounded">
         <span class="text-xs text-cyan-400 uppercase tracking-wider font-semibold font-mono-hud">VOICE:</span>
         <select id="voiceProfileSelect" class="bg-[#020816] text-xs text-cyan-200 border border-cyan-500/50 rounded px-2.5 py-1 outline-none cursor-pointer font-mono-hud">
@@ -500,7 +500,7 @@
 
         </div>
 
-        <!-- RIGHT: CYBER IMAGE SYNTHESIZER (FIXED) -->
+        <!-- RIGHT: CYBER IMAGE SYNTHESIZER (FIXED & RELIABLE) -->
         <div class="hud-bracket rounded p-6 flex flex-col justify-between relative min-h-[580px]">
           <div class="corner-notch-tr"></div>
           <div class="corner-notch-bl"></div>
@@ -955,7 +955,7 @@
     </section>
 
     <!-- =========================================================================
-         NEW TAB 8: NETWORK UPLINK & PACKET SNIFFER
+         TAB 8: NETWORK UPLINK & PACKET SNIFFER
     ========================================================================= -->
     <section id="tab-network" class="tab-view hidden space-y-6">
       <div class="hud-bracket rounded p-5 relative">
@@ -1686,188 +1686,3 @@
         loadingEl.classList.add('hidden');
         imgEl.src = backupUrl;
         document.getElementById('synthDownloadBtn').href = backupUrl;
-        resultEl.classList.remove('hidden');
-        playBeep(1200, 0.1);
-        synthBtn.innerText = 'SYNTHESIZE';
-        synthBtn.disabled = false;
-      };
-
-      // Trigger load
-      loaderImg.src = imageUrl;
-    }
-
-    function generateProceduralBlueprintDataUrl(promptText) {
-      const offCanvas = document.createElement('canvas');
-      offCanvas.width = 640; offCanvas.height = 360;
-      const oCtx = offCanvas.getContext('2d');
-
-      oCtx.fillStyle = '#020612'; oCtx.fillRect(0, 0, 640, 360);
-      oCtx.strokeStyle = 'rgba(0, 243, 255, 0.12)'; oCtx.lineWidth = 1;
-      
-      for (let x = 0; x < 640; x += 25) { oCtx.beginPath(); oCtx.moveTo(x, 0); oCtx.lineTo(x, 360); oCtx.stroke(); }
-      for (let y = 0; y < 360; y += 25) { oCtx.beginPath(); oCtx.moveTo(0, y); oCtx.lineTo(640, y); oCtx.stroke(); }
-
-      const cx = 320, cy = 180;
-      oCtx.strokeStyle = '#00f3ff'; oCtx.shadowColor = '#00f3ff'; oCtx.shadowBlur = 12;
-      oCtx.beginPath(); oCtx.arc(cx, cy, 90, 0, Math.PI * 2); oCtx.stroke();
-      oCtx.beginPath(); oCtx.arc(cx, cy, 60, 0, Math.PI * 2); oCtx.setLineDash([8, 8]); oCtx.stroke(); oCtx.setLineDash([]);
-
-      oCtx.fillStyle = '#00f3ff';
-      for (let i = -60; i <= 60; i += 20) { oCtx.fillRect(cx - 130, cy + i - 3, 25, 6); oCtx.fillRect(cx + 105, cy + i - 3, 25, 6); }
-
-      oCtx.fillStyle = '#01142e'; oCtx.fillRect(cx - 35, cy - 35, 70, 70);
-      oCtx.strokeStyle = '#00f3ff'; oCtx.strokeRect(cx - 35, cy - 35, 70, 70);
-
-      oCtx.shadowBlur = 0;
-      oCtx.font = 'bold 13px Orbitron, sans-serif'; oCtx.fillStyle = '#00f3ff'; oCtx.textAlign = 'center';
-      oCtx.fillText('M.V // QUANTUM CORE', cx, cy + 5);
-      oCtx.font = '10px "Share Tech Mono", monospace'; oCtx.fillStyle = '#00ffaa';
-      oCtx.fillText('SYNTHESIZED ASSET: ' + promptText.substring(0, 32).toUpperCase(), cx, 335);
-
-      return offCanvas.toDataURL('image/png');
-    }
-
-    /* =====================================================================
-       6. MIND MAP MATRIX
-    ===================================================================== */
-    function inspectNode(name, desc) {
-      playBeep(920, 0.06);
-      const box = document.getElementById('nodeInspectBox');
-      if (box) { box.innerHTML = `<span class="font-hud text-cyan-300 font-bold">[NODE INSPECT // ${name.toUpperCase()}]:</span> ${desc}`; }
-    }
-
-    function filterNodes(query) {
-      const q = query.toLowerCase();
-      const nodes = document.querySelectorAll('.matrix-node');
-      nodes.forEach(node => {
-        if (!q || node.innerText.toLowerCase().includes(q)) {
-          node.style.opacity = '1'; node.style.borderColor = 'rgba(0, 243, 255, 0.8)';
-        } else {
-          node.style.opacity = '0.3'; node.style.borderColor = 'rgba(0, 243, 255, 0.2)';
-        }
-      });
-    }
-
-    /* =====================================================================
-       7. CYBER DEFENSE ARCADE ENGINE
-    ===================================================================== */
-    const canvas = document.getElementById('gameCanvas');
-    const ctx = canvas.getContext('2d');
-    let gameLoopId = null;
-    let isGameRunning = false;
-    let score = 0;
-    let coreHealth = 100;
-    let enemies = [];
-    let lasers = [];
-    let particles = [];
-    let empWaves = [];
-    let droneAngle = 0;
-
-    function resizeCanvas() {
-      if (!canvas || !canvas.parentElement) return;
-      canvas.width = canvas.parentElement.clientWidth;
-      canvas.height = canvas.parentElement.clientHeight;
-      if (!isGameRunning) renderStaticGameFrame();
-    }
-    window.addEventListener('resize', resizeCanvas);
-
-    function toggleGameRunState() {
-      isGameRunning = !isGameRunning;
-      const overlay = document.getElementById('gamePauseOverlay');
-      const btn = document.getElementById('gamePlayBtn');
-
-      if (isGameRunning) {
-        overlay.classList.add('hidden');
-        btn.innerText = 'PAUSE GAME';
-        btn.className = "px-3 py-1 bg-amber-600 hover:bg-amber-500 text-black font-hud font-bold rounded shadow-[0_0_10px_#ffaa00] transition";
-        playBeep(880, 0.1);
-        if (!gameLoopId) gameLoopId = requestAnimationFrame(updateGame);
-      } else {
-        overlay.classList.remove('hidden');
-        btn.innerText = 'START GAME';
-        btn.className = "px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-black font-hud font-bold rounded shadow-[0_0_10px_#00ffaa] transition";
-        if (gameLoopId) { cancelAnimationFrame(gameLoopId); gameLoopId = null; }
-        renderStaticGameFrame();
-      }
-    }
-
-    function resetGame() {
-      score = 0; coreHealth = 100; enemies = []; lasers = []; particles = []; empWaves = [];
-      const scoreEl = document.getElementById('gameScore');
-      const hpEl = document.getElementById('gameHealth');
-      if (scoreEl) scoreEl.innerText = score;
-      if (hpEl) hpEl.innerText = `${coreHealth}%`;
-      renderStaticGameFrame();
-    }
-
-    canvas.addEventListener('click', (e) => {
-      if (!isGameRunning) return;
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const centerX = canvas.width / 2;
-      const centerY = canvas.height / 2;
-      const angle = Math.atan2(y - centerY, x - centerX);
-      lasers.push({ x: centerX, y: centerY, vx: Math.cos(angle) * 10, vy: Math.sin(angle) * 10 });
-      playLaserSound();
-    });
-
-    window.addEventListener('keydown', (e) => {
-      if (e.code === 'Space' && !document.getElementById('tab-arcade').classList.contains('hidden') && isGameRunning) {
-        e.preventDefault(); triggerOverdrive();
-      }
-    });
-
-    function triggerOverdrive() {
-      if (!isGameRunning) return;
-      empWaves.push({ r: 10, maxR: Math.max(canvas.width, canvas.height) * 0.75 });
-      playEmpSound();
-    }
-
-    function spawnEnemy() {
-      if (Math.random() < 0.035) {
-        const angle = Math.random() * Math.PI * 2;
-        const dist = Math.max(canvas.width, canvas.height) / 1.4;
-        enemies.push({ x: canvas.width / 2 + Math.cos(angle) * dist, y: canvas.height / 2 + Math.sin(angle) * dist, speed: 1.4 + Math.random() * 1.4 });
-      }
-    }
-
-    function createParticles(x, y, color = '#ff0055', count = 8) {
-      for (let i = 0; i < count; i++) {
-        const angle = Math.random() * Math.PI * 2;
-        const spd = Math.random() * 3 + 1;
-        particles.push({ x, y, vx: Math.cos(angle) * spd, vy: Math.sin(angle) * spd, color, alpha: 1, decay: 0.03 });
-      }
-    }
-
-    function renderStaticGameFrame() {
-      ctx.fillStyle = '#02050e'; ctx.fillRect(0, 0, canvas.width, canvas.height);
-      const centerX = canvas.width / 2; const centerY = canvas.height / 2;
-      ctx.beginPath(); ctx.arc(centerX, centerY, 24, 0, Math.PI * 2);
-      ctx.fillStyle = '#00f3ff'; ctx.shadowBlur = 15; ctx.shadowColor = '#00f3ff'; ctx.fill(); ctx.shadowBlur = 0;
-    }
-
-    function updateGame() {
-      if (!isGameRunning) return;
-      ctx.fillStyle = 'rgba(2, 5, 14, 0.35)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      const centerX = canvas.width / 2; const centerY = canvas.height / 2;
-
-      droneAngle += 0.03;
-      const droneDist = 48;
-      ctx.fillStyle = '#00f3ff';
-      ctx.fillRect(centerX + Math.cos(droneAngle) * droneDist - 3, centerY + Math.sin(droneAngle) * droneDist - 3, 6, 6);
-      ctx.fillRect(centerX + Math.cos(droneAngle + Math.PI) * droneDist - 3, centerY + Math.sin(droneAngle + Math.PI) * droneDist - 3, 6, 6);
-
-      ctx.beginPath(); ctx.arc(centerX, centerY, 24, 0, Math.PI * 2);
-      ctx.fillStyle = '#00f3ff'; ctx.shadowBlur = 18; ctx.shadowColor = '#00f3ff'; ctx.fill(); ctx.shadowBlur = 0;
-
-      for (let i = empWaves.length - 1; i >= 0; i--) {
-        const emp = empWaves[i]; emp.r += 12;
-        ctx.beginPath(); ctx.arc(centerX, centerY, emp.r, 0, Math.PI * 2);
-        ctx.strokeStyle = 'rgba(255, 170, 0, 0.7)'; ctx.lineWidth = 4; ctx.stroke();
-        for (let j = enemies.length - 1; j >= 0; j--) {
-          const en = enemies[j];
-          if (Math.hypot(centerX - en.x, centerY - en.y) < emp.r) {
-            createParticles(en.x, en.y, '#ffaa00', 10); enemies.splice(j, 1);
-            score += 15
