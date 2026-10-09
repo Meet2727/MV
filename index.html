@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>M.V // APEX CYBERNETIC HUD, NEURAL LAB & ARCADE PLATFORM</title>
+  <title>M.V // APEX CYBERNETIC HUD, NEURAL LAB & ARCADE PLATFORMA</title>
   
   <!-- Sci-Fi Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -316,6 +316,9 @@
         <button onclick="switchTab('telemetrysec')" id="tabBtn-telemetrysec" class="tab-btn px-3 py-1.5 rounded text-xs font-hud text-cyan-400/80 border border-cyan-500/30 hover:border-cyan-400 hover:text-cyan-300 transition">
           CYBER VAULT
         </button>
+        <button onclick="switchTab('network')" id="tabBtn-network" class="tab-btn px-3 py-1.5 rounded text-xs font-hud text-cyan-400/80 border border-cyan-500/30 hover:border-cyan-400 hover:text-cyan-300 transition">
+          NETWORK UPLINK
+        </button>
         <button onclick="switchTab('projects')" id="tabBtn-projects" class="tab-btn px-3 py-1.5 rounded text-xs font-hud text-cyan-400/80 border border-cyan-500/30 hover:border-cyan-400 hover:text-cyan-300 transition">
           DOSSIER
         </button>
@@ -435,7 +438,7 @@
             </p>
           </div>
           <div class="shrink-0 bg-[#02091c] border border-cyan-500/50 px-3.5 py-2 rounded text-[11px] font-mono-hud text-cyan-300 shadow-[0_0_10px_rgba(0,243,255,0.15)]">
-            ACTIVE MODELS: <span class="text-white font-bold">gemini-3-flash-preview & imagen-3.0-generate-002</span>
+            ACTIVE MODELS: <span class="text-white font-bold">gemini-3-flash & pollinations-ai</span>
           </div>
         </div>
       </div>
@@ -497,7 +500,7 @@
 
         </div>
 
-        <!-- RIGHT: CYBER IMAGE SYNTHESIZER -->
+        <!-- RIGHT: CYBER IMAGE SYNTHESIZER (FIXED) -->
         <div class="hud-bracket rounded p-6 flex flex-col justify-between relative min-h-[580px]">
           <div class="corner-notch-tr"></div>
           <div class="corner-notch-bl"></div>
@@ -508,12 +511,12 @@
                 CYBER IMAGE SYNTHESIZER
               </h2>
               <span class="text-[11px] font-mono-hud text-cyan-400/90 bg-cyan-950/80 px-2.5 py-0.5 rounded border border-cyan-500/30">
-                imagen-3.0-generate-002
+                pollinations-ai-engine
               </span>
             </div>
 
             <p class="text-xs font-mono-hud text-cyan-400/80 mb-4 leading-relaxed">
-              Synthesize sci-fi concept badges, glowing UI nodes, and futuristic architectural schematics using Gemini's native image model or instant procedural vector synthesis.
+              Synthesize sci-fi concept badges, glowing UI nodes, and futuristic architectural schematics. Operates seamlessly without requiring an API key.
             </p>
 
             <div class="flex items-center gap-2 mb-4">
@@ -538,13 +541,13 @@
                 <span class="font-hud text-xs font-bold text-cyan-200">M.V</span>
               </div>
               <span class="font-hud text-xs tracking-wider text-cyan-300 animate-pulse">SYNTHESIZING HOLOGRAPHIC ASSET...</span>
-              <span class="text-[10px] font-mono-hud text-cyan-500 mt-1">Executing cyber image payload matrix</span>
+              <span class="text-[10px] font-mono-hud text-cyan-500 mt-1">Routing payload to neural diffusion matrix</span>
             </div>
 
             <div id="synthResultState" class="hidden w-full h-full flex flex-col items-center justify-center">
               <img id="synthGeneratedImg" src="" alt="Synthesized Blueprint" class="max-h-[290px] w-full object-contain rounded border border-cyan-500/50 glow-box">
               <div class="flex items-center gap-3 mt-2">
-                <a id="synthDownloadBtn" href="#" download="mv_holographic_blueprint.png" class="text-[10px] font-mono-hud text-cyan-300 underline hover:text-white">Download Asset</a>
+                <a id="synthDownloadBtn" href="#" download="mv_holographic_blueprint.png" class="text-[10px] font-mono-hud text-cyan-300 underline hover:text-white" target="_blank">Download Asset</a>
                 <span class="text-[10px] text-cyan-600">•</span>
                 <button onclick="synthesizeCyberImage()" class="text-[10px] font-mono-hud text-cyan-400 hover:text-white">Regenerate</button>
               </div>
@@ -819,7 +822,7 @@
     </section>
 
     <!-- =========================================================================
-         TAB 7: CYBER VAULT // TELEMETRY, CIPHER & QUANTUM PING
+         TAB 7: CYBER VAULT // TELEMETRY & CIPHER
     ========================================================================= -->
     <section id="tab-telemetrysec" class="tab-view hidden space-y-6">
       <div class="hud-bracket rounded p-5 relative">
@@ -952,7 +955,62 @@
     </section>
 
     <!-- =========================================================================
-         TAB 8: PROJECT DOSSIER
+         NEW TAB 8: NETWORK UPLINK & PACKET SNIFFER
+    ========================================================================= -->
+    <section id="tab-network" class="tab-view hidden space-y-6">
+      <div class="hud-bracket rounded p-5 relative">
+        <div class="corner-notch-tr"></div>
+        <div class="corner-notch-bl"></div>
+
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h1 class="font-hud text-xl sm:text-2xl font-bold tracking-wider text-cyan-300 glow-cyan uppercase">
+              GLOBAL NETWORK UPLINK & PACKET SNIFFER
+            </h1>
+            <p class="text-xs sm:text-sm font-mono-hud text-cyan-400/90 mt-1">
+              Live interception of geospatial node traffic and orbital satellite synchronization.
+            </p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="inline-block w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse"></span>
+            <span class="text-xs font-mono-hud text-rose-400 font-bold tracking-wider">INTERCEPT ACTIVE</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Packet Sniffer Terminal -->
+        <div class="lg:col-span-7 hud-bracket rounded p-6 flex flex-col h-[500px]">
+          <div class="border-b border-cyan-500/30 pb-2 mb-3 flex justify-between items-center">
+            <h2 class="font-hud text-sm text-cyan-300 font-bold uppercase tracking-wider">LIVE PACKET INTERCEPT</h2>
+            <span class="text-[10px] font-mono-hud text-cyan-500">PORTS: 443 | 80 | 22</span>
+          </div>
+          <div id="packetStream" class="flex-1 bg-[#010614] border border-cyan-500/30 rounded p-3 overflow-hidden font-mono text-xs flex flex-col justify-end space-y-1">
+            <!-- Simulated Packets will spawn here -->
+          </div>
+        </div>
+
+        <!-- Orbital Tracker -->
+        <div class="lg:col-span-5 hud-bracket rounded p-6 flex flex-col h-[500px]">
+          <div class="border-b border-cyan-500/30 pb-2 mb-3 flex justify-between items-center">
+            <h2 class="font-hud text-sm text-cyan-300 font-bold uppercase tracking-wider">ORBITAL TRACKING MATRIX</h2>
+            <span class="text-[10px] font-mono-hud text-cyan-500">GEO-SYNC ENABLED</span>
+          </div>
+          <div class="flex-1 bg-[#010614] border border-cyan-500/30 rounded flex items-center justify-center relative overflow-hidden">
+            <canvas id="orbitalCanvas" class="w-full h-full absolute inset-0"></canvas>
+            <div class="absolute bottom-3 left-3 text-[10px] font-mono-hud text-cyan-500 z-10 pointer-events-none">
+              UPLINK: <span class="text-emerald-400">STRONG</span><br>
+              LAT/LON: <span class="text-cyan-400">ENCRYPTED</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         TAB 9: PROJECT DOSSIER
     ========================================================================= -->
     <section id="tab-projects" class="tab-view hidden grid grid-cols-1 md:grid-cols-3 gap-6">
       <div class="hud-bracket rounded p-5 space-y-3 hover:border-cyan-300 hover:shadow-[0_0_20px_#00f3ff] transition">
@@ -969,7 +1027,7 @@
         <h3 class="font-hud text-cyan-300 text-lg">M.V ASSISTANT &amp; NEURAL LAB</h3>
         <p class="text-xs font-mono-hud text-cyan-200/80 leading-relaxed">Multimodal voice &amp; vision ecosystem with speech synthesis, Gemini-powered image diagnostics, and cyber image synthesis.</p>
         <div class="flex gap-2 text-[10px] font-mono-hud text-cyan-400 pt-2 border-t border-cyan-500/20">
-          <span>Web Speech</span> • <span>gemini-3-flash</span> • <span>imagen-3.0-generate-002</span>
+          <span>Web Speech</span> • <span>gemini-3-flash</span> • <span>pollinations-ai</span>
         </div>
       </div>
 
@@ -1003,7 +1061,7 @@
       </div>
 
       <div id="terminalOutput" class="flex-1 overflow-y-auto font-mono text-xs text-cyan-300 space-y-1 pr-2">
-        <div>[M.V Shell v5.0 Active. Type <strong class="text-white">help</strong> for tactical command list.]</div>
+        <div>[M.V Shell v6.0 Active. Type <strong class="text-white">help</strong> for tactical command list.]</div>
       </div>
 
       <form onsubmit="handleTerminalCommand(event)" class="flex items-center gap-2 mt-2 pt-2 border-t border-cyan-500/20">
@@ -1023,7 +1081,7 @@
         <button onclick="closeApiKeyModal()" class="text-cyan-400 hover:text-white font-mono-hud">✕</button>
       </div>
       <p class="text-xs font-mono-hud text-cyan-400/80 leading-relaxed">
-        When deployed on GitHub Pages or custom hosting, enter your Google AI Studio API key here. In local Canvas preview, leave blank to use the built-in runtime.
+        When deployed on GitHub Pages or custom hosting, enter your Google AI Studio API key here for Vision Diagnostics. Image synthesis now runs independently without a key.
       </p>
       <div>
         <input type="password" id="customApiKeyInput" placeholder="Enter AI Studio API Key (AIzaSy...)" class="w-full bg-[#020817] border border-cyan-500/50 rounded px-3 py-2 text-xs font-mono-hud text-cyan-100 placeholder-cyan-700 outline-none focus:border-cyan-400">
@@ -1144,12 +1202,11 @@
         toggleGameRunState();
       }
 
-      if (tabId === 'sandbox') {
-        runSandboxCode();
-      }
-
-      if (tabId === 'audiofx') {
-        resizeVisualizerCanvas();
+      if (tabId === 'sandbox') runSandboxCode();
+      if (tabId === 'audiofx') resizeVisualizerCanvas();
+      if (tabId === 'network') {
+        resizeOrbitalCanvas();
+        startPacketSniffer();
       }
     }
 
@@ -1264,51 +1321,19 @@
     }
 
     /* =====================================================================
-       3. 5-VOICE MATRIX (3 FEMALE, 2 MALE)
+       3. VOICE MATRIX (3 FEMALE, 2 MALE)
     ===================================================================== */
     const VOICE_PROFILES = {
-      female_1: {
-        name: "Valkyrie",
-        gender: "female",
-        pitch: 1.25,
-        rate: 1.05,
-        testLine: "M.V online. Voice Profile F-01 Valkyrie engaged. All parameters ready."
-      },
-      female_2: {
-        name: "Athena",
-        gender: "female",
-        pitch: 1.05,
-        rate: 0.98,
-        testLine: "M.V online. Profile F-02 Athena active. Systems steady and analytical."
-      },
-      female_3: {
-        name: "Nyx",
-        gender: "female",
-        pitch: 0.88,
-        rate: 0.95,
-        testLine: "M.V tactical unit. Profile F-03 Nyx loaded in stealth mode."
-      },
-      male_1: {
-        name: "Titan",
-        gender: "male",
-        pitch: 0.72,
-        rate: 0.92,
-        testLine: "M.V online. Profile M-01 Titan operational. Integrity secure."
-      },
-      male_2: {
-        name: "Apex",
-        gender: "male",
-        pitch: 0.92,
-        rate: 1.05,
-        testLine: "M.V online. Profile M-02 Apex deployed. Ready for combat."
-      }
+      female_1: { name: "Valkyrie", gender: "female", pitch: 1.25, rate: 1.05, testLine: "M.V online. Voice Profile F-01 Valkyrie engaged. All parameters ready." },
+      female_2: { name: "Athena", gender: "female", pitch: 1.05, rate: 0.98, testLine: "M.V online. Profile F-02 Athena active. Systems steady and analytical." },
+      female_3: { name: "Nyx", gender: "female", pitch: 0.88, rate: 0.95, testLine: "M.V tactical unit. Profile F-03 Nyx loaded in stealth mode." },
+      male_1: { name: "Titan", gender: "male", pitch: 0.72, rate: 0.92, testLine: "M.V online. Profile M-01 Titan operational. Integrity secure." },
+      male_2: { name: "Apex", gender: "male", pitch: 0.92, rate: 1.05, testLine: "M.V online. Profile M-02 Apex deployed. Ready for combat." }
     };
 
     let availableVoices = [];
     function loadVoices() {
-      if ('speechSynthesis' in window) {
-        availableVoices = window.speechSynthesis.getVoices();
-      }
+      if ('speechSynthesis' in window) { availableVoices = window.speechSynthesis.getVoices(); }
     }
     if ('speechSynthesis' in window) {
       window.speechSynthesis.onvoiceschanged = loadVoices;
@@ -1321,23 +1346,14 @@
       const maleKeywords = ['male', 'david', 'alex', 'daniel', 'george', 'fred'];
       const targetKeywords = gender === 'female' ? femaleKeywords : maleKeywords;
       
-      let matched = availableVoices.find(v => 
-        targetKeywords.some(kw => v.name.toLowerCase().includes(kw))
-      );
-      if (!matched) {
-        matched = availableVoices.find(v => v.lang.startsWith('en'));
-      }
+      let matched = availableVoices.find(v => targetKeywords.some(kw => v.name.toLowerCase().includes(kw)));
+      if (!matched) matched = availableVoices.find(v => v.lang.startsWith('en'));
       return matched || availableVoices[0] || null;
     }
 
     function cleanTextForSpeech(raw) {
       if (!raw) return "";
-      return raw
-        .replace(/[*_#`~[\]()<>]/g, '')
-        .replace(/\/\/.*/g, '')
-        .replace(/•/g, '')
-        .replace(/\s+/g, ' ')
-        .trim();
+      return raw.replace(/[*_#`~[\]()<>]/g, '').replace(/\/\/.*/g, '').replace(/•/g, '').replace(/\s+/g, ' ').trim();
     }
 
     function speakText(rawText) {
@@ -1354,7 +1370,6 @@
       const utterance = new SpeechSynthesisUtterance(clean);
       utterance.pitch = config.pitch;
       utterance.rate = config.rate;
-
       const voice = getBestMatchingVoice(config.gender);
       if (voice) utterance.voice = voice;
 
@@ -1396,8 +1411,7 @@
       spectrumInterval = setInterval(() => {
         const bars = spectrumContainer.children;
         for (let bar of bars) {
-          const randHeight = Math.floor(Math.random() * 32) + 6;
-          bar.style.height = `${randHeight}px`;
+          bar.style.height = `${Math.floor(Math.random() * 32) + 6}px`;
         }
       }, 70);
     }
@@ -1405,9 +1419,7 @@
     function stopSpectrumAnimation() {
       if (spectrumInterval) clearInterval(spectrumInterval);
       const bars = spectrumContainer.children;
-      for (let bar of bars) {
-        bar.style.height = '4px';
-      }
+      for (let bar of bars) { bar.style.height = '4px'; }
     }
 
     /* =====================================================================
@@ -1420,7 +1432,7 @@
       msgDiv.className = isMv 
         ? 'bg-cyan-950/30 border border-cyan-500/30 rounded p-3 text-cyan-200' 
         : 'bg-[#06112c] border border-cyan-500/20 rounded p-3 text-cyan-100 text-right';
-      msgDiv.innerHTML = `<span class="font-bold text-cyan-400 font-hud">[${sender}]:</span> ${text}`;
+      msgDiv.innerHTML = `<span class="font-bold text-cyan-400 font-hud">[${sender}]:</span>${text}`;
       container.appendChild(msgDiv);
       container.scrollTop = container.scrollHeight;
     }
@@ -1428,33 +1440,16 @@
     function generateSmartContextualReply(userInput) {
       const q = userInput.toLowerCase().trim();
 
-      if (/^(hi|hello|hey|greetings|morning|evening)/i.test(q)) {
-        return "Hello Commander! I am M.V, fully operational and ready to assist you. What would you like to explore or discuss?";
-      }
-      if (q.includes('who are you') || q.includes('your name') || q.includes('what are you')) {
-        return "I am M.V, an intelligent personal AI assistant and operations operative. I manage your portfolio, diagnose visual schematics in the Neural Lab, and run live simulations.";
-      }
-      if (q.includes('sandbox') || q.includes('code') || q.includes('shader')) {
-        return "The Quantum Code Sandbox allows you to write HTML, CSS, JavaScript, and WebGL code directly in-browser with instantaneous live execution.";
-      }
-      if (q.includes('terminal') || q.includes('cli') || q.includes('shell')) {
-        return "You can toggle the Cyber Terminal CLI drawer anytime by pressing the tilde key [ ` ] or clicking the CLI button in the top telemetry dock.";
-      }
-      if (q.includes('vault') || q.includes('cipher') || q.includes('hash') || q.includes('crypto')) {
-        return "The Cyber Vault tab offers real-time hardware telemetry auditing and cryptographic encoding including SHA-256 digests, Base64, Hex dumps, and ROT13 ciphers.";
-      }
-      if (q.includes('vision') || q.includes('scanner') || q.includes('multimodal')) {
-        return "The Holographic Vision Scanner accepts diagrams or code screenshots and performs visual diagnostics using gemini-3-flash-preview.";
-      }
-      if (q.includes('synthesize') || q.includes('generator') || q.includes('image')) {
-        return "The Cyber Image Synthesizer generates sci-fi blueprints, glowing badges, and holographic concepts directly from your text descriptions.";
-      }
-      if (q.includes('project') || q.includes('portfolio') || q.includes('dossier')) {
-        return "The portfolio includes the Neural Mind Map visualization engine, the M.V Assistant and Multimodal Lab, and the Core Guardian cyber defense engine.";
-      }
-      if (q.includes('game') || q.includes('arcade') || q.includes('play')) {
-        return "In the Cyber Arcade, click 'Start Game' to engage hostile vector drones. Aim with your mouse to shoot lasers and press Spacebar to activate the EMP blast.";
-      }
+      if (/^(hi|hello|hey|greetings)/i.test(q)) return "Hello Commander! I am M.V, fully operational and ready to assist you. What would you like to explore or discuss?";
+      if (q.includes('who are you') || q.includes('your name')) return "I am M.V, an intelligent personal AI assistant and operations operative. I manage your portfolio, diagnose visual schematics in the Neural Lab, and run live simulations.";
+      if (q.includes('sandbox') || q.includes('code')) return "The Quantum Code Sandbox allows you to write HTML, CSS, JavaScript, and WebGL code directly in-browser with instantaneous live execution.";
+      if (q.includes('terminal') || q.includes('cli')) return "You can toggle the Cyber Terminal CLI drawer anytime by pressing the tilde key [ ` ] or clicking the CLI button in the top telemetry dock.";
+      if (q.includes('vault') || q.includes('cipher')) return "The Cyber Vault tab offers real-time hardware telemetry auditing and cryptographic encoding including SHA-256 digests, Base64, Hex dumps, and ROT13 ciphers.";
+      if (q.includes('network') || q.includes('uplink') || q.includes('packet')) return "The Network Uplink tab provides live packet sniffing capabilities alongside an orbital satellite geolocation tracking matrix.";
+      if (q.includes('vision') || q.includes('scanner')) return "The Holographic Vision Scanner accepts diagrams or code screenshots and performs visual diagnostics using Gemini Flash.";
+      if (q.includes('synthesize') || q.includes('image')) return "The Cyber Image Synthesizer generates sci-fi blueprints, glowing badges, and holographic concepts directly from your text descriptions instantly.";
+      if (q.includes('project') || q.includes('dossier')) return "The portfolio includes the Neural Mind Map visualization engine, the M.V Assistant and Multimodal Lab, and the Core Guardian cyber defense engine.";
+      if (q.includes('game') || q.includes('arcade')) return "In the Cyber Arcade, click 'Start Game' to engage hostile vector drones. Aim with your mouse to shoot lasers and press Spacebar to activate the EMP blast.";
 
       return `I received your directive: "${userInput}". Everything is nominal. Please feel free to ask any specific question or explore the Neural Lab!`;
     }
@@ -1531,7 +1526,7 @@
     }
 
     /* =====================================================================
-       5. NEURAL LAB: VISION SCANNER & IMAGE SYNTHESIZER
+       5. NEURAL LAB: VISION SCANNER & COMPLETELY FIXED IMAGE SYNTHESIZER
     ===================================================================== */
     let currentVisionBase64 = null;
     let currentVisionMime = 'image/png';
@@ -1565,9 +1560,7 @@
       logVisionTelemetry('// Optical telemetry stream awaiting input image...');
     }
 
-    function logVisionTelemetry(text) {
-      document.getElementById('visionTelemetryLog').innerText = text;
-    }
+    function logVisionTelemetry(text) { document.getElementById('visionTelemetryLog').innerText = text; }
 
     async function scanVisionImage() {
       if (!currentVisionBase64) {
@@ -1598,12 +1591,7 @@
             role: "user",
             parts: [
               { text: userPrompt },
-              {
-                inlineData: {
-                  mimeType: currentVisionMime,
-                  data: currentVisionBase64
-                }
-              }
+              { inlineData: { mimeType: currentVisionMime, data: currentVisionBase64 } }
             ]
           }]
         };
@@ -1640,25 +1628,19 @@
 
     const dropZone = document.getElementById('dropZone');
     ['dragenter', 'dragover'].forEach(eventName => {
-      dropZone.addEventListener(eventName, (e) => {
-        e.preventDefault();
-        dropZone.classList.add('border-cyan-300', 'bg-[#020e2e]');
-      }, false);
+      dropZone.addEventListener(eventName, (e) => { e.preventDefault(); dropZone.classList.add('border-cyan-300', 'bg-[#020e2e]'); }, false);
     });
     ['dragleave', 'drop'].forEach(eventName => {
-      dropZone.addEventListener(eventName, (e) => {
-        e.preventDefault();
-        dropZone.classList.remove('border-cyan-300', 'bg-[#020e2e]');
-      }, false);
+      dropZone.addEventListener(eventName, (e) => { e.preventDefault(); dropZone.classList.remove('border-cyan-300', 'bg-[#020e2e]'); }, false);
     });
     dropZone.addEventListener('drop', (e) => {
       const dt = e.dataTransfer;
-      const files = dt.files;
-      if (files.length) {
-        handleVisionFileSelect({ target: { files } });
-      }
+      if (dt.files.length) handleVisionFileSelect({ target: { files: dt.files } });
     });
 
+    // -------------------------------------------------------------------------
+    // FIXED IMAGE SYNTHESIZER 
+    // -------------------------------------------------------------------------
     async function synthesizeCyberImage() {
       const prompt = document.getElementById('synthPromptInput').value.trim();
       if (!prompt) return;
@@ -1669,6 +1651,7 @@
       const resultEl = document.getElementById('synthResultState');
       const loadingEl = document.getElementById('synthLoadingState');
       const synthBtn = document.getElementById('synthActionBtn');
+      const imgEl = document.getElementById('synthGeneratedImg');
 
       standbyEl.classList.add('hidden');
       resultEl.classList.add('hidden');
@@ -1677,118 +1660,68 @@
       synthBtn.innerText = 'SYNTHESIZING...';
       synthBtn.disabled = true;
 
-      const keyToUse = (typeof currentApiKey !== 'undefined' ? currentApiKey : '').trim();
-      let imageUrl = null;
+      // Make generation 100% reliable by routing through keyless API endpoint 
+      const seed = Math.floor(Math.random() * 10000000);
+      const enhancedPrompt = encodeURIComponent(prompt + ", high quality, masterpiece, cybernetic, scifi, glowing");
+      const imageUrl = `https://image.pollinations.ai/prompt/${enhancedPrompt}?width=640&height=360&seed=${seed}&nologo=true`;
 
-      // 1. If an API key is present, attempt live generation
-      if (keyToUse) {
-        try {
-          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${keyToUse}`;
-          const res = await fetch(apiUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              instances: [{ prompt: prompt }],
-              parameters: { sampleCount: 1, aspectRatio: "1:1" }
-            })
-          });
-
-          if (res.ok) {
-            const data = await res.json();
-            const b64 = data?.predictions?.[0]?.bytesBase64Encoded;
-            const mime = data?.predictions?.[0]?.mimeType || 'image/png';
-            if (b64) {
-              imageUrl = `data:${mime};base64,${b64}`;
-            }
-          }
-        } catch (err) {
-          console.warn("Live API call encountered an issue, falling back to local procedural synthesizer:", err);
-        }
-      }
-
-      // 2. Procedural Canvas generator fallback (instant, offline & 100% reliable)
-      if (!imageUrl) {
-        try {
-          imageUrl = generateProceduralBlueprintDataUrl(prompt);
-        } catch (canvasErr) {
-          console.error("Canvas generation error:", canvasErr);
-        }
-      }
-
-      // 3. Render Output
-      loadingEl.classList.add('hidden');
-
-      if (imageUrl) {
-        const imgEl = document.getElementById('synthGeneratedImg');
-        const dlBtn = document.getElementById('synthDownloadBtn');
+      // Create an image object to wait for the download/generation to complete
+      const loaderImg = new Image();
+      loaderImg.crossOrigin = "Anonymous";
+      
+      loaderImg.onload = () => {
+        loadingEl.classList.add('hidden');
         imgEl.src = imageUrl;
-        dlBtn.href = imageUrl;
+        document.getElementById('synthDownloadBtn').href = imageUrl;
         resultEl.classList.remove('hidden');
         playBeep(1200, 0.1);
-      } else {
-        standbyEl.classList.remove('hidden');
-      }
+        synthBtn.innerText = 'SYNTHESIZE';
+        synthBtn.disabled = false;
+      };
 
-      synthBtn.innerText = 'SYNTHESIZE';
-      synthBtn.disabled = false;
+      // If adblocker or network blocks image generation, seamlessly fallback to procedural canvas matrix
+      loaderImg.onerror = () => {
+        console.warn("AI generation engine blocked by network. Booting procedural canvas fallback engine.");
+        const backupUrl = generateProceduralBlueprintDataUrl(prompt);
+        loadingEl.classList.add('hidden');
+        imgEl.src = backupUrl;
+        document.getElementById('synthDownloadBtn').href = backupUrl;
+        resultEl.classList.remove('hidden');
+        playBeep(1200, 0.1);
+        synthBtn.innerText = 'SYNTHESIZE';
+        synthBtn.disabled = false;
+      };
+
+      // Trigger load
+      loaderImg.src = imageUrl;
     }
 
     function generateProceduralBlueprintDataUrl(promptText) {
       const offCanvas = document.createElement('canvas');
-      offCanvas.width = 640;
-      offCanvas.height = 360;
+      offCanvas.width = 640; offCanvas.height = 360;
       const oCtx = offCanvas.getContext('2d');
 
-      oCtx.fillStyle = '#020612';
-      oCtx.fillRect(0, 0, 640, 360);
-
-      oCtx.strokeStyle = 'rgba(0, 243, 255, 0.12)';
-      oCtx.lineWidth = 1;
-      for (let x = 0; x < 640; x += 25) {
-        oCtx.beginPath();
-        oCtx.moveTo(x, 0); oCtx.lineTo(x, 360);
-        oCtx.stroke();
-      }
-      for (let y = 0; y < 360; y += 25) {
-        oCtx.beginPath();
-        oCtx.moveTo(0, y); oCtx.lineTo(640, y);
-        oCtx.stroke();
-      }
+      oCtx.fillStyle = '#020612'; oCtx.fillRect(0, 0, 640, 360);
+      oCtx.strokeStyle = 'rgba(0, 243, 255, 0.12)'; oCtx.lineWidth = 1;
+      
+      for (let x = 0; x < 640; x += 25) { oCtx.beginPath(); oCtx.moveTo(x, 0); oCtx.lineTo(x, 360); oCtx.stroke(); }
+      for (let y = 0; y < 360; y += 25) { oCtx.beginPath(); oCtx.moveTo(0, y); oCtx.lineTo(640, y); oCtx.stroke(); }
 
       const cx = 320, cy = 180;
-      oCtx.strokeStyle = '#00f3ff';
-      oCtx.shadowColor = '#00f3ff';
-      oCtx.shadowBlur = 12;
-      
-      oCtx.beginPath();
-      oCtx.arc(cx, cy, 90, 0, Math.PI * 2);
-      oCtx.stroke();
-
-      oCtx.beginPath();
-      oCtx.arc(cx, cy, 60, 0, Math.PI * 2);
-      oCtx.setLineDash([8, 8]);
-      oCtx.stroke();
-      oCtx.setLineDash([]);
+      oCtx.strokeStyle = '#00f3ff'; oCtx.shadowColor = '#00f3ff'; oCtx.shadowBlur = 12;
+      oCtx.beginPath(); oCtx.arc(cx, cy, 90, 0, Math.PI * 2); oCtx.stroke();
+      oCtx.beginPath(); oCtx.arc(cx, cy, 60, 0, Math.PI * 2); oCtx.setLineDash([8, 8]); oCtx.stroke(); oCtx.setLineDash([]);
 
       oCtx.fillStyle = '#00f3ff';
-      for (let i = -60; i <= 60; i += 20) {
-        oCtx.fillRect(cx - 130, cy + i - 3, 25, 6);
-        oCtx.fillRect(cx + 105, cy + i - 3, 25, 6);
-      }
+      for (let i = -60; i <= 60; i += 20) { oCtx.fillRect(cx - 130, cy + i - 3, 25, 6); oCtx.fillRect(cx + 105, cy + i - 3, 25, 6); }
 
-      oCtx.fillStyle = '#01142e';
-      oCtx.fillRect(cx - 35, cy - 35, 70, 70);
-      oCtx.strokeStyle = '#00f3ff';
-      oCtx.strokeRect(cx - 35, cy - 35, 70, 70);
+      oCtx.fillStyle = '#01142e'; oCtx.fillRect(cx - 35, cy - 35, 70, 70);
+      oCtx.strokeStyle = '#00f3ff'; oCtx.strokeRect(cx - 35, cy - 35, 70, 70);
 
       oCtx.shadowBlur = 0;
-      oCtx.font = 'bold 13px Orbitron, sans-serif';
-      oCtx.fillStyle = '#00f3ff';
-      oCtx.textAlign = 'center';
+      oCtx.font = 'bold 13px Orbitron, sans-serif'; oCtx.fillStyle = '#00f3ff'; oCtx.textAlign = 'center';
       oCtx.fillText('M.V // QUANTUM CORE', cx, cy + 5);
-
-      oCtx.font = '10px "Share Tech Mono", monospace';
-      oCtx.fillStyle = '#00ffaa';
+      oCtx.font = '10px "Share Tech Mono", monospace'; oCtx.fillStyle = '#00ffaa';
       oCtx.fillText('SYNTHESIZED ASSET: ' + promptText.substring(0, 32).toUpperCase(), cx, 335);
 
       return offCanvas.toDataURL('image/png');
@@ -1800,9 +1733,7 @@
     function inspectNode(name, desc) {
       playBeep(920, 0.06);
       const box = document.getElementById('nodeInspectBox');
-      if (box) {
-        box.innerHTML = `<span class="font-hud text-cyan-300 font-bold">[NODE INSPECT // ${name.toUpperCase()}]:</span>${desc}`;
-      }
+      if (box) { box.innerHTML = `<span class="font-hud text-cyan-300 font-bold">[NODE INSPECT // ${name.toUpperCase()}]:</span> ${desc}`; }
     }
 
     function filterNodes(query) {
@@ -1810,11 +1741,9 @@
       const nodes = document.querySelectorAll('.matrix-node');
       nodes.forEach(node => {
         if (!q || node.innerText.toLowerCase().includes(q)) {
-          node.style.opacity = '1';
-          node.style.borderColor = 'rgba(0, 243, 255, 0.8)';
+          node.style.opacity = '1'; node.style.borderColor = 'rgba(0, 243, 255, 0.8)';
         } else {
-          node.style.opacity = '0.3';
-          node.style.borderColor = 'rgba(0, 243, 255, 0.2)';
+          node.style.opacity = '0.3'; node.style.borderColor = 'rgba(0, 243, 255, 0.2)';
         }
       });
     }
@@ -1838,9 +1767,7 @@
       if (!canvas || !canvas.parentElement) return;
       canvas.width = canvas.parentElement.clientWidth;
       canvas.height = canvas.parentElement.clientHeight;
-      if (!isGameRunning) {
-        renderStaticGameFrame();
-      }
+      if (!isGameRunning) renderStaticGameFrame();
     }
     window.addEventListener('resize', resizeCanvas);
 
@@ -1854,28 +1781,18 @@
         btn.innerText = 'PAUSE GAME';
         btn.className = "px-3 py-1 bg-amber-600 hover:bg-amber-500 text-black font-hud font-bold rounded shadow-[0_0_10px_#ffaa00] transition";
         playBeep(880, 0.1);
-        if (!gameLoopId) {
-          gameLoopId = requestAnimationFrame(updateGame);
-        }
+        if (!gameLoopId) gameLoopId = requestAnimationFrame(updateGame);
       } else {
         overlay.classList.remove('hidden');
         btn.innerText = 'START GAME';
         btn.className = "px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-black font-hud font-bold rounded shadow-[0_0_10px_#00ffaa] transition";
-        if (gameLoopId) {
-          cancelAnimationFrame(gameLoopId);
-          gameLoopId = null;
-        }
+        if (gameLoopId) { cancelAnimationFrame(gameLoopId); gameLoopId = null; }
         renderStaticGameFrame();
       }
     }
 
     function resetGame() {
-      score = 0;
-      coreHealth = 100;
-      enemies = [];
-      lasers = [];
-      particles = [];
-      empWaves = [];
+      score = 0; coreHealth = 100; enemies = []; lasers = []; particles = []; empWaves = [];
       const scoreEl = document.getElementById('gameScore');
       const hpEl = document.getElementById('gameHealth');
       if (scoreEl) scoreEl.innerText = score;
@@ -1885,27 +1802,19 @@
 
     canvas.addEventListener('click', (e) => {
       if (!isGameRunning) return;
-
       const rect = canvas.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       const centerX = canvas.width / 2;
       const centerY = canvas.height / 2;
       const angle = Math.atan2(y - centerY, x - centerX);
-
-      lasers.push({
-        x: centerX,
-        y: centerY,
-        vx: Math.cos(angle) * 10,
-        vy: Math.sin(angle) * 10
-      });
+      lasers.push({ x: centerX, y: centerY, vx: Math.cos(angle) * 10, vy: Math.sin(angle) * 10 });
       playLaserSound();
     });
 
     window.addEventListener('keydown', (e) => {
       if (e.code === 'Space' && !document.getElementById('tab-arcade').classList.contains('hidden') && isGameRunning) {
-        e.preventDefault();
-        triggerOverdrive();
+        e.preventDefault(); triggerOverdrive();
       }
     });
 
@@ -1919,11 +1828,7 @@
       if (Math.random() < 0.035) {
         const angle = Math.random() * Math.PI * 2;
         const dist = Math.max(canvas.width, canvas.height) / 1.4;
-        enemies.push({
-          x: canvas.width / 2 + Math.cos(angle) * dist,
-          y: canvas.height / 2 + Math.sin(angle) * dist,
-          speed: 1.4 + Math.random() * 1.4
-        });
+        enemies.push({ x: canvas.width / 2 + Math.cos(angle) * dist, y: canvas.height / 2 + Math.sin(angle) * dist, speed: 1.4 + Math.random() * 1.4 });
       }
     }
 
@@ -1931,759 +1836,38 @@
       for (let i = 0; i < count; i++) {
         const angle = Math.random() * Math.PI * 2;
         const spd = Math.random() * 3 + 1;
-        particles.push({
-          x, y,
-          vx: Math.cos(angle) * spd,
-          vy: Math.sin(angle) * spd,
-          color,
-          alpha: 1,
-          decay: 0.03
-        });
+        particles.push({ x, y, vx: Math.cos(angle) * spd, vy: Math.sin(angle) * spd, color, alpha: 1, decay: 0.03 });
       }
     }
 
     function renderStaticGameFrame() {
-      ctx.fillStyle = '#02050e';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      const centerX = canvas.width / 2;
-      const centerY = canvas.height / 2;
-
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, 24, 0, Math.PI * 2);
-      ctx.fillStyle = '#00f3ff';
-      ctx.shadowBlur = 15;
-      ctx.shadowColor = '#00f3ff';
-      ctx.fill();
-      ctx.shadowBlur = 0;
+      ctx.fillStyle = '#02050e'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+      const centerX = canvas.width / 2; const centerY = canvas.height / 2;
+      ctx.beginPath(); ctx.arc(centerX, centerY, 24, 0, Math.PI * 2);
+      ctx.fillStyle = '#00f3ff'; ctx.shadowBlur = 15; ctx.shadowColor = '#00f3ff'; ctx.fill(); ctx.shadowBlur = 0;
     }
 
     function updateGame() {
       if (!isGameRunning) return;
+      ctx.fillStyle = 'rgba(2, 5, 14, 0.35)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = 'rgba(2, 5, 14, 0.35)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      const centerX = canvas.width / 2;
-      const centerY = canvas.height / 2;
+      const centerX = canvas.width / 2; const centerY = canvas.height / 2;
 
       droneAngle += 0.03;
       const droneDist = 48;
-      const d1x = centerX + Math.cos(droneAngle) * droneDist;
-      const d1y = centerY + Math.sin(droneAngle) * droneDist;
-      const d2x = centerX + Math.cos(droneAngle + Math.PI) * droneDist;
-      const d2y = centerY + Math.sin(droneAngle + Math.PI) * droneDist;
-
       ctx.fillStyle = '#00f3ff';
-      ctx.fillRect(d1x - 3, d1y - 3, 6, 6);
-      ctx.fillRect(d2x - 3, d2y - 3, 6, 6);
+      ctx.fillRect(centerX + Math.cos(droneAngle) * droneDist - 3, centerY + Math.sin(droneAngle) * droneDist - 3, 6, 6);
+      ctx.fillRect(centerX + Math.cos(droneAngle + Math.PI) * droneDist - 3, centerY + Math.sin(droneAngle + Math.PI) * droneDist - 3, 6, 6);
 
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, 24, 0, Math.PI * 2);
-      ctx.fillStyle = '#00f3ff';
-      ctx.shadowBlur = 18;
-      ctx.shadowColor = '#00f3ff';
-      ctx.fill();
-      ctx.shadowBlur = 0;
+      ctx.beginPath(); ctx.arc(centerX, centerY, 24, 0, Math.PI * 2);
+      ctx.fillStyle = '#00f3ff'; ctx.shadowBlur = 18; ctx.shadowColor = '#00f3ff'; ctx.fill(); ctx.shadowBlur = 0;
 
       for (let i = empWaves.length - 1; i >= 0; i--) {
-        const emp = empWaves[i];
-        emp.r += 12;
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, emp.r, 0, Math.PI * 2);
-        ctx.strokeStyle = 'rgba(255, 170, 0, 0.7)';
-        ctx.lineWidth = 4;
-        ctx.stroke();
-
+        const emp = empWaves[i]; emp.r += 12;
+        ctx.beginPath(); ctx.arc(centerX, centerY, emp.r, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(255, 170, 0, 0.7)'; ctx.lineWidth = 4; ctx.stroke();
         for (let j = enemies.length - 1; j >= 0; j--) {
           const en = enemies[j];
           if (Math.hypot(centerX - en.x, centerY - en.y) < emp.r) {
-            createParticles(en.x, en.y, '#ffaa00', 10);
-            enemies.splice(j, 1);
-            score += 150;
-            document.getElementById('gameScore').innerText = score;
-          }
-        }
-
-        if (emp.r >= emp.maxR) empWaves.splice(i, 1);
-      }
-
-      for (let i = lasers.length - 1; i >= 0; i--) {
-        const l = lasers[i];
-        l.x += l.vx;
-        l.y += l.vy;
-
-        ctx.fillStyle = '#00f3ff';
-        ctx.fillRect(l.x - 2, l.y - 2, 5, 5);
-
-        if (l.x < 0 || l.x > canvas.width || l.y < 0 || l.y > canvas.height) {
-          lasers.splice(i, 1);
-        }
-      }
-
-      for (let i = particles.length - 1; i >= 0; i--) {
-        const p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        p.alpha -= p.decay;
-
-        ctx.fillStyle = p.color;
-        ctx.globalAlpha = Math.max(0, p.alpha);
-        ctx.fillRect(p.x, p.y, 3, 3);
-        ctx.globalAlpha = 1;
-
-        if (p.alpha <= 0) particles.splice(i, 1);
-      }
-
-      spawnEnemy();
-      for (let i = enemies.length - 1; i >= 0; i--) {
-        const en = enemies[i];
-        const angle = Math.atan2(centerY - en.y, centerX - en.x);
-        en.x += Math.cos(angle) * en.speed;
-        en.y += Math.sin(angle) * en.speed;
-
-        ctx.strokeStyle = '#ff0055';
-        ctx.strokeRect(en.x - 7, en.y - 7, 14, 14);
-
-        for (let j = lasers.length - 1; j >= 0; j--) {
-          const l = lasers[j];
-          if (Math.hypot(l.x - en.x, l.y - en.y) < 14) {
-            enemies.splice(i, 1);
-            lasers.splice(j, 1);
-            score += 100;
-            document.getElementById('gameScore').innerText = score;
-            createParticles(en.x, en.y, '#ff0055', 7);
-            playExplosionSound();
-            break;
-          }
-        }
-
-        if (Math.hypot(centerX - en.x, centerY - en.y) < 26) {
-          enemies.splice(i, 1);
-          coreHealth = Math.max(0, coreHealth - 12);
-          const hpEl = document.getElementById('gameHealth');
-          if (hpEl) hpEl.innerText = `${coreHealth}%`;
-          createParticles(en.x, en.y, '#ff0055', 12);
-          playExplosionSound();
-        }
-      }
-
-      gameLoopId = requestAnimationFrame(updateGame);
-    }
-
-    /* =====================================================================
-       8. QUANTUM CODE VAULT & SANDBOX PLAYGROUND
-    ===================================================================== */
-    const SANDBOX_PRESETS = {
-      matrix_rain: `<!DOCTYPE html>
-<html>
-<head>
-<style>
-  body { margin: 0; background: #000; overflow: hidden; }
-  canvas { display: block; width: 100vw; height: 100vh; }
-</style>
-</head>
-<body>
-<canvas id="c"></canvas>
-<script>
-const c = document.getElementById('c');
-const ctx = c.getContext('2d');
-c.width = window.innerWidth;
-c.height = window.innerHeight;
-const chars = '0123456789ABCDEF@#$%&*MV';
-const fontSize = 14;
-const cols = Math.floor(c.width / fontSize);
-const drops = Array(cols).fill(1);
-
-function draw() {
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.06)';
-  ctx.fillRect(0, 0, c.width, c.height);
-  ctx.fillStyle = '#00f3ff';
-  ctx.font = fontSize + 'px monospace';
-  for (let i = 0; i < drops.length; i++) {
-    const text = chars[Math.floor(Math.random() * chars.length)];
-    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-    if (drops[i] * fontSize > c.height && Math.random() > 0.975) {
-      drops[i] = 0;
-    }
-    drops[i]++;
-  }
-  requestAnimationFrame(draw);
-}
-draw();
-<\/script>
-</body>
-</html>`,
-
-      quantum_swarm: `<!DOCTYPE html>
-<html>
-<head>
-<style>
-  body { margin: 0; background: #010614; overflow: hidden; }
-  canvas { display: block; width: 100vw; height: 100vh; }
-</style>
-</head>
-<body>
-<canvas id="c"></canvas>
-<script>
-const c = document.getElementById('c');
-const ctx = c.getContext('2d');
-c.width = window.innerWidth;
-c.height = window.innerHeight;
-const particles = Array.from({ length: 65 }, () => ({
-  x: Math.random() * c.width,
-  y: Math.random() * c.height,
-  vx: (Math.random() - 0.5) * 1.5,
-  vy: (Math.random() - 0.5) * 1.5,
-  radius: Math.random() * 2 + 1
-}));
-
-function animate() {
-  ctx.fillStyle = 'rgba(1, 6, 20, 0.2)';
-  ctx.fillRect(0, 0, c.width, c.height);
-
-  for (let i = 0; i < particles.length; i++) {
-    const p = particles[i];
-    p.x += p.vx;
-    p.y += p.vy;
-    if (p.x < 0 || p.x > c.width) p.vx *= -1;
-    if (p.y < 0 || p.y > c.height) p.vy *= -1;
-
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-    ctx.fillStyle = '#00f3ff';
-    ctx.fill();
-
-    for (let j = i + 1; j < particles.length; j++) {
-      const p2 = particles[j];
-      const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-      if (dist < 100) {
-        ctx.strokeStyle = 'rgba(0, 243, 255, ' + (1 - dist / 100) * 0.4 + ')';
-        ctx.beginPath();
-        ctx.moveTo(p.x, p.y);
-        ctx.lineTo(p2.x, p2.y);
-        ctx.stroke();
-      }
-    }
-  }
-  requestAnimationFrame(animate);
-}
-animate();
-<\/script>
-</body>
-</html>`,
-
-      holographic_radar: `<!DOCTYPE html>
-<html>
-<head>
-<style>
-  body { margin: 0; background: #020817; overflow: hidden; display: flex; align-items: center; justify-content: center; height: 100vh; }
-  canvas { border-radius: 50%; box-shadow: 0 0 25px rgba(0,243,255,0.4); }
-</style>
-</head>
-<body>
-<canvas id="c" width="300" height="300"></canvas>
-<script>
-const c = document.getElementById('c');
-const ctx = c.getContext('2d');
-let angle = 0;
-
-function drawRadar() {
-  ctx.fillStyle = 'rgba(2, 8, 23, 0.15)';
-  ctx.fillRect(0, 0, 300, 300);
-
-  const cx = 150, cy = 150;
-  ctx.strokeStyle = 'rgba(0, 243, 255, 0.4)';
-  [40, 80, 120].forEach(r => {
-    ctx.beginPath();
-    ctx.arc(cx, cy, r, 0, Math.PI * 2);
-    ctx.stroke();
-  });
-
-  angle += 0.04;
-  ctx.strokeStyle = '#00f3ff';
-  ctx.beginPath();
-  ctx.moveTo(cx, cy);
-  ctx.lineTo(cx + Math.cos(angle) * 130, cy + Math.sin(angle) * 130);
-  ctx.stroke();
-
-  requestAnimationFrame(drawRadar);
-}
-drawRadar();
-<\/script>
-</body>
-</html>`,
-
-      neural_lattice: `<!DOCTYPE html>
-<html>
-<head>
-<style>
-  body { margin: 0; background: #030a1c; overflow: hidden; display: flex; align-items: center; justify-content: center; height: 100vh; }
-  h1 { font-family: sans-serif; color: #00f3ff; text-shadow: 0 0 10px #00f3ff; }
-</style>
-</head>
-<body>
-  <h1>[M.V] NEURAL LATTICE ONLINE</h1>
-</body>
-</html>`
-    };
-
-    function loadSandboxPreset(key) {
-      const code = SANDBOX_PRESETS[key] || SANDBOX_PRESETS.matrix_rain;
-      document.getElementById('sandboxCodeInput').value = code;
-      runSandboxCode();
-      playBeep(900, 0.05);
-    }
-
-    function runSandboxCode() {
-      const code = document.getElementById('sandboxCodeInput').value;
-      const iframe = document.getElementById('sandboxPreviewFrame');
-      iframe.srcdoc = code;
-      playBeep(1000, 0.05);
-    }
-
-    function resetSandboxCode() {
-      const key = document.getElementById('sandboxPresetSelect').value;
-      loadSandboxPreset(key);
-    }
-
-    function formatSandboxCode() {
-      playBeep(850, 0.04);
-    }
-
-    /* =====================================================================
-       9. HOLOGRAPHIC AUDIO FREQUENCY ANALYZER & CYBER SYNTH
-    ===================================================================== */
-    let ambientDroneOscs = [];
-    let ambientDroneGain = null;
-    let ambientDroneFilter = null;
-    let isAmbientDronePlaying = false;
-    let synthAnalyser = null;
-    let synthAnimFrame = null;
-
-    const visCanvas = document.getElementById('frequencyVisualizerCanvas');
-    const visCtx = visCanvas ? visCanvas.getContext('2d') : null;
-
-    function resizeVisualizerCanvas() {
-      if (!visCanvas || !visCanvas.parentElement) return;
-      visCanvas.width = visCanvas.parentElement.clientWidth;
-      visCanvas.height = visCanvas.parentElement.clientHeight;
-    }
-    window.addEventListener('resize', resizeVisualizerCanvas);
-
-    function toggleAmbientDrone() {
-      const btn = document.getElementById('ambientDroneBtn');
-      const badge = document.getElementById('spectralStatusBadge');
-
-      if (!isAmbientDronePlaying) {
-        if (!isMasterAudioEnabled) {
-          toggleMasterAudio();
-        }
-        startAmbientDroneEngine();
-        isAmbientDronePlaying = true;
-        btn.innerText = 'STOP AMBIENT SYNTH';
-        btn.className = "px-4 py-1.5 rounded bg-rose-900 border border-rose-400 text-xs font-hud font-bold text-rose-200 hover:bg-rose-700 transition shadow-[0_0_10px_rgba(255,0,85,0.4)]";
-        badge.innerText = 'STREAMING AUDIO';
-        badge.className = 'text-xs font-mono-hud text-emerald-400 font-bold';
-      } else {
-        stopAmbientDroneEngine();
-        isAmbientDronePlaying = false;
-        btn.innerText = 'START AMBIENT SYNTH';
-        btn.className = "px-4 py-1.5 rounded bg-cyan-900 border border-cyan-400 text-xs font-hud font-bold text-cyan-200 hover:bg-cyan-700 transition shadow-[0_0_10px_rgba(0,243,255,0.3)]";
-        badge.innerText = 'STANDBY';
-        badge.className = 'text-xs font-mono-hud text-cyan-400';
-      }
-    }
-
-    function startAmbientDroneEngine() {
-      const ctx = getAudioCtx();
-      stopAmbientDroneEngine();
-
-      ambientDroneGain = ctx.createGain();
-      ambientDroneFilter = ctx.createBiquadFilter();
-      synthAnalyser = ctx.createAnalyser();
-      synthAnalyser.fftSize = 64;
-
-      const track = document.getElementById('synthTrackSelect').value;
-      const vol = parseFloat(document.getElementById('synthVolumeSlider').value) / 100 * 0.4;
-      const cutoff = parseFloat(document.getElementById('filterCutoffSlider').value);
-
-      ambientDroneGain.gain.setValueAtTime(vol, ctx.currentTime);
-      ambientDroneFilter.type = 'lowpass';
-      ambientDroneFilter.frequency.setValueAtTime(cutoff, ctx.currentTime);
-
-      ambientDroneFilter.connect(ambientDroneGain);
-      ambientDroneGain.connect(synthAnalyser);
-      synthAnalyser.connect(ctx.destination);
-
-      const baseFreqs = track === 'neon_grid' ? [130.81, 196.00, 261.63] :
-                        track === 'quantum_pulse' ? [55.00, 110.00, 164.81] :
-                        [36.71, 73.42, 110.00];
-
-      ambientDroneOscs = baseFreqs.map(f => {
-        const osc = ctx.createOscillator();
-        osc.type = track === 'neon_grid' ? 'sawtooth' : 'triangle';
-        osc.frequency.setValueAtTime(f, ctx.currentTime);
-        osc.connect(ambientDroneFilter);
-        osc.start();
-        return osc;
-      });
-
-      renderVisualizer();
-    }
-
-    function stopAmbientDroneEngine() {
-      ambientDroneOscs.forEach(osc => {
-        try { osc.stop(); osc.disconnect(); } catch(e) {}
-      });
-      ambientDroneOscs = [];
-      if (synthAnimFrame) cancelAnimationFrame(synthAnimFrame);
-      if (visCtx && visCanvas) {
-        visCtx.clearRect(0, 0, visCanvas.width, visCanvas.height);
-      }
-    }
-
-    function adjustSynthFilter(val) {
-      document.getElementById('filterCutoffVal').innerText = `${val} Hz`;
-      if (ambientDroneFilter && audioCtx) {
-        ambientDroneFilter.frequency.setValueAtTime(parseFloat(val), audioCtx.currentTime);
-      }
-    }
-
-    function adjustSynthVolume(val) {
-      document.getElementById('synthVolumeVal').innerText = `${val}%`;
-      if (ambientDroneGain && audioCtx) {
-        ambientDroneGain.gain.setValueAtTime((parseFloat(val) / 100) * 0.4, audioCtx.currentTime);
-      }
-    }
-
-    function changeSynthTrack(val) {
-      if (isAmbientDronePlaying) {
-        startAmbientDroneEngine();
-      }
-    }
-
-    function renderVisualizer() {
-      if (!isAmbientDronePlaying || !synthAnalyser || !visCtx || !visCanvas) return;
-
-      const bufferLength = synthAnalyser.frequencyBinCount;
-      const dataArray = new Uint8Array(bufferLength);
-      synthAnalyser.getByteFrequencyData(dataArray);
-
-      visCtx.fillStyle = 'rgba(1, 5, 18, 0.25)';
-      visCtx.fillRect(0, 0, visCanvas.width, visCanvas.height);
-
-      const barWidth = (visCanvas.width / bufferLength) * 0.8;
-      let x = 0;
-
-      for (let i = 0; i < bufferLength; i++) {
-        const barHeight = (dataArray[i] / 255) * visCanvas.height * 0.9;
-        visCtx.fillStyle = 'var(--neon-primary)';
-        visCtx.shadowBlur = 8;
-        visCtx.shadowColor = 'var(--neon-primary)';
-        visCtx.fillRect(x, visCanvas.height - barHeight, barWidth, barHeight);
-        visCtx.shadowBlur = 0;
-        x += barWidth + (visCanvas.width / bufferLength) * 0.2;
-      }
-
-      synthAnimFrame = requestAnimationFrame(renderVisualizer);
-    }
-
-    /* =====================================================================
-       10. CYBER VAULT // TELEMETRY, CIPHER & HARDWARE AUDIT
-    ===================================================================== */
-    function runDiagnosticsAudit() {
-      playBeep(980, 0.08);
-      const cpu = Math.floor(Math.random() * 35) + 20;
-      const mem = Math.floor(Math.random() * 25) + 45;
-      const shield = (99.1 + Math.random() * 0.8).toFixed(1);
-
-      document.getElementById('metricCpuVal').innerText = `${cpu}%`;
-      document.getElementById('metricCpuBar').style.width = `${cpu}%`;
-
-      document.getElementById('metricMemVal').innerText = `${mem}%`;
-      document.getElementById('metricMemBar').style.width = `${mem}%`;
-
-      document.getElementById('metricShieldVal').innerText = `${shield}%`;
-      document.getElementById('metricShieldBar').style.width = `${shield}%`;
-
-      const nodes = ['nodeAlphaStatus', 'nodeBetaStatus', 'nodeGammaStatus', 'nodeDeltaStatus'];
-      nodes.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) {
-          el.innerText = 'ONLINE';
-          el.className = 'text-emerald-400 font-bold';
-        }
-      });
-
-      const auditLog = document.getElementById('auditLogText');
-      if (auditLog) {
-        auditLog.innerText = `// AUDIT COMPLETE [${new Date().toLocaleTimeString()}]: All neural pipelines and memory rings nominal.`;
-      }
-    }
-
-    async function executeCipher(mode) {
-      const input = document.getElementById('cipherInput').value;
-      const outputEl = document.getElementById('cipherOutput');
-      playBeep(850, 0.04);
-
-      if (!input) {
-        outputEl.value = "// Error: Input payload buffer is empty.";
-        return;
-      }
-
-      switch (mode) {
-        case 'b64_enc':
-          try {
-            outputEl.value = btoa(unescape(encodeURIComponent(input)));
-          } catch(e) {
-            outputEl.value = "// Error during Base64 encoding.";
-          }
-          break;
-
-        case 'b64_dec':
-          try {
-            outputEl.value = decodeURIComponent(escape(atob(input.trim())));
-          } catch(e) {
-            outputEl.value = "// Error: Invalid Base64 payload string.";
-          }
-          break;
-
-        case 'hex_enc':
-          let hex = '';
-          for (let i = 0; i < input.length; i++) {
-            hex += input.charCodeAt(i).toString(16).padStart(2, '0') + ' ';
-          }
-          outputEl.value = hex.trim().toUpperCase();
-          break;
-
-        case 'caesar':
-          outputEl.value = input.replace(/[a-zA-Z]/g, (c) => {
-            const code = c.charCodeAt(0);
-            const base = code >= 97 ? 97 : 65;
-            return String.fromCharCode(((code - base + 13) % 26) + base);
-          });
-          break;
-
-        case 'sha256':
-          try {
-            const msgBuffer = new TextEncoder().encode(input);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-            outputEl.value = hashHex;
-          } catch (e) {
-            outputEl.value = "// Web Crypto API SHA-256 execution failed.";
-          }
-          break;
-      }
-    }
-
-    function copyCipherOutput() {
-      const out = document.getElementById('cipherOutput').value;
-      if (out) {
-        navigator.clipboard.writeText(out);
-        playBeep(1100, 0.05);
-      }
-    }
-
-    /* =====================================================================
-       11. CYBER TERMINAL CLI DRAWER ENGINE
-    ===================================================================== */
-    let isTerminalOpen = false;
-
-    function toggleTerminalDrawer() {
-      isTerminalOpen = !isTerminalOpen;
-      const drawer = document.getElementById('terminalDrawer');
-      if (isTerminalOpen) {
-        drawer.classList.remove('translate-y-full');
-        document.getElementById('terminalInput').focus();
-        playBeep(900, 0.05);
-      } else {
-        drawer.classList.add('translate-y-full');
-      }
-    }
-
-    window.addEventListener('keydown', (e) => {
-      if (e.key === '`' || e.key === '~') {
-        const activeTag = document.activeElement.tagName;
-        if (activeTag !== 'INPUT' && activeTag !== 'TEXTAREA') {
-          e.preventDefault();
-          toggleTerminalDrawer();
-        }
-      }
-    });
-
-    function logTerminal(msg, isCommand = false) {
-      const output = document.getElementById('terminalOutput');
-      const line = document.createElement('div');
-      line.className = isCommand ? 'text-white font-bold' : 'text-cyan-300';
-      line.innerHTML = msg;
-      output.appendChild(line);
-      output.scrollTop = output.scrollHeight;
-    }
-
-    function handleTerminalCommand(e) {
-      e.preventDefault();
-      const input = document.getElementById('terminalInput');
-      const raw = input.value.trim();
-      if (!raw) return;
-
-      logTerminal(`mv@cybernet:~$ ${raw}`, true);
-      input.value = '';
-      playBeep(750, 0.03);
-
-      const parts = raw.split(' ');
-      const cmd = parts[0].toLowerCase();
-      const arg = parts[1] ? parts[1].toLowerCase() : '';
-
-      switch(cmd) {
-        case 'help':
-          logTerminal(`AVAILABLE SHELL DIRECTIVES:
- • <strong>help</strong> : Displays this command list
- • <strong>status</strong> : Queries quantum telemetry & reactor core
- • <strong>nav &lt;core|lab|map|arcade|sandbox|audio|vault|projects&gt;</strong> : Tab navigation
- • <strong>theme &lt;cyan|crimson|amber|emerald|violet&gt;</strong> : Switch HUD color theme
- • <strong>audit</strong> : Trigger Cyber Vault hardware diagnostics
- • <strong>mute</strong> / <strong>unmute</strong> : Control master audio
- • <strong>game &lt;start|pause|reset&gt;</strong> : Control Cyber Arcade simulation
- • <strong>synth</strong> : Open Cyber Image Synthesizer
- • <strong>say &lt;message&gt;</strong> : Transmit voice instruction to M.V
- • <strong>clear</strong> : Flush terminal screen buffer`);
-          break;
-
-        case 'status':
-          logTerminal(`SYSTEM TELEMETRY AUDIT:
- • AGENT: M.V MK-V Active
- • REACTOR: 100% Stable
- • FPS: 60 | LATENCY: 12ms
- • AUDIO: ${isMasterAudioEnabled ? 'ENABLED' : 'MUTED'}
- • THEME: ${currentTheme.toUpperCase()}
- • SANDBOX & VAULT: READY`);
-          break;
-
-        case 'audit':
-          runDiagnosticsAudit();
-          logTerminal(`Hardware diagnostic audit initiated.`);
-          break;
-
-        case 'nav':
-          if (['core', 'neurallab', 'mindmap', 'arcade', 'sandbox', 'audiofx', 'telemetrysec', 'projects'].includes(arg)) {
-            switchTab(arg);
-            logTerminal(`Navigated view to: [${arg}]`);
-          } else if (arg === 'lab') {
-            switchTab('neurallab');
-            logTerminal(`Navigated view to: [neurallab]`);
-          } else if (arg === 'map') {
-            switchTab('mindmap');
-            logTerminal(`Navigated view to: [mindmap]`);
-          } else if (arg === 'audio') {
-            switchTab('audiofx');
-            logTerminal(`Navigated view to: [audiofx]`);
-          } else if (arg === 'vault' || arg === 'sec') {
-            switchTab('telemetrysec');
-            logTerminal(`Navigated view to: [telemetrysec]`);
-          } else {
-            logTerminal(`Unknown viewport. Valid options: core, lab, map, arcade, sandbox, audio, vault, projects.`);
-          }
-          break;
-
-        case 'theme':
-          if (['cyan', 'crimson', 'amber', 'emerald', 'violet'].includes(arg)) {
-            setTheme(arg);
-            logTerminal(`HUD theme palette adjusted to: [${arg.toUpperCase()}]`);
-          } else {
-            logTerminal(`Invalid theme. Choose: cyan, crimson, amber, emerald, violet.`);
-          }
-          break;
-
-        case 'mute':
-          if (isMasterAudioEnabled) toggleMasterAudio();
-          logTerminal(`Master audio muted.`);
-          break;
-
-        case 'unmute':
-          if (!isMasterAudioEnabled) toggleMasterAudio();
-          logTerminal(`Master audio enabled.`);
-          break;
-
-        case 'game':
-          switchTab('arcade');
-          if (arg === 'start') {
-            if (!isGameRunning) toggleGameRunState();
-            logTerminal(`Arcade defense simulation engaged.`);
-          } else if (arg === 'pause') {
-            if (isGameRunning) toggleGameRunState();
-            logTerminal(`Arcade defense simulation paused.`);
-          } else if (arg === 'reset') {
-            resetGame();
-            logTerminal(`Arcade state reset.`);
-          } else {
-            logTerminal(`Game syntax: game <start|pause|reset>`);
-          }
-          break;
-
-        case 'say':
-          const message = parts.slice(1).join(' ');
-          if (message) {
-            speakText(message);
-            logTerminal(`Vocalized via M.V: "${message}"`);
-          } else {
-            logTerminal(`Usage: say <your message here>`);
-          }
-          break;
-
-        case 'synth':
-          switchTab('neurallab');
-          logTerminal(`Navigated to Neural Lab synthesizer.`);
-          break;
-
-        case 'clear':
-          document.getElementById('terminalOutput').innerHTML = '';
-          break;
-
-        default:
-          logTerminal(`Unknown directive: "${cmd}". Type <strong>help</strong> for tactical command list.`);
-      }
-    }
-
-    /* =====================================================================
-       12. AMBIENT BACKGROUND MATRIX PARTICLES
-    ===================================================================== */
-    const bgCanvas = document.getElementById('ambientMatrixCanvas');
-    const bgCtx = bgCanvas.getContext('2d');
-    let points = [];
-
-    function initPoints() {
-      bgCanvas.width = window.innerWidth;
-      bgCanvas.height = window.innerHeight;
-      points = Array.from({ length: 45 }, () => ({
-        x: Math.random() * bgCanvas.width,
-        y: Math.random() * bgCanvas.height,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4
-      }));
-    }
-
-    function renderPoints() {
-      bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
-      bgCtx.fillStyle = 'var(--neon-primary)';
-      for (let p of points) {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0 || p.x > bgCanvas.width) p.vx *= -1;
-        if (p.y < 0 || p.y > bgCanvas.height) p.vy *= -1;
-        bgCtx.fillRect(p.x, p.y, 2, 2);
-      }
-      requestAnimationFrame(renderPoints);
-    }
-
-    window.onload = () => {
-      initPoints();
-      renderPoints();
-      resetGame();
-      loadSandboxPreset('matrix_rain');
-      setTheme(currentTheme);
-    };
-  </script>
-</body>
-</html>
+            createParticles(en.x, en.y, '#ffaa00', 10); enemies.splice(j, 1);
+            score += 15
