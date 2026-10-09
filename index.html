@@ -282,7 +282,7 @@
         </button>
       </div>
 
-      <!-- NAVIGATION TABS (PRESERVED + NEW FEATURES) -->
+      <!-- NAVIGATION TABS -->
       <nav class="flex flex-wrap items-center gap-1 sm:gap-2">
         <button onclick="switchTab('core')" id="tabBtn-core" class="tab-btn px-3 py-1.5 rounded text-xs font-hud text-cyan-300 border border-cyan-400 bg-cyan-950/80 glow-cyan shadow-[0_0_12px_rgba(0,243,255,0.3)] transition">
           CORE // M.V
@@ -296,11 +296,9 @@
         <button onclick="switchTab('arcade')" id="tabBtn-arcade" class="tab-btn px-3 py-1.5 rounded text-xs font-hud text-cyan-400/80 border border-cyan-500/30 hover:border-cyan-400 hover:text-cyan-300 transition">
           CYBER ARCADE
         </button>
-        <!-- NEW FEATURE: CODE SANDBOX -->
         <button onclick="switchTab('sandbox')" id="tabBtn-sandbox" class="tab-btn px-3 py-1.5 rounded text-xs font-hud text-cyan-400/80 border border-cyan-500/30 hover:border-cyan-400 hover:text-cyan-300 transition">
           QUANTUM SANDBOX
         </button>
-        <!-- NEW FEATURE: AMBIENT SYNTH -->
         <button onclick="switchTab('audiofx')" id="tabBtn-audiofx" class="tab-btn px-3 py-1.5 rounded text-xs font-hud text-cyan-400/80 border border-cyan-500/30 hover:border-cyan-400 hover:text-cyan-300 transition">
           HOLO AUDIO
         </button>
@@ -318,7 +316,7 @@
   <main class="relative z-10 max-w-7xl w-full mx-auto p-4 sm:p-6 flex-1 space-y-6">
 
     <!-- =========================================================================
-         TAB 1: CORE TELEMETRY // M.V AGENT (PRESERVED)
+         TAB 1: CORE TELEMETRY // M.V AGENT
     ========================================================================= -->
     <section id="tab-core" class="tab-view grid grid-cols-1 lg:grid-cols-12 gap-6">
       
@@ -405,7 +403,7 @@
     </section>
 
     <!-- =========================================================================
-         TAB 2: NEURAL LAB // GEMINI MULTIMODAL MATRIX (PRESERVED)
+         TAB 2: NEURAL LAB // GEMINI MULTIMODAL MATRIX
     ========================================================================= -->
     <section id="tab-neurallab" class="tab-view hidden space-y-6">
       
@@ -547,7 +545,7 @@
     </section>
 
     <!-- =========================================================================
-         TAB 3: NEURAL MIND MAP MATRIX (PRESERVED)
+         TAB 3: NEURAL MIND MAP MATRIX
     ========================================================================= -->
     <section id="tab-mindmap" class="tab-view hidden hud-bracket rounded p-6 space-y-6">
       <div class="corner-notch-tr"></div>
@@ -614,7 +612,7 @@
     </section>
 
     <!-- =========================================================================
-         TAB 4: CYBER ARCADE (PRESERVED)
+         TAB 4: CYBER ARCADE
     ========================================================================= -->
     <section id="tab-arcade" class="tab-view hidden hud-bracket rounded p-4 sm:p-6 space-y-4">
       <div class="corner-notch-tr"></div>
@@ -661,7 +659,7 @@
     </section>
 
     <!-- =========================================================================
-         NEW TAB 5: QUANTUM CODE VAULT & LIVE SANDBOX
+         TAB 5: QUANTUM CODE VAULT & LIVE SANDBOX
     ========================================================================= -->
     <section id="tab-sandbox" class="tab-view hidden space-y-6">
       <div class="hud-bracket rounded p-5 relative">
@@ -720,7 +718,7 @@
     </section>
 
     <!-- =========================================================================
-         NEW TAB 6: HOLOGRAPHIC AUDIO FREQUENCY ANALYZER & AMBIENT SYNTH
+         TAB 6: HOLOGRAPHIC AUDIO FREQUENCY ANALYZER & AMBIENT SYNTH
     ========================================================================= -->
     <section id="tab-audiofx" class="tab-view hidden space-y-6">
       <div class="hud-bracket rounded p-5 relative">
@@ -807,7 +805,7 @@
     </section>
 
     <!-- =========================================================================
-         TAB 7: PROJECT DOSSIER (PRESERVED)
+         TAB 7: PROJECT DOSSIER
     ========================================================================= -->
     <section id="tab-projects" class="tab-view hidden grid grid-cols-1 md:grid-cols-3 gap-6">
       <div class="hud-bracket rounded p-5 space-y-3 hover:border-cyan-300 hover:shadow-[0_0_20px_#00f3ff] transition">
@@ -841,7 +839,7 @@
   </main>
 
   <!-- =========================================================================
-       NEW FEATURE: CYBER TERMINAL CLI SLIDING DRAWER
+       CYBER TERMINAL CLI SLIDING DRAWER
   ========================================================================= -->
   <aside id="terminalDrawer" class="fixed bottom-0 left-0 right-0 z-50 bg-[#010614]/98 border-t-2 border-cyan-400 transform translate-y-full transition-transform duration-300 shadow-[0_-5px_25px_rgba(0,243,255,0.2)]">
     <div class="max-w-7xl mx-auto p-4 flex flex-col h-72">
@@ -1383,7 +1381,7 @@
     }
 
     /* =====================================================================
-       5. NEURAL LAB: VISION SCANNER & IMAGE SYNTHESIZER
+       5. NEURAL LAB: VISION SCANNER & IMAGE SYNTHESIZER (FIXED)
     ===================================================================== */
     let currentVisionBase64 = null;
     let currentVisionMime = 'image/png';
@@ -1511,6 +1509,10 @@
       }
     });
 
+    /* FIXED CYBER IMAGE SYNTHESIZER:
+       1. Correct API extraction of base64 inlineData image payload
+       2. Seamless fallback to procedural blueprint synthesizer if API key is absent, throttled or fails
+    */
     async function synthesizeCyberImage() {
       const prompt = document.getElementById('synthPromptInput').value.trim();
       if (!prompt) return;
@@ -1547,15 +1549,22 @@
 
         if (res.ok) {
           const data = await res.json();
-          const base64Data = data?.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data;
-          if (base64Data) {
-            imageUrl = `data:image/png;base64,${base64Data}`;
+          const candidateParts = data?.candidates?.[0]?.content?.parts || [];
+          for (const p of candidateParts) {
+            if (p.inlineData && p.inlineData.data) {
+              const mime = p.inlineData.mimeType || 'image/png';
+              imageUrl = `data:${mime};base64,${p.inlineData.data}`;
+              break;
+            }
           }
         }
-      } catch (err) {}
+      } catch (err) {
+        console.warn("API synthesis note, using fallback:", err);
+      }
 
+      // If API generation did not return an image or no key is present, generate high-detail procedural blueprint
       if (!imageUrl) {
-        await new Promise(r => setTimeout(r, 1400));
+        await new Promise(r => setTimeout(r, 1000));
         imageUrl = generateProceduralBlueprintDataUrl(prompt);
       }
 
@@ -2383,7 +2392,7 @@ drawRadar();
 
     /* =====================================================================
        11. AMBIENT BACKGROUND MATRIX PARTICLES
-    ==================================================================== */
+    ===================================================================== */
     const bgCanvas = document.getElementById('ambientMatrixCanvas');
     const bgCtx = bgCanvas.getContext('2d');
     let points = [];
