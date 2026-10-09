@@ -81,6 +81,16 @@
       --hud-panel: #03170b;
     }
 
+    [data-theme="violet"] {
+      --neon-primary: #c026d3;
+      --neon-primary-rgb: 192, 38, 211;
+      --neon-secondary: #7c3aed;
+      --neon-secondary-rgb: 124, 58, 237;
+      --neon-glow: rgba(192, 38, 211, 0.45);
+      --hud-dark: #0a0112;
+      --hud-panel: #150324;
+    }
+
     * { box-sizing: border-box; }
 
     body {
@@ -221,6 +231,7 @@
         <button onclick="setTheme('crimson')" class="theme-chip w-3 h-3 rounded-full bg-[#ff0055]" title="Cyber Crimson"></button>
         <button onclick="setTheme('amber')" class="theme-chip w-3 h-3 rounded-full bg-[#ffb700]" title="Electric Amber"></button>
         <button onclick="setTheme('emerald')" class="theme-chip w-3 h-3 rounded-full bg-[#00ff88]" title="Matrix Emerald"></button>
+        <button onclick="setTheme('violet')" class="theme-chip w-3 h-3 rounded-full bg-[#c026d3]" title="Hyper Violet"></button>
       </div>
 
       <!-- MASTER AUDIO TOGGLE -->
@@ -302,6 +313,10 @@
         <button onclick="switchTab('audiofx')" id="tabBtn-audiofx" class="tab-btn px-3 py-1.5 rounded text-xs font-hud text-cyan-400/80 border border-cyan-500/30 hover:border-cyan-400 hover:text-cyan-300 transition">
           HOLO AUDIO
         </button>
+        <!-- NEW ADDED TAB: CYBER DIAGNOSTICS & ENCRYPTION MATRIX -->
+        <button onclick="switchTab('telemetrysec')" id="tabBtn-telemetrysec" class="tab-btn px-3 py-1.5 rounded text-xs font-hud text-cyan-400/80 border border-cyan-500/30 hover:border-cyan-400 hover:text-cyan-300 transition">
+          CYBER VAULT
+        </button>
         <button onclick="switchTab('projects')" id="tabBtn-projects" class="tab-btn px-3 py-1.5 rounded text-xs font-hud text-cyan-400/80 border border-cyan-500/30 hover:border-cyan-400 hover:text-cyan-300 transition">
           DOSSIER
         </button>
@@ -316,7 +331,7 @@
   <main class="relative z-10 max-w-7xl w-full mx-auto p-4 sm:p-6 flex-1 space-y-6">
 
     <!-- =========================================================================
-         TAB 1: CORE TELEMETRY // M.V AGENT
+         TAB 1: CORE TELEMETRY // M.V AGENT (PRESERVED)
     ========================================================================= -->
     <section id="tab-core" class="tab-view grid grid-cols-1 lg:grid-cols-12 gap-6">
       
@@ -403,7 +418,7 @@
     </section>
 
     <!-- =========================================================================
-         TAB 2: NEURAL LAB // GEMINI MULTIMODAL MATRIX
+         TAB 2: NEURAL LAB // GEMINI MULTIMODAL MATRIX (PRESERVED)
     ========================================================================= -->
     <section id="tab-neurallab" class="tab-view hidden space-y-6">
       
@@ -545,7 +560,7 @@
     </section>
 
     <!-- =========================================================================
-         TAB 3: NEURAL MIND MAP MATRIX
+         TAB 3: NEURAL MIND MAP MATRIX (PRESERVED)
     ========================================================================= -->
     <section id="tab-mindmap" class="tab-view hidden hud-bracket rounded p-6 space-y-6">
       <div class="corner-notch-tr"></div>
@@ -612,7 +627,7 @@
     </section>
 
     <!-- =========================================================================
-         TAB 4: CYBER ARCADE
+         TAB 4: CYBER ARCADE (PRESERVED)
     ========================================================================= -->
     <section id="tab-arcade" class="tab-view hidden hud-bracket rounded p-4 sm:p-6 space-y-4">
       <div class="corner-notch-tr"></div>
@@ -659,7 +674,7 @@
     </section>
 
     <!-- =========================================================================
-         TAB 5: QUANTUM CODE VAULT & LIVE SANDBOX
+         TAB 5: QUANTUM CODE VAULT & LIVE SANDBOX (PRESERVED)
     ========================================================================= -->
     <section id="tab-sandbox" class="tab-view hidden space-y-6">
       <div class="hud-bracket rounded p-5 relative">
@@ -718,7 +733,7 @@
     </section>
 
     <!-- =========================================================================
-         TAB 6: HOLOGRAPHIC AUDIO FREQUENCY ANALYZER & AMBIENT SYNTH
+         TAB 6: HOLOGRAPHIC AUDIO FREQUENCY ANALYZER & AMBIENT SYNTH (PRESERVED)
     ========================================================================= -->
     <section id="tab-audiofx" class="tab-view hidden space-y-6">
       <div class="hud-bracket rounded p-5 relative">
@@ -805,7 +820,140 @@
     </section>
 
     <!-- =========================================================================
-         TAB 7: PROJECT DOSSIER
+         NEW TAB 7: CYBER VAULT // TELEMETRY, CIPHER & QUANTUM PING
+    ========================================================================= -->
+    <section id="tab-telemetrysec" class="tab-view hidden space-y-6">
+      <div class="hud-bracket rounded p-5 relative">
+        <div class="corner-notch-tr"></div>
+        <div class="corner-notch-bl"></div>
+
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h1 class="font-hud text-xl sm:text-2xl font-bold tracking-wider text-cyan-300 glow-cyan uppercase">
+              CYBER VAULT // CRYPTO MATRIX &amp; RADAR MONITOR
+            </h1>
+            <p class="text-xs sm:text-sm font-mono-hud text-cyan-400/90 mt-1">
+              Cryptographic payload encoder/hasher, live system telemetry diagnostic monitor, and quantum node pinger.
+            </p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="inline-block w-2.5 h-2.5 rounded-full bg-cyan-400 animate-ping"></span>
+            <span class="text-xs font-mono-hud text-cyan-300 font-bold">CRYPTO ENGINE 256-BIT</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Subsystem Live Metrics & Quantum Nodes -->
+        <div class="lg:col-span-5 hud-bracket rounded p-6 space-y-5">
+          <div class="border-b border-cyan-500/30 pb-2 flex justify-between items-center">
+            <h2 class="font-hud text-sm text-cyan-300 font-bold uppercase tracking-wider">HARDWARE &amp; SYNAPSE METRICS</h2>
+            <button onclick="runDiagnosticsAudit()" class="px-2.5 py-1 text-[11px] font-mono-hud bg-cyan-950 border border-cyan-400/60 rounded text-cyan-300 hover:bg-cyan-800 transition">
+              RUN AUDIT
+            </button>
+          </div>
+
+          <div class="space-y-3 font-mono-hud text-xs">
+            <div>
+              <div class="flex justify-between text-cyan-300 mb-1">
+                <span>NEURAL COMPUTATION LOAD:</span>
+                <span id="metricCpuVal">34%</span>
+              </div>
+              <div class="w-full bg-[#010817] rounded h-2 overflow-hidden border border-cyan-500/30">
+                <div id="metricCpuBar" class="h-full bg-cyan-400 transition-all duration-500" style="width: 34%;"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-cyan-300 mb-1">
+                <span>SYNAPSE BUFFER OCCUPANCY:</span>
+                <span id="metricMemVal">58%</span>
+              </div>
+              <div class="w-full bg-[#010817] rounded h-2 overflow-hidden border border-cyan-500/30">
+                <div id="metricMemBar" class="h-full bg-emerald-400 transition-all duration-500" style="width: 58%;"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-cyan-300 mb-1">
+                <span>ENTROPY SHIELD INTEGRITY:</span>
+                <span id="metricShieldVal">99.8%</span>
+              </div>
+              <div class="w-full bg-[#010817] rounded h-2 overflow-hidden border border-cyan-500/30">
+                <div id="metricShieldBar" class="h-full bg-cyan-300 transition-all duration-500" style="width: 99.8%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quantum Node Pinger -->
+          <div class="p-3 bg-[#010817] rounded border border-cyan-500/30 space-y-2">
+            <div class="text-xs font-hud text-cyan-300">QUANTUM SYNAPSE NODES</div>
+            <div class="grid grid-cols-2 gap-2 text-[11px] font-mono-hud">
+              <div class="flex items-center justify-between p-1.5 rounded bg-[#020d2b] border border-cyan-500/20">
+                <span class="text-cyan-400">NODE ALPHA:</span>
+                <span class="text-emerald-400 font-bold" id="nodeAlphaStatus">ONLINE</span>
+              </div>
+              <div class="flex items-center justify-between p-1.5 rounded bg-[#020d2b] border border-cyan-500/20">
+                <span class="text-cyan-400">NODE BETA:</span>
+                <span class="text-emerald-400 font-bold" id="nodeBetaStatus">ONLINE</span>
+              </div>
+              <div class="flex items-center justify-between p-1.5 rounded bg-[#020d2b] border border-cyan-500/20">
+                <span class="text-cyan-400">NODE GAMMA:</span>
+                <span class="text-emerald-400 font-bold" id="nodeGammaStatus">ONLINE</span>
+              </div>
+              <div class="flex items-center justify-between p-1.5 rounded bg-[#020d2b] border border-cyan-500/20">
+                <span class="text-cyan-400">NODE DELTA:</span>
+                <span class="text-cyan-300 font-bold" id="nodeDeltaStatus">SYNCING</span>
+              </div>
+            </div>
+          </div>
+
+          <div id="auditLogText" class="text-[11px] font-mono-hud text-cyan-500/90 leading-tight">
+            // Telemetry daemon: Subsystems running within optimal frequency boundaries.
+          </div>
+        </div>
+
+        <!-- Cryptographic Cipher Matrix -->
+        <div class="lg:col-span-7 hud-bracket rounded p-6 flex flex-col justify-between space-y-4">
+          <div class="border-b border-cyan-500/30 pb-2 flex justify-between items-center">
+            <h2 class="font-hud text-sm text-cyan-300 font-bold uppercase tracking-wider">CYBER CIPHER &amp; HASHER</h2>
+            <span class="text-[10px] font-mono-hud text-cyan-500">IN-BROWSER CRYPTO SUB-ROUTINE</span>
+          </div>
+
+          <div class="space-y-3 font-mono-hud">
+            <div>
+              <label class="block text-xs text-cyan-400 mb-1">INPUT PAYLOAD / SECRET MESSAGE:</label>
+              <textarea id="cipherInput" rows="3" placeholder="Enter plaintext to encrypt, encode or hash..." class="w-full bg-[#020817] border border-cyan-500/40 rounded p-2.5 text-xs text-cyan-100 placeholder-cyan-800 outline-none focus:border-cyan-400 resize-none">M.V // CLASSIFIED QUANTUM DIRECTIVE 2026</textarea>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2">
+              <button onclick="executeCipher('b64_enc')" class="px-3 py-1 bg-cyan-950 border border-cyan-500/50 hover:bg-cyan-800 rounded text-xs text-cyan-300 transition">Base64 Encode</button>
+              <button onclick="executeCipher('b64_dec')" class="px-3 py-1 bg-cyan-950 border border-cyan-500/50 hover:bg-cyan-800 rounded text-xs text-cyan-300 transition">Base64 Decode</button>
+              <button onclick="executeCipher('hex_enc')" class="px-3 py-1 bg-cyan-950 border border-cyan-500/50 hover:bg-cyan-800 rounded text-xs text-cyan-300 transition">Hex Dump</button>
+              <button onclick="executeCipher('caesar')" class="px-3 py-1 bg-cyan-950 border border-cyan-500/50 hover:bg-cyan-800 rounded text-xs text-cyan-300 transition">ROT13 Shift</button>
+              <button onclick="executeCipher('sha256')" class="px-3 py-1 bg-cyan-500 hover:bg-white text-black font-bold font-hud rounded text-xs transition shadow-[0_0_8px_#00f3ff]">SHA-256 Digest</button>
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center text-xs text-cyan-400 mb-1">
+                <span>ENCRYPTED / PROCESSED TELEMETRY OUTPUT:</span>
+                <button onclick="copyCipherOutput()" class="text-[10px] text-cyan-300 hover:underline">Copy to Clipboard</button>
+              </div>
+              <textarea id="cipherOutput" readonly rows="4" class="w-full bg-[#010614] border border-cyan-500/30 rounded p-2.5 text-xs text-emerald-300 font-mono outline-none resize-none">// Output will display here...</textarea>
+            </div>
+          </div>
+
+          <div class="text-[10px] font-mono-hud text-cyan-500">
+            Hardware-backed Web Cryptography API and client-side encoders active. Zero data sent off-device.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         TAB 8: PROJECT DOSSIER (PRESERVED)
     ========================================================================= -->
     <section id="tab-projects" class="tab-view hidden grid grid-cols-1 md:grid-cols-3 gap-6">
       <div class="hud-bracket rounded p-5 space-y-3 hover:border-cyan-300 hover:shadow-[0_0_20px_#00f3ff] transition">
@@ -839,7 +987,7 @@
   </main>
 
   <!-- =========================================================================
-       CYBER TERMINAL CLI SLIDING DRAWER
+       CYBER TERMINAL CLI SLIDING DRAWER (PRESERVED)
   ========================================================================= -->
   <aside id="terminalDrawer" class="fixed bottom-0 left-0 right-0 z-50 bg-[#010614]/98 border-t-2 border-cyan-400 transform translate-y-full transition-transform duration-300 shadow-[0_-5px_25px_rgba(0,243,255,0.2)]">
     <div class="max-w-7xl mx-auto p-4 flex flex-col h-72">
@@ -856,7 +1004,7 @@
       </div>
 
       <div id="terminalOutput" class="flex-1 overflow-y-auto font-mono text-xs text-cyan-300 space-y-1 pr-2">
-        <div>[M.V Shell v4.9 Active. Type <strong class="text-white">help</strong> for tactical command list.]</div>
+        <div>[M.V Shell v5.0 Active. Type <strong class="text-white">help</strong> for tactical command list.]</div>
       </div>
 
       <form onsubmit="handleTerminalCommand(event)" class="flex items-center gap-2 mt-2 pt-2 border-t border-cyan-500/20">
@@ -1264,7 +1412,7 @@
     }
 
     /* =====================================================================
-       4. CONVERSATIONAL ENGINE (DIRECT, RELEVANT, NO JARGON)
+       4. CONVERSATIONAL ENGINE
     ===================================================================== */
     function addChatMessage(sender, text) {
       const container = document.getElementById('chatMessages');
@@ -1292,6 +1440,9 @@
       }
       if (q.includes('terminal') || q.includes('cli') || q.includes('shell')) {
         return "You can toggle the Cyber Terminal CLI drawer anytime by pressing the tilde key [ ` ] or clicking the CLI button in the top telemetry dock.";
+      }
+      if (q.includes('vault') || q.includes('cipher') || q.includes('hash') || q.includes('crypto')) {
+        return "The Cyber Vault tab offers real-time hardware telemetry auditing and cryptographic encoding including SHA-256 digests, Base64, Hex dumps, and ROT13 ciphers.";
       }
       if (q.includes('vision') || q.includes('scanner') || q.includes('multimodal')) {
         return "The Holographic Vision Scanner accepts diagrams or code screenshots and performs visual diagnostics using gemini-3-flash-preview.";
@@ -1381,7 +1532,7 @@
     }
 
     /* =====================================================================
-       5. NEURAL LAB: VISION SCANNER & IMAGE SYNTHESIZER (FIXED)
+       5. NEURAL LAB: VISION SCANNER & IMAGE SYNTHESIZER
     ===================================================================== */
     let currentVisionBase64 = null;
     let currentVisionMime = 'image/png';
@@ -1509,10 +1660,6 @@
       }
     });
 
-    /* FIXED CYBER IMAGE SYNTHESIZER:
-       1. Correct API extraction of base64 inlineData image payload
-       2. Seamless fallback to procedural blueprint synthesizer if API key is absent, throttled or fails
-    */
     async function synthesizeCyberImage() {
       const prompt = document.getElementById('synthPromptInput').value.trim();
       if (!prompt) return;
@@ -1527,44 +1674,46 @@
       synthBtn.disabled = true;
 
       const keyToUse = currentApiKey || "";
-      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image:generateContent?key=${keyToUse}`;
-
       let imageUrl = null;
 
-      try {
-        const payload = {
-          contents: [{
-            parts: [{ text: prompt }]
-          }],
-          generationConfig: {
-            responseModalities: ['TEXT', 'IMAGE']
-          }
-        };
+      if (keyToUse) {
+        try {
+          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key=${keyToUse}`;
+          const payload = {
+            contents: [{
+              parts: [{ text: prompt }]
+            }],
+            generationConfig: {
+              responseModalities: ['TEXT', 'IMAGE']
+            }
+          };
 
-        const res = await fetch(apiUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
+          const res = await fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
 
-        if (res.ok) {
-          const data = await res.json();
-          const candidateParts = data?.candidates?.[0]?.content?.parts || [];
-          for (const p of candidateParts) {
-            if (p.inlineData && p.inlineData.data) {
-              const mime = p.inlineData.mimeType || 'image/png';
-              imageUrl = `data:${mime};base64,${p.inlineData.data}`;
-              break;
+          if (res.ok) {
+            const data = await res.json();
+            const candidates = data?.candidates || [];
+            for (const cand of candidates) {
+              const parts = cand?.content?.parts || [];
+              for (const part of parts) {
+                if (part.inlineData && part.inlineData.data) {
+                  const mime = part.inlineData.mimeType || 'image/png';
+                  imageUrl = `data:${mime};base64,${part.inlineData.data}`;
+                  break;
+                }
+              }
+              if (imageUrl) break;
             }
           }
-        }
-      } catch (err) {
-        console.warn("API synthesis note, using fallback:", err);
+        } catch (err) {}
       }
 
-      // If API generation did not return an image or no key is present, generate high-detail procedural blueprint
       if (!imageUrl) {
-        await new Promise(r => setTimeout(r, 1000));
+        await new Promise(r => setTimeout(r, 1100));
         imageUrl = generateProceduralBlueprintDataUrl(prompt);
       }
 
@@ -1646,7 +1795,7 @@
       playBeep(920, 0.06);
       const box = document.getElementById('nodeInspectBox');
       if (box) {
-        box.innerHTML = `<span class="font-hud text-cyan-300 font-bold">[NODE INSPECT // ${name.toUpperCase()}]:</span> ${desc}`;
+        box.innerHTML = `<span class="font-hud text-cyan-300 font-bold">[NODE INSPECT // ${name.toUpperCase()}]:</span>${desc}`;
       }
     }
 
@@ -1665,7 +1814,7 @@
     }
 
     /* =====================================================================
-       7. CYBER DEFENSE ARCADE ENGINE (PAUSED BY DEFAULT)
+       7. CYBER DEFENSE ARCADE ENGINE
     ===================================================================== */
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
@@ -1811,7 +1960,6 @@
       const centerX = canvas.width / 2;
       const centerY = canvas.height / 2;
 
-      // Orbiting Drones
       droneAngle += 0.03;
       const droneDist = 48;
       const d1x = centerX + Math.cos(droneAngle) * droneDist;
@@ -1823,7 +1971,6 @@
       ctx.fillRect(d1x - 3, d1y - 3, 6, 6);
       ctx.fillRect(d2x - 3, d2y - 3, 6, 6);
 
-      // Central Core
       ctx.beginPath();
       ctx.arc(centerX, centerY, 24, 0, Math.PI * 2);
       ctx.fillStyle = '#00f3ff';
@@ -1832,7 +1979,6 @@
       ctx.fill();
       ctx.shadowBlur = 0;
 
-      // EMP Waves
       for (let i = empWaves.length - 1; i >= 0; i--) {
         const emp = empWaves[i];
         emp.r += 12;
@@ -1855,7 +2001,6 @@
         if (emp.r >= emp.maxR) empWaves.splice(i, 1);
       }
 
-      // Lasers
       for (let i = lasers.length - 1; i >= 0; i--) {
         const l = lasers[i];
         l.x += l.vx;
@@ -1869,7 +2014,6 @@
         }
       }
 
-      // Particles
       for (let i = particles.length - 1; i >= 0; i--) {
         const p = particles[i];
         p.x += p.vx;
@@ -1884,7 +2028,6 @@
         if (p.alpha <= 0) particles.splice(i, 1);
       }
 
-      // Enemies
       spawnEnemy();
       for (let i = enemies.length - 1; i >= 0; i--) {
         const en = enemies[i];
@@ -2240,7 +2383,105 @@ drawRadar();
     }
 
     /* =====================================================================
-       10. CYBER TERMINAL CLI DRAWER ENGINE
+       NEW FEATURE 10: CYBER VAULT // TELEMETRY, CIPHER & HARDWARE AUDIT
+    ===================================================================== */
+    function runDiagnosticsAudit() {
+      playBeep(980, 0.08);
+      const cpu = Math.floor(Math.random() * 35) + 20;
+      const mem = Math.floor(Math.random() * 25) + 45;
+      const shield = (99.1 + Math.random() * 0.8).toFixed(1);
+
+      document.getElementById('metricCpuVal').innerText = `${cpu}%`;
+      document.getElementById('metricCpuBar').style.width = `${cpu}%`;
+
+      document.getElementById('metricMemVal').innerText = `${mem}%`;
+      document.getElementById('metricMemBar').style.width = `${mem}%`;
+
+      document.getElementById('metricShieldVal').innerText = `${shield}%`;
+      document.getElementById('metricShieldBar').style.width = `${shield}%`;
+
+      const nodes = ['nodeAlphaStatus', 'nodeBetaStatus', 'nodeGammaStatus', 'nodeDeltaStatus'];
+      nodes.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.innerText = 'ONLINE';
+          el.className = 'text-emerald-400 font-bold';
+        }
+      });
+
+      const auditLog = document.getElementById('auditLogText');
+      if (auditLog) {
+        auditLog.innerText = `// AUDIT COMPLETE [${new Date().toLocaleTimeString()}]: All neural pipelines and memory rings nominal.`;
+      }
+    }
+
+    async function executeCipher(mode) {
+      const input = document.getElementById('cipherInput').value;
+      const outputEl = document.getElementById('cipherOutput');
+      playBeep(850, 0.04);
+
+      if (!input) {
+        outputEl.value = "// Error: Input payload buffer is empty.";
+        return;
+      }
+
+      switch (mode) {
+        case 'b64_enc':
+          try {
+            outputEl.value = btoa(unescape(encodeURIComponent(input)));
+          } catch(e) {
+            outputEl.value = "// Error during Base64 encoding.";
+          }
+          break;
+
+        case 'b64_dec':
+          try {
+            outputEl.value = decodeURIComponent(escape(atob(input.trim())));
+          } catch(e) {
+            outputEl.value = "// Error: Invalid Base64 payload string.";
+          }
+          break;
+
+        case 'hex_enc':
+          let hex = '';
+          for (let i = 0; i < input.length; i++) {
+            hex += input.charCodeAt(i).toString(16).padStart(2, '0') + ' ';
+          }
+          outputEl.value = hex.trim().toUpperCase();
+          break;
+
+        case 'caesar':
+          outputEl.value = input.replace(/[a-zA-Z]/g, (c) => {
+            const code = c.charCodeAt(0);
+            const base = code >= 97 ? 97 : 65;
+            return String.fromCharCode(((code - base + 13) % 26) + base);
+          });
+          break;
+
+        case 'sha256':
+          try {
+            const msgBuffer = new TextEncoder().encode(input);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            outputEl.value = hashHex;
+          } catch (e) {
+            outputEl.value = "// Web Crypto API SHA-256 execution failed.";
+          }
+          break;
+      }
+    }
+
+    function copyCipherOutput() {
+      const out = document.getElementById('cipherOutput').value;
+      if (out) {
+        navigator.clipboard.writeText(out);
+        playBeep(1100, 0.05);
+      }
+    }
+
+    /* =====================================================================
+       11. CYBER TERMINAL CLI DRAWER ENGINE
     ===================================================================== */
     let isTerminalOpen = false;
 
@@ -2294,8 +2535,9 @@ drawRadar();
           logTerminal(`AVAILABLE SHELL DIRECTIVES:
  • <strong>help</strong> : Displays this command list
  • <strong>status</strong> : Queries quantum telemetry & reactor core
- • <strong>nav &lt;core|lab|map|arcade|sandbox|audio|projects&gt;</strong> : Tab navigation
- • <strong>theme &lt;cyan|crimson|amber|emerald&gt;</strong> : Switch HUD color theme
+ • <strong>nav &lt;core|lab|map|arcade|sandbox|audio|vault|projects&gt;</strong> : Tab navigation
+ • <strong>theme &lt;cyan|crimson|amber|emerald|violet&gt;</strong> : Switch HUD color theme
+ • <strong>audit</strong> : Trigger Cyber Vault hardware diagnostics
  • <strong>mute</strong> / <strong>unmute</strong> : Control master audio
  • <strong>game &lt;start|pause|reset&gt;</strong> : Control Cyber Arcade simulation
  • <strong>synth</strong> : Open Cyber Image Synthesizer
@@ -2310,11 +2552,16 @@ drawRadar();
  • FPS: 60 | LATENCY: 12ms
  • AUDIO: ${isMasterAudioEnabled ? 'ENABLED' : 'MUTED'}
  • THEME: ${currentTheme.toUpperCase()}
- • SANDBOX ENGINE: READY`);
+ • SANDBOX & VAULT: READY`);
+          break;
+
+        case 'audit':
+          runDiagnosticsAudit();
+          logTerminal(`Hardware diagnostic audit initiated.`);
           break;
 
         case 'nav':
-          if (['core', 'neurallab', 'mindmap', 'arcade', 'sandbox', 'audiofx', 'projects'].includes(arg)) {
+          if (['core', 'neurallab', 'mindmap', 'arcade', 'sandbox', 'audiofx', 'telemetrysec', 'projects'].includes(arg)) {
             switchTab(arg);
             logTerminal(`Navigated view to: [${arg}]`);
           } else if (arg === 'lab') {
@@ -2326,17 +2573,20 @@ drawRadar();
           } else if (arg === 'audio') {
             switchTab('audiofx');
             logTerminal(`Navigated view to: [audiofx]`);
+          } else if (arg === 'vault' || arg === 'sec') {
+            switchTab('telemetrysec');
+            logTerminal(`Navigated view to: [telemetrysec]`);
           } else {
-            logTerminal(`Unknown viewport. Valid options: core, lab, map, arcade, sandbox, audio, projects.`);
+            logTerminal(`Unknown viewport. Valid options: core, lab, map, arcade, sandbox, audio, vault, projects.`);
           }
           break;
 
         case 'theme':
-          if (['cyan', 'crimson', 'amber', 'emerald'].includes(arg)) {
+          if (['cyan', 'crimson', 'amber', 'emerald', 'violet'].includes(arg)) {
             setTheme(arg);
             logTerminal(`HUD theme palette adjusted to: [${arg.toUpperCase()}]`);
           } else {
-            logTerminal(`Invalid theme. Choose: cyan, crimson, amber, emerald.`);
+            logTerminal(`Invalid theme. Choose: cyan, crimson, amber, emerald, violet.`);
           }
           break;
 
@@ -2391,7 +2641,7 @@ drawRadar();
     }
 
     /* =====================================================================
-       11. AMBIENT BACKGROUND MATRIX PARTICLES
+       12. AMBIENT BACKGROUND MATRIX PARTICLES
     ===================================================================== */
     const bgCanvas = document.getElementById('ambientMatrixCanvas');
     const bgCtx = bgCanvas.getContext('2d');
