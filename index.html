@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>M.V // CYBERNETIC HUD, NEURAL LAB & ARCADE PLATFORM</title>
+  <title>M.V // APEX CYBERNETIC HUD, NEURAL LAB & ARCADE PLATFORM</title>
   
   <!-- Sci-Fi Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,8 +22,7 @@
               void: '#020612',
               dark: '#030a1e',
               panel: '#040d28',
-              cyan: '#00f3ff',
-              cyanGlow: '#00d2ff',
+              cyan: 'var(--neon-primary)',
               electric: '#0066ff',
               alert: '#ff0055',
               amber: '#ffaa00',
@@ -41,12 +40,45 @@
   </script>
 
   <style>
+    /* DYNAMIC THEME SYSTEM */
     :root {
-      --neon-cyan: #00f3ff;
-      --neon-blue: #0066ff;
-      --neon-amber: #ffaa00;
-      --neon-crimson: #ff0055;
+      --neon-primary: #00f3ff;
+      --neon-primary-rgb: 0, 243, 255;
+      --neon-secondary: #0066ff;
+      --neon-secondary-rgb: 0, 102, 255;
+      --neon-glow: rgba(0, 243, 255, 0.4);
       --hud-dark: #020612;
+      --hud-panel: #030a1e;
+    }
+
+    [data-theme="crimson"] {
+      --neon-primary: #ff0055;
+      --neon-primary-rgb: 255, 0, 85;
+      --neon-secondary: #ff5500;
+      --neon-secondary-rgb: 255, 85, 0;
+      --neon-glow: rgba(255, 0, 85, 0.45);
+      --hud-dark: #100206;
+      --hud-panel: #1a040b;
+    }
+
+    [data-theme="amber"] {
+      --neon-primary: #ffb700;
+      --neon-primary-rgb: 255, 183, 0;
+      --neon-secondary: #ff6600;
+      --neon-secondary-rgb: 255, 102, 0;
+      --neon-glow: rgba(255, 183, 0, 0.45);
+      --hud-dark: #0f0a01;
+      --hud-panel: #1a1202;
+    }
+
+    [data-theme="emerald"] {
+      --neon-primary: #00ff88;
+      --neon-primary-rgb: 0, 255, 136;
+      --neon-secondary: #00aa55;
+      --neon-secondary-rgb: 0, 170, 85;
+      --neon-glow: rgba(0, 255, 136, 0.45);
+      --hud-dark: #010e06;
+      --hud-panel: #03170b;
     }
 
     * { box-sizing: border-box; }
@@ -57,16 +89,19 @@
       font-family: 'Rajdhani', sans-serif;
       overflow-x: hidden;
       user-select: none;
+      transition: background-color 0.4s ease, color 0.4s ease;
     }
 
     .font-hud { font-family: 'Orbitron', monospace; }
     .font-mono-hud { font-family: 'Share Tech Mono', monospace; }
 
+    /* HUD PANELS & BRACKETS */
     .hud-bracket {
-      border: 1px solid rgba(0, 243, 255, 0.4);
+      border: 1px solid rgba(var(--neon-primary-rgb), 0.35);
       background: rgba(3, 10, 30, 0.88);
       position: relative;
-      box-shadow: 0 0 20px rgba(0, 243, 255, 0.08), inset 0 0 25px rgba(0, 243, 255, 0.03);
+      box-shadow: 0 0 20px rgba(var(--neon-primary-rgb), 0.08), inset 0 0 25px rgba(var(--neon-primary-rgb), 0.03);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
     .hud-bracket::before, .hud-bracket::after {
@@ -79,34 +114,34 @@
     }
     .hud-bracket::before {
       top: -2px; left: -2px;
-      border-top: 2px solid var(--neon-cyan);
-      border-left: 2px solid var(--neon-cyan);
+      border-top: 2px solid var(--neon-primary);
+      border-left: 2px solid var(--neon-primary);
     }
     .hud-bracket::after {
       bottom: -2px; right: -2px;
-      border-bottom: 2px solid var(--neon-cyan);
-      border-right: 2px solid var(--neon-cyan);
+      border-bottom: 2px solid var(--neon-primary);
+      border-right: 2px solid var(--neon-primary);
     }
 
     .corner-notch-tr {
       position: absolute;
       top: -2px; right: -2px;
       width: 12px; height: 12px;
-      border-top: 2px solid var(--neon-cyan);
-      border-right: 2px solid var(--neon-cyan);
+      border-top: 2px solid var(--neon-primary);
+      border-right: 2px solid var(--neon-primary);
       pointer-events: none;
     }
     .corner-notch-bl {
       position: absolute;
       bottom: -2px; left: -2px;
       width: 12px; height: 12px;
-      border-bottom: 2px solid var(--neon-cyan);
-      border-left: 2px solid var(--neon-cyan);
+      border-bottom: 2px solid var(--neon-primary);
+      border-left: 2px solid var(--neon-primary);
       pointer-events: none;
     }
 
-    .glow-cyan { text-shadow: 0 0 12px rgba(0, 243, 255, 0.85); }
-    .glow-box { box-shadow: 0 0 25px rgba(0, 243, 255, 0.35); }
+    .glow-cyan { text-shadow: 0 0 12px var(--neon-glow); }
+    .glow-box { box-shadow: 0 0 25px var(--neon-glow); }
 
     @keyframes rotateCW {
       from { transform: rotate(0deg); }
@@ -117,8 +152,8 @@
       to { transform: rotate(0deg); }
     }
     @keyframes pulseCore {
-      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 16px #00f3ff); }
-      50% { transform: scale(1.08); filter: drop-shadow(0 0 35px #00f3ff); }
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 16px var(--neon-primary)); }
+      50% { transform: scale(1.08); filter: drop-shadow(0 0 35px var(--neon-primary)); }
     }
 
     .rotate-cw { animation: rotateCW 22s linear infinite; }
@@ -134,47 +169,75 @@
       position: absolute;
       left: 0; right: 0;
       height: 3px;
-      background: linear-gradient(90deg, transparent, #00f3ff, #fff, #00f3ff, transparent);
-      box-shadow: 0 0 12px #00f3ff, 0 0 20px #00f3ff;
+      background: linear-gradient(90deg, transparent, var(--neon-primary), #fff, var(--neon-primary), transparent);
+      box-shadow: 0 0 12px var(--neon-primary), 0 0 20px var(--neon-primary);
       animation: scanLineAnim 2s ease-in-out infinite alternate;
     }
 
     .scanlines {
       background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.28) 50%),
-                  linear-gradient(90deg, rgba(0, 243, 255, 0.02), rgba(0, 0, 0, 0), rgba(0, 102, 255, 0.02));
+                  linear-gradient(90deg, rgba(var(--neon-primary-rgb), 0.02), rgba(0, 0, 0, 0), rgba(0, 102, 255, 0.02));
       background-size: 100% 3px, 6px 100%;
       pointer-events: none;
     }
 
     .wave-bar { transition: height 0.07s ease; }
 
+    /* Custom Scrollbars */
     ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: #010614; }
-    ::-webkit-scrollbar-thumb { background: rgba(0, 243, 255, 0.4); border-radius: 2px; }
-    ::-webkit-scrollbar-thumb:hover { background: rgba(0, 243, 255, 0.8); }
+    ::-webkit-scrollbar-thumb { background: rgba(var(--neon-primary-rgb), 0.4); border-radius: 2px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(var(--neon-primary-rgb), 0.8); }
+
+    .theme-chip {
+      transition: all 0.2s ease;
+    }
+    .theme-chip.active {
+      outline: 2px solid #fff;
+      box-shadow: 0 0 10px var(--neon-primary);
+    }
   </style>
 </head>
 <body class="relative min-h-screen flex flex-col selection:bg-cyan-400 selection:text-black">
   <div class="fixed inset-0 scanlines z-40 pointer-events-none"></div>
   <canvas id="ambientMatrixCanvas" class="fixed inset-0 pointer-events-none z-0 opacity-40"></canvas>
 
-  <!-- TOP TELEMETRY DOCK -->
+  <!-- =========================================================================
+       TOP TELEMETRY DOCK & CONTROLS
+  ========================================================================= -->
   <aside class="relative z-50 bg-[#01040e]/95 border-b border-cyan-500/25 px-4 py-1 text-[11px] font-mono-hud flex flex-wrap items-center justify-between text-cyan-400/80">
     <div class="flex items-center gap-4">
       <span>LATENCY: <strong id="telemetryLatency" class="text-cyan-300">12ms</strong></span>
       <span>SYS FPS: <strong id="telemetryFps" class="text-cyan-300">60</strong></span>
       <span>API LINK: <strong id="apiKeyBadge" class="text-cyan-300">CANVAS RUNTIME</strong></span>
+      <span class="hidden md:inline">SYSTEM RUNTIME: <strong id="uptimeCounter" class="text-cyan-300">00:00:00</strong></span>
     </div>
     
-    <!-- MASTER AUDIO MUTE / UNMUTE BUTTON -->
     <div class="flex items-center gap-3">
+      <!-- THEME SELECTOR -->
+      <div class="flex items-center gap-1.5 bg-[#030d24] px-2 py-0.5 rounded border border-cyan-500/30">
+        <span class="text-[10px] text-cyan-400 uppercase">THEME:</span>
+        <button onclick="setTheme('cyan')" class="theme-chip w-3 h-3 rounded-full bg-[#00f3ff] active" title="Cyan Neon"></button>
+        <button onclick="setTheme('crimson')" class="theme-chip w-3 h-3 rounded-full bg-[#ff0055]" title="Cyber Crimson"></button>
+        <button onclick="setTheme('amber')" class="theme-chip w-3 h-3 rounded-full bg-[#ffb700]" title="Electric Amber"></button>
+        <button onclick="setTheme('emerald')" class="theme-chip w-3 h-3 rounded-full bg-[#00ff88]" title="Matrix Emerald"></button>
+      </div>
+
+      <!-- MASTER AUDIO TOGGLE -->
       <button onclick="toggleMasterAudio()" id="masterAudioBtn" class="flex items-center gap-1.5 px-2.5 py-0.5 rounded border border-emerald-500/50 bg-emerald-950/60 text-emerald-300 hover:bg-emerald-800 transition">
         <span id="masterAudioIcon">🔊</span>
         <span id="masterAudioText" class="uppercase font-bold tracking-wider">AUDIO: ON</span>
       </button>
 
+      <!-- TERMINAL TOGGLE BUTTON -->
+      <button onclick="toggleTerminalDrawer()" class="flex items-center gap-1 px-2 py-0.5 rounded border border-cyan-500/40 bg-cyan-950/60 text-cyan-300 hover:bg-cyan-800 transition">
+        <span>&gt;_</span>
+        <span class="text-[10px] font-bold">CLI [ ` ]</span>
+      </button>
+
+      <!-- KEY CONFIG MODAL -->
       <button onclick="openApiKeyModal()" class="text-[10px] uppercase tracking-wider text-cyan-300 border border-cyan-500/40 bg-cyan-950/60 px-2 py-0.5 rounded hover:bg-cyan-800 transition">
-        ⚙️ Config Key
+        ⚙️ KEY
       </button>
       
       <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -219,7 +282,7 @@
         </button>
       </div>
 
-      <!-- NAVIGATION TABS -->
+      <!-- NAVIGATION TABS (PRESERVED + NEW FEATURES) -->
       <nav class="flex flex-wrap items-center gap-1 sm:gap-2">
         <button onclick="switchTab('core')" id="tabBtn-core" class="tab-btn px-3 py-1.5 rounded text-xs font-hud text-cyan-300 border border-cyan-400 bg-cyan-950/80 glow-cyan shadow-[0_0_12px_rgba(0,243,255,0.3)] transition">
           CORE // M.V
@@ -233,6 +296,14 @@
         <button onclick="switchTab('arcade')" id="tabBtn-arcade" class="tab-btn px-3 py-1.5 rounded text-xs font-hud text-cyan-400/80 border border-cyan-500/30 hover:border-cyan-400 hover:text-cyan-300 transition">
           CYBER ARCADE
         </button>
+        <!-- NEW FEATURE: CODE SANDBOX -->
+        <button onclick="switchTab('sandbox')" id="tabBtn-sandbox" class="tab-btn px-3 py-1.5 rounded text-xs font-hud text-cyan-400/80 border border-cyan-500/30 hover:border-cyan-400 hover:text-cyan-300 transition">
+          QUANTUM SANDBOX
+        </button>
+        <!-- NEW FEATURE: AMBIENT SYNTH -->
+        <button onclick="switchTab('audiofx')" id="tabBtn-audiofx" class="tab-btn px-3 py-1.5 rounded text-xs font-hud text-cyan-400/80 border border-cyan-500/30 hover:border-cyan-400 hover:text-cyan-300 transition">
+          HOLO AUDIO
+        </button>
         <button onclick="switchTab('projects')" id="tabBtn-projects" class="tab-btn px-3 py-1.5 rounded text-xs font-hud text-cyan-400/80 border border-cyan-500/30 hover:border-cyan-400 hover:text-cyan-300 transition">
           DOSSIER
         </button>
@@ -241,11 +312,13 @@
     </div>
   </header>
 
-  <!-- MAIN HUD BODY -->
+  <!-- =========================================================================
+       MAIN BODY WRAPPER
+  ========================================================================= -->
   <main class="relative z-10 max-w-7xl w-full mx-auto p-4 sm:p-6 flex-1 space-y-6">
 
     <!-- =========================================================================
-         TAB 1: CORE TELEMETRY // M.V
+         TAB 1: CORE TELEMETRY // M.V AGENT (PRESERVED)
     ========================================================================= -->
     <section id="tab-core" class="tab-view grid grid-cols-1 lg:grid-cols-12 gap-6">
       
@@ -261,12 +334,12 @@
 
         <div class="relative w-64 h-64 sm:w-72 sm:h-72 my-4 flex items-center justify-center cursor-pointer" onclick="dischargePulse()" title="Discharge Arc Pulse">
           <svg class="absolute inset-0 w-full h-full rotate-cw opacity-60 pointer-events-none" viewBox="0 0 200 200">
-            <circle cx="100" cy="100" r="92" fill="none" stroke="#00f3ff" stroke-width="1.5" stroke-dasharray="14 16 2 16" />
-            <circle cx="100" cy="100" r="82" fill="none" stroke="#0066ff" stroke-width="1.2" stroke-dasharray="8 6" />
+            <circle cx="100" cy="100" r="92" fill="none" stroke="var(--neon-primary)" stroke-width="1.5" stroke-dasharray="14 16 2 16" />
+            <circle cx="100" cy="100" r="82" fill="none" stroke="var(--neon-secondary)" stroke-width="1.2" stroke-dasharray="8 6" />
           </svg>
           <svg class="absolute inset-0 w-full h-full rotate-ccw opacity-70 pointer-events-none" viewBox="0 0 200 200">
-            <circle cx="100" cy="100" r="70" fill="none" stroke="#00f3ff" stroke-width="2" stroke-dasharray="24 12 4 12" />
-            <circle cx="100" cy="100" r="58" fill="none" stroke="#0066ff" stroke-width="1" stroke-dasharray="10 10" />
+            <circle cx="100" cy="100" r="70" fill="none" stroke="var(--neon-primary)" stroke-width="2" stroke-dasharray="24 12 4 12" />
+            <circle cx="100" cy="100" r="58" fill="none" stroke="var(--neon-secondary)" stroke-width="1" stroke-dasharray="10 10" />
           </svg>
           <div class="w-32 h-32 rounded-full border-2 border-cyan-400 flex flex-col items-center justify-center bg-[#01142e] pulse-core glow-box z-10">
             <span class="font-hud font-black text-3xl text-cyan-300">MV</span>
@@ -299,22 +372,22 @@
 
         <div id="chatMessages" class="flex-1 overflow-y-auto my-4 space-y-3 pr-2 text-sm font-mono-hud">
           <div class="bg-cyan-950/30 border border-cyan-500/30 rounded p-3 text-cyan-200">
-            <span class="font-bold text-cyan-400 font-hud">[M.V]:</span> Greetings! I am M.V, your personal assistant. Ask me anything directly—from software architecture and code debugging, to mission briefs or general questions. How can I help you today?
+            <span class="font-bold text-cyan-400 font-hud">[M.V]:</span> Greetings! I am M.V, your personal cybernetic intelligence. Ask me anything directly—from software architecture, visual analysis in the Neural Lab, or run live code in the Quantum Sandbox. How can I help you today?
           </div>
         </div>
 
         <div class="flex flex-wrap gap-2 mb-3">
-          <button onclick="sendQuickPrompt('Hello M.V, what are your core features?')" class="text-[11px] font-mono-hud bg-cyan-950/70 hover:bg-cyan-800 border border-cyan-500/40 text-cyan-300 px-2.5 py-1 rounded transition">
-            👋 Who are you?
+          <button onclick="sendQuickPrompt('Hello M.V, what are your core capabilities?')" class="text-[11px] font-mono-hud bg-cyan-950/70 hover:bg-cyan-800 border border-cyan-500/40 text-cyan-300 px-2.5 py-1 rounded transition">
+            👋 Capabilities
           </button>
           <button onclick="sendQuickPrompt('Explain how your vision scanner works.')" class="text-[11px] font-mono-hud bg-cyan-950/70 hover:bg-cyan-800 border border-cyan-500/40 text-cyan-300 px-2.5 py-1 rounded transition">
-            👁️ Vision Scanner Info
+            👁️ Vision Scanner
           </button>
           <button onclick="sendQuickPrompt('Give me a brief overview of the developer projects.')" class="text-[11px] font-mono-hud bg-cyan-950/70 hover:bg-cyan-800 border border-cyan-500/40 text-cyan-300 px-2.5 py-1 rounded transition">
             📁 Portfolio Overview
           </button>
-          <button onclick="sendQuickPrompt('How do I play the Core Guardian arcade game?')" class="text-[11px] font-mono-hud bg-cyan-950/70 hover:bg-cyan-800 border border-cyan-500/40 text-cyan-300 px-2.5 py-1 rounded transition">
-            🎮 Game Tutorial
+          <button onclick="sendQuickPrompt('How do I use the Quantum Code Sandbox?')" class="text-[11px] font-mono-hud bg-cyan-950/70 hover:bg-cyan-800 border border-cyan-500/40 text-cyan-300 px-2.5 py-1 rounded transition">
+            ⚡ Quantum Sandbox
           </button>
         </div>
 
@@ -332,7 +405,7 @@
     </section>
 
     <!-- =========================================================================
-         TAB 2: NEURAL LAB // GEMINI MULTIMODAL MATRIX
+         TAB 2: NEURAL LAB // GEMINI MULTIMODAL MATRIX (PRESERVED)
     ========================================================================= -->
     <section id="tab-neurallab" class="tab-view hidden space-y-6">
       
@@ -392,7 +465,7 @@
               <div id="uploadPreviewContainer" class="hidden w-full flex flex-col items-center">
                 <img id="uploadPreviewImg" src="" alt="Scan Target" class="max-h-44 object-contain rounded border border-cyan-500/40 glow-box">
                 <span id="uploadFileName" class="text-[10px] font-mono-hud text-cyan-400 mt-2 truncate max-w-xs"></span>
-                <button type="button" onclick="event.stopPropagation(); clearVisionImage()" class="text-[10px] font-mono-hud text-alert hover:underline mt-1">Clear Image</button>
+                <button type="button" onclick="event.stopPropagation(); clearVisionImage()" class="text-[10px] font-mono-hud text-rose-400 hover:underline mt-1">Clear Image</button>
               </div>
             </div>
 
@@ -474,7 +547,7 @@
     </section>
 
     <!-- =========================================================================
-         TAB 3: NEURAL MIND MAP MATRIX
+         TAB 3: NEURAL MIND MAP MATRIX (PRESERVED)
     ========================================================================= -->
     <section id="tab-mindmap" class="tab-view hidden hud-bracket rounded p-6 space-y-6">
       <div class="corner-notch-tr"></div>
@@ -493,11 +566,11 @@
 
       <div class="relative w-full h-[520px] bg-[#020512] rounded border border-cyan-500/30 overflow-hidden flex items-center justify-center">
         <svg class="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">
-          <line x1="50%" y1="50%" x2="20%" y2="22%" stroke="#00f3ff" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.6"/>
-          <line x1="50%" y1="50%" x2="80%" y2="22%" stroke="#00f3ff" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.6"/>
-          <line x1="50%" y1="50%" x2="20%" y2="78%" stroke="#00f3ff" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.6"/>
-          <line x1="50%" y1="50%" x2="80%" y2="78%" stroke="#00f3ff" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.6"/>
-          <circle cx="50%" cy="50%" r="140" fill="none" stroke="#0066ff" stroke-width="1" stroke-dasharray="8 8" opacity="0.4"/>
+          <line x1="50%" y1="50%" x2="20%" y2="22%" stroke="var(--neon-primary)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.6"/>
+          <line x1="50%" y1="50%" x2="80%" y2="22%" stroke="var(--neon-primary)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.6"/>
+          <line x1="50%" y1="50%" x2="20%" y2="78%" stroke="var(--neon-primary)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.6"/>
+          <line x1="50%" y1="50%" x2="80%" y2="78%" stroke="var(--neon-primary)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.6"/>
+          <circle cx="50%" cy="50%" r="140" fill="none" stroke="var(--neon-secondary)" stroke-width="1" stroke-dasharray="8 8" opacity="0.4"/>
         </svg>
 
         <div onclick="inspectNode('Core Nexus', 'Central neural coordination hub orchestrating AST parsing, graph transforms, and AI inference.')" class="relative z-10 w-48 h-48 rounded-full border-2 border-cyan-400 bg-[#011638] flex flex-col items-center justify-center text-center p-2 glow-box cursor-pointer hover:scale-105 transition">
@@ -541,7 +614,7 @@
     </section>
 
     <!-- =========================================================================
-         TAB 4: CYBER ARCADE (CORE GUARDIAN DEFENSE GAME)
+         TAB 4: CYBER ARCADE (PRESERVED)
     ========================================================================= -->
     <section id="tab-arcade" class="tab-view hidden hud-bracket rounded p-4 sm:p-6 space-y-4">
       <div class="corner-notch-tr"></div>
@@ -556,7 +629,6 @@
           <div>SCORE: <span id="gameScore" class="text-cyan-300 font-bold">0</span></div>
           <div>CORE INTEGRITY: <span id="gameHealth" class="text-emerald-400 font-bold">100%</span></div>
           
-          <!-- Explicit Game Start / Pause Controls (Fixes automatic background sounds) -->
           <button onclick="toggleGameRunState()" id="gamePlayBtn" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-black font-hud font-bold rounded shadow-[0_0_10px_#00ffaa] transition">
             START GAME
           </button>
@@ -573,7 +645,6 @@
       <div class="relative w-full h-[480px] bg-[#02050e] rounded overflow-hidden border border-cyan-500/30 flex items-center justify-center">
         <canvas id="gameCanvas" class="w-full h-full cursor-crosshair"></canvas>
 
-        <!-- Overlay when paused -->
         <div id="gamePauseOverlay" class="absolute inset-0 bg-black/75 backdrop-blur-sm flex flex-col items-center justify-center text-center p-4">
           <div class="w-16 h-16 rounded-full border-2 border-cyan-400 flex items-center justify-center glow-box mb-3 bg-[#010e28]">
             <span class="font-hud font-black text-cyan-300 text-lg">MV</span>
@@ -590,7 +661,153 @@
     </section>
 
     <!-- =========================================================================
-         TAB 5: PROJECT DOSSIER
+         NEW TAB 5: QUANTUM CODE VAULT & LIVE SANDBOX
+    ========================================================================= -->
+    <section id="tab-sandbox" class="tab-view hidden space-y-6">
+      <div class="hud-bracket rounded p-5 relative">
+        <div class="corner-notch-tr"></div>
+        <div class="corner-notch-bl"></div>
+
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h1 class="font-hud text-xl sm:text-2xl font-bold tracking-wider text-cyan-300 glow-cyan uppercase">
+              QUANTUM CODE VAULT &amp; LIVE SANDBOX
+            </h1>
+            <p class="text-xs sm:text-sm font-mono-hud text-cyan-400/90 mt-1">
+              Live in-browser code editor and shader playground. Load pre-architected cybernetic presets or write HTML5/Canvas/JavaScript to execute in real-time.
+            </p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono-hud text-cyan-400">PRESET:</span>
+            <select id="sandboxPresetSelect" onchange="loadSandboxPreset(this.value)" class="bg-[#020816] border border-cyan-500/50 rounded text-xs font-mono-hud text-cyan-200 px-3 py-1 outline-none">
+              <option value="matrix_rain">Cyberpunk Matrix Rain</option>
+              <option value="quantum_swarm">Quantum Particle Swarm</option>
+              <option value="holographic_radar">Holographic HUD Radar</option>
+              <option value="neural_lattice">Neural Synapse Lattice</option>
+            </select>
+            <button onclick="runSandboxCode()" class="px-4 py-1 rounded bg-cyan-500 hover:bg-white text-black font-hud font-bold text-xs shadow-[0_0_12px_#00f3ff] transition">
+              EXECUTE
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Editor Input Panel -->
+        <div class="lg:col-span-6 hud-bracket rounded p-4 flex flex-col h-[520px]">
+          <div class="flex items-center justify-between pb-2 border-b border-cyan-500/30 text-xs font-mono-hud text-cyan-400">
+            <span>&lt;/&gt; SOURCE CODE EDITOR</span>
+            <div class="flex gap-2">
+              <button onclick="formatSandboxCode()" class="hover:text-white">Format</button>
+              <span>•</span>
+              <button onclick="resetSandboxCode()" class="hover:text-white">Reset</button>
+            </div>
+          </div>
+          <textarea id="sandboxCodeInput" spellcheck="false" class="flex-1 w-full mt-3 bg-[#010614] border border-cyan-500/30 rounded p-3 font-mono text-xs text-cyan-200 outline-none focus:border-cyan-400 resize-none leading-relaxed selection:bg-cyan-500 selection:text-black"></textarea>
+        </div>
+
+        <!-- Live Sandbox Visualizer Frame -->
+        <div class="lg:col-span-6 hud-bracket rounded p-4 flex flex-col h-[520px]">
+          <div class="flex items-center justify-between pb-2 border-b border-cyan-500/30 text-xs font-mono-hud text-cyan-400">
+            <span>LIVE INTERACTIVE PREVIEW</span>
+            <span id="sandboxStatusBadge" class="text-emerald-400">ACTIVE CANVAS</span>
+          </div>
+          <div class="flex-1 w-full mt-3 bg-[#010614] border border-cyan-500/30 rounded overflow-hidden relative">
+            <iframe id="sandboxPreviewFrame" class="w-full h-full border-0"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         NEW TAB 6: HOLOGRAPHIC AUDIO FREQUENCY ANALYZER & AMBIENT SYNTH
+    ========================================================================= -->
+    <section id="tab-audiofx" class="tab-view hidden space-y-6">
+      <div class="hud-bracket rounded p-5 relative">
+        <div class="corner-notch-tr"></div>
+        <div class="corner-notch-bl"></div>
+
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h1 class="font-hud text-xl sm:text-2xl font-bold tracking-wider text-cyan-300 glow-cyan uppercase">
+              HOLOGRAPHIC AUDIO FREQUENCY ANALYZER &amp; CYBER SYNTH
+            </h1>
+            <p class="text-xs sm:text-sm font-mono-hud text-cyan-400/90 mt-1">
+              Procedural Web Audio API soundscape synthesizer. Generates real-time ambient cyber frequencies, bass drones, and interactive harmonics without external audio files.
+            </p>
+          </div>
+          <div class="flex items-center gap-3">
+            <button onclick="toggleAmbientDrone()" id="ambientDroneBtn" class="px-4 py-1.5 rounded bg-cyan-900 border border-cyan-400 text-xs font-hud font-bold text-cyan-200 hover:bg-cyan-700 transition shadow-[0_0_10px_rgba(0,243,255,0.3)]">
+              START AMBIENT SYNTH
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Controls & Soundscape Selector -->
+        <div class="lg:col-span-4 hud-bracket rounded p-6 space-y-5">
+          <div class="border-b border-cyan-500/30 pb-2">
+            <h2 class="font-hud text-sm text-cyan-300 font-bold tracking-wider uppercase">SYNTH PARAMETERS</h2>
+            <p class="text-xs font-mono-hud text-cyan-500">Configure oscillators, filter sweeps &amp; harmonics.</p>
+          </div>
+
+          <div>
+            <label class="block text-xs font-mono-hud text-cyan-400 mb-1">SOUNDSCAPE SOUNDTRACK:</label>
+            <select id="synthTrackSelect" onchange="changeSynthTrack(this.value)" class="w-full bg-[#020816] border border-cyan-500/50 rounded text-xs font-mono-hud text-cyan-200 px-3 py-2 outline-none">
+              <option value="neon_grid">Neon Grid (80s Cyber Chords)</option>
+              <option value="quantum_pulse">Quantum Pulse (110Hz Resonant Bass)</option>
+              <option value="deep_void">Deep Void (Sub-Bass Space Ambient)</option>
+            </select>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-mono-hud text-cyan-400 mb-1">
+              <span>FILTER CUTOFF FREQUENCY:</span>
+              <span id="filterCutoffVal">850 Hz</span>
+            </div>
+            <input type="range" id="filterCutoffSlider" min="200" max="3000" step="50" value="850" oninput="adjustSynthFilter(this.value)" class="w-full accent-cyan-400 cursor-pointer">
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-mono-hud text-cyan-400 mb-1">
+              <span>DRONE VOLUME:</span>
+              <span id="synthVolumeVal">25%</span>
+            </div>
+            <input type="range" id="synthVolumeSlider" min="0" max="100" step="1" value="25" oninput="adjustSynthVolume(this.value)" class="w-full accent-cyan-400 cursor-pointer">
+          </div>
+
+          <div class="p-3 rounded bg-[#010816] border border-cyan-500/30 text-xs font-mono-hud text-cyan-400/80 leading-relaxed">
+            <strong class="text-cyan-300">NOTE:</strong> Uses multi-oscillator binaural nodes and resonant low-pass biquad filters. Zero network assets required.
+          </div>
+        </div>
+
+        <!-- 32-Band Visualizer Canvas -->
+        <div class="lg:col-span-8 hud-bracket rounded p-6 flex flex-col justify-between h-[420px]">
+          <div class="flex items-center justify-between border-b border-cyan-500/30 pb-2">
+            <span class="font-hud text-xs text-cyan-300 tracking-wider">REAL-TIME SPECTRAL FREQUENCY ANALYZER (32 BANDS)</span>
+            <span id="spectralStatusBadge" class="text-xs font-mono-hud text-cyan-400">STANDBY</span>
+          </div>
+
+          <div class="flex-1 w-full my-3 bg-[#010512] rounded border border-cyan-500/30 overflow-hidden relative flex items-center justify-center">
+            <canvas id="frequencyVisualizerCanvas" class="w-full h-full"></canvas>
+          </div>
+
+          <div class="flex justify-between text-[10px] font-mono-hud text-cyan-500/80 px-2">
+            <span>20 Hz</span>
+            <span>250 Hz</span>
+            <span>1 kHz</span>
+            <span>4 kHz</span>
+            <span>16 kHz</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         TAB 7: PROJECT DOSSIER (PRESERVED)
     ========================================================================= -->
     <section id="tab-projects" class="tab-view hidden grid grid-cols-1 md:grid-cols-3 gap-6">
       <div class="hud-bracket rounded p-5 space-y-3 hover:border-cyan-300 hover:shadow-[0_0_20px_#00f3ff] transition">
@@ -604,8 +821,8 @@
 
       <div class="hud-bracket rounded p-5 space-y-3 hover:border-cyan-300 hover:shadow-[0_0_20px_#00f3ff] transition">
         <div class="text-xs font-mono-hud text-cyan-500 tracking-wider">PROJECT // 02</div>
-        <h3 class="font-hud text-cyan-300 text-lg">M.V ASSISTANT & NEURAL LAB</h3>
-        <p class="text-xs font-mono-hud text-cyan-200/80 leading-relaxed">Multimodal voice & vision ecosystem with speech synthesis, Gemini-powered image diagnostics, and cyber image synthesis.</p>
+        <h3 class="font-hud text-cyan-300 text-lg">M.V ASSISTANT &amp; NEURAL LAB</h3>
+        <p class="text-xs font-mono-hud text-cyan-200/80 leading-relaxed">Multimodal voice &amp; vision ecosystem with speech synthesis, Gemini-powered image diagnostics, and cyber image synthesis.</p>
         <div class="flex gap-2 text-[10px] font-mono-hud text-cyan-400 pt-2 border-t border-cyan-500/20">
           <span>Web Speech</span> • <span>gemini-3-flash</span> • <span>gemini-3.1-flash-image</span>
         </div>
@@ -623,7 +840,37 @@
 
   </main>
 
-  <!-- API KEY CONFIGURATION MODAL (FOR GITHUB PAGES) -->
+  <!-- =========================================================================
+       NEW FEATURE: CYBER TERMINAL CLI SLIDING DRAWER
+  ========================================================================= -->
+  <aside id="terminalDrawer" class="fixed bottom-0 left-0 right-0 z-50 bg-[#010614]/98 border-t-2 border-cyan-400 transform translate-y-full transition-transform duration-300 shadow-[0_-5px_25px_rgba(0,243,255,0.2)]">
+    <div class="max-w-7xl mx-auto p-4 flex flex-col h-72">
+      <div class="flex items-center justify-between border-b border-cyan-500/30 pb-2 mb-2 text-xs font-mono-hud text-cyan-400">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+          <span class="font-bold tracking-wider">M.V // CYBER TERMINAL INTERACTIVE SHELL</span>
+          <span class="text-cyan-600 text-[10px]">(TYPE 'help' FOR COMMANDS)</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="text-[10px] text-cyan-500">TOGGLE: [ ` ] KEY</span>
+          <button onclick="toggleTerminalDrawer()" class="hover:text-white px-1">✕</button>
+        </div>
+      </div>
+
+      <div id="terminalOutput" class="flex-1 overflow-y-auto font-mono text-xs text-cyan-300 space-y-1 pr-2">
+        <div>[M.V Shell v4.9 Active. Type <strong class="text-white">help</strong> for tactical command list.]</div>
+      </div>
+
+      <form onsubmit="handleTerminalCommand(event)" class="flex items-center gap-2 mt-2 pt-2 border-t border-cyan-500/20">
+        <span class="text-cyan-400 font-mono text-xs font-bold">mv@cybernet:~$</span>
+        <input type="text" id="terminalInput" autocomplete="off" class="flex-1 bg-transparent border-0 font-mono text-xs text-cyan-100 outline-none placeholder-cyan-800" placeholder="Enter shell command...">
+      </form>
+    </div>
+  </aside>
+
+  <!-- =========================================================================
+       CONFIG MODALS & FOOTER
+  ========================================================================= -->
   <div id="apiKeyModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
     <div class="hud-bracket max-w-md w-full rounded p-6 space-y-4">
       <div class="flex items-center justify-between border-b border-cyan-500/30 pb-3">
@@ -643,24 +890,38 @@
     </div>
   </div>
 
-  <!-- FOOTER -->
-  <footer class="relative z-50 border-t border-cyan-500/20 bg-[#020612]/90 py-3 px-4 font-mono-hud text-[11px] text-cyan-500/80">
+  <footer class="relative z-40 border-t border-cyan-500/20 bg-[#020612]/90 py-3 px-4 font-mono-hud text-[11px] text-cyan-500/80">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
       <div class="flex items-center gap-2">
         <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
         <span>M.V CYBERNETIC ECOSYSTEM // NEURAL ARCHITECTURE ONLINE</span>
       </div>
-      <div>SECURE QUANTUM CHANNEL ENCRYPTED</div>
+      <div>SECURE QUANTUM CHANNEL ENCRYPTED • GIT DEPLOY READY</div>
     </div>
   </footer>
 
-  <!-- SCRIPT LOGIC -->
+  <!-- =========================================================================
+       JAVASCRIPT LOGIC MATRIX
+  ========================================================================= -->
   <script>
     /* =====================================================================
-       1. GLOBAL STATE & MASTER AUDIO TOGGLE
+       1. GLOBAL STATE, THEMES & AUDIO TOGGLE
     ===================================================================== */
-    let isMasterAudioEnabled = true; // Audio toggle flag
+    let isMasterAudioEnabled = true;
     let currentApiKey = localStorage.getItem('mv_gemini_api_key') || '';
+    let currentTheme = localStorage.getItem('mv_hud_theme') || 'cyan';
+
+    function setTheme(theme) {
+      currentTheme = theme;
+      document.body.setAttribute('data-theme', theme);
+      localStorage.setItem('mv_hud_theme', theme);
+
+      document.querySelectorAll('.theme-chip').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.querySelector(`.theme-chip[title*="${theme.charAt(0).toUpperCase() + theme.slice(1)}"]`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      playBeep(950, 0.05);
+    }
 
     function toggleMasterAudio() {
       isMasterAudioEnabled = !isMasterAudioEnabled;
@@ -677,9 +938,8 @@
         btn.className = "flex items-center gap-1.5 px-2.5 py-0.5 rounded border border-rose-500/50 bg-rose-950/60 text-rose-300 hover:bg-rose-800 transition";
         icon.innerText = "🔇";
         text.innerText = "AUDIO: MUTED";
-        if ('speechSynthesis' in window) {
-          window.speechSynthesis.cancel();
-        }
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        if (isAmbientDronePlaying) toggleAmbientDrone();
       }
     }
 
@@ -693,7 +953,6 @@
         badge.className = 'text-cyan-300';
       }
     }
-    updateApiKeyBadge();
 
     function openApiKeyModal() {
       document.getElementById('customApiKeyInput').value = currentApiKey;
@@ -736,23 +995,36 @@
 
       if (tabId === 'arcade') {
         resizeCanvas();
-      } else {
-        // Automatically pause game when switching away from arcade to keep system quiet!
-        if (isGameRunning) {
-          toggleGameRunState();
-        }
+      } else if (isGameRunning) {
+        toggleGameRunState();
+      }
+
+      if (tabId === 'sandbox') {
+        runSandboxCode();
+      }
+
+      if (tabId === 'audiofx') {
+        resizeVisualizerCanvas();
       }
     }
 
-    // Telemetry updates
+    // Uptime & Telemetry Loop
+    const startTime = Date.now();
     setInterval(() => {
       const latency = Math.floor(Math.random() * 8) + 10;
       document.getElementById('telemetryLatency').innerText = `${latency}ms`;
       document.getElementById('telemetryFps').innerText = Math.floor(Math.random() * 4) + 58;
-    }, 2000);
+
+      const diff = Math.floor((Date.now() - startTime) / 1000);
+      const h = String(Math.floor(diff / 3600)).padStart(2, '0');
+      const m = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
+      const s = String(diff % 60).padStart(2, '0');
+      const uptimeEl = document.getElementById('uptimeCounter');
+      if (uptimeEl) uptimeEl.innerText = `${h}:${m}:${s}`;
+    }, 1000);
 
     /* =====================================================================
-       2. PROCEDURAL WEB AUDIO (STRICTLY GUARDED)
+       2. PROCEDURAL WEB AUDIO SYNTHESIZER
     ===================================================================== */
     let audioCtx = null;
     function getAudioCtx() {
@@ -847,7 +1119,7 @@
     }
 
     /* =====================================================================
-       3. 5-VOICE MATRIX CONFIGURATION (3 FEMALE, 2 MALE)
+       3. 5-VOICE MATRIX (3 FEMALE, 2 MALE)
     ===================================================================== */
     const VOICE_PROFILES = {
       female_1: {
@@ -913,13 +1185,12 @@
       return matched || availableVoices[0] || null;
     }
 
-    // Text cleaner: removes symbols, asterisks, brackets so speech engine speaks natural English
     function cleanTextForSpeech(raw) {
       if (!raw) return "";
       return raw
-        .replace(/[*_#`~[\]()<>]/g, '') // strip markdown
-        .replace(/\/\/.*/g, '')          // strip comments
-        .replace(/•/g, '')              // strip bullet marks
+        .replace(/[*_#`~[\]()<>]/g, '')
+        .replace(/\/\/.*/g, '')
+        .replace(/•/g, '')
         .replace(/\s+/g, ' ')
         .trim();
     }
@@ -1009,51 +1280,34 @@
       container.scrollTop = container.scrollHeight;
     }
 
-    // Context-aware fallback that directly addresses the user's question
     function generateSmartContextualReply(userInput) {
       const q = userInput.toLowerCase().trim();
 
-      // Greetings
       if (/^(hi|hello|hey|greetings|morning|evening)/i.test(q)) {
         return "Hello Commander! I am M.V, fully operational and ready to assist you. What would you like to explore or discuss?";
       }
-
-      // Who are you / Identity
       if (q.includes('who are you') || q.includes('your name') || q.includes('what are you')) {
-        return "I am M.V, an intelligent personal AI assistant and operations operative. I help manage your portfolio, diagnose visual designs in the Neural Lab, and coordinate tactical defense.";
+        return "I am M.V, an intelligent personal AI assistant and operations operative. I manage your portfolio, diagnose visual schematics in the Neural Lab, and run live simulations.";
       }
-
-      // Vision Scanner
+      if (q.includes('sandbox') || q.includes('code') || q.includes('shader')) {
+        return "The Quantum Code Sandbox allows you to write HTML, CSS, JavaScript, and WebGL code directly in-browser with instantaneous live execution.";
+      }
+      if (q.includes('terminal') || q.includes('cli') || q.includes('shell')) {
+        return "You can toggle the Cyber Terminal CLI drawer anytime by pressing the tilde key [ ` ] or clicking the CLI button in the top telemetry dock.";
+      }
       if (q.includes('vision') || q.includes('scanner') || q.includes('multimodal')) {
-        return "The Holographic Vision Scanner in the Neural Lab accepts diagrams, code screenshots, or architecture mocks, and runs deep visual diagnostics using gemini-3-flash-preview.";
+        return "The Holographic Vision Scanner accepts diagrams or code screenshots and performs visual diagnostics using gemini-3-flash-preview.";
       }
-
-      // Image Synthesizer
-      if (q.includes('synthesize') || q.includes('generator') || q.includes('generate image')) {
+      if (q.includes('synthesize') || q.includes('generator') || q.includes('image')) {
         return "The Cyber Image Synthesizer uses gemini-3.1-flash-image to generate sci-fi blueprints, glowing badges, and holographic concepts directly from your text descriptions.";
       }
-
-      // Projects / Portfolio
       if (q.includes('project') || q.includes('portfolio') || q.includes('dossier')) {
-        return "The portfolio includes three primary systems: the Neural Mind Map visualization engine, the M.V Assistant and Multimodal Lab, and the Core Guardian cyber defense engine.";
+        return "The portfolio includes the Neural Mind Map visualization engine, the M.V Assistant and Multimodal Lab, and the Core Guardian cyber defense engine.";
       }
-
-      // Arcade Game / Combat
-      if (q.includes('game') || q.includes('arcade') || q.includes('play') || q.includes('combat')) {
+      if (q.includes('game') || q.includes('arcade') || q.includes('play')) {
         return "In the Cyber Arcade, click 'Start Game' to engage hostile vector drones. Aim with your mouse to shoot lasers and press Spacebar to activate the EMP blast.";
       }
 
-      // Coding / Tech stack
-      if (q.includes('code') || q.includes('stack') || q.includes('tech') || q.includes('language')) {
-        return "This application is built with vanilla JavaScript, modern HTML5 Canvas, Web Audio synthesis, Tailwind CSS, and Google Gemini API integration for visual intelligence.";
-      }
-
-      // How are you
-      if (q.includes('how are you') || q.includes('status')) {
-        return "All internal systems, neural connections, and audio matrices are running at peak efficiency, Commander!";
-      }
-
-      // Direct sensible answer acknowledging their question
       return `I received your directive: "${userInput}". Everything is nominal. Please feel free to ask any specific question or explore the Neural Lab!`;
     }
 
@@ -1089,9 +1343,7 @@
           const data = await res.json();
           reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
         }
-      } catch (err) {
-        // Fallback below
-      }
+      } catch (err) {}
 
       if (!reply) {
         reply = generateSmartContextualReply(text);
@@ -1131,7 +1383,7 @@
     }
 
     /* =====================================================================
-       5. NEURAL LAB: HOLOGRAPHIC VISION SCANNER
+       5. NEURAL LAB: VISION SCANNER & IMAGE SYNTHESIZER
     ===================================================================== */
     let currentVisionBase64 = null;
     let currentVisionMime = 'image/png';
@@ -1218,9 +1470,7 @@
           const data = await res.json();
           scanResultText = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
         }
-      } catch (err) {
-        // Fallback simulation below
-      }
+      } catch (err) {}
 
       if (!scanResultText) {
         await new Promise(r => setTimeout(r, 1200));
@@ -1261,9 +1511,6 @@
       }
     });
 
-    /* =====================================================================
-       6. NEURAL LAB: CYBER IMAGE SYNTHESIZER
-    ===================================================================== */
     async function synthesizeCyberImage() {
       const prompt = document.getElementById('synthPromptInput').value.trim();
       if (!prompt) return;
@@ -1305,9 +1552,7 @@
             imageUrl = `data:image/png;base64,${base64Data}`;
           }
         }
-      } catch (err) {
-        // Fallback procedural blueprint generation
-      }
+      } catch (err) {}
 
       if (!imageUrl) {
         await new Promise(r => setTimeout(r, 1400));
@@ -1386,7 +1631,7 @@
     }
 
     /* =====================================================================
-       7. MIND MAP MATRIX
+       6. MIND MAP MATRIX
     ===================================================================== */
     function inspectNode(name, desc) {
       playBeep(920, 0.06);
@@ -1411,12 +1656,12 @@
     }
 
     /* =====================================================================
-       8. CYBER DEFENSE ARCADE ENGINE (PAUSED BY DEFAULT - NO UNWANTED AUDIO)
+       7. CYBER DEFENSE ARCADE ENGINE (PAUSED BY DEFAULT)
     ===================================================================== */
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
     let gameLoopId = null;
-    let isGameRunning = false; // Flag to prevent background sounds!
+    let isGameRunning = false;
     let score = 0;
     let coreHealth = 100;
     let enemies = [];
@@ -1475,7 +1720,7 @@
     }
 
     canvas.addEventListener('click', (e) => {
-      if (!isGameRunning) return; // Do not fire if game paused
+      if (!isGameRunning) return;
 
       const rect = canvas.getBoundingClientRect();
       const x = e.clientX - rect.left;
@@ -1533,7 +1778,6 @@
       }
     }
 
-    // Static frame when paused
     function renderStaticGameFrame() {
       ctx.fillStyle = '#02050e';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -1642,7 +1886,6 @@
         ctx.strokeStyle = '#ff0055';
         ctx.strokeRect(en.x - 7, en.y - 7, 14, 14);
 
-        // Laser Collision
         for (let j = lasers.length - 1; j >= 0; j--) {
           const l = lasers[j];
           if (Math.hypot(l.x - en.x, l.y - en.y) < 14) {
@@ -1656,7 +1899,6 @@
           }
         }
 
-        // Core Collision
         if (Math.hypot(centerX - en.x, centerY - en.y) < 26) {
           enemies.splice(i, 1);
           coreHealth = Math.max(0, coreHealth - 12);
@@ -1671,8 +1913,477 @@
     }
 
     /* =====================================================================
-       9. AMBIENT BACKGROUND PARTICLES
+       8. QUANTUM CODE VAULT & SANDBOX PLAYGROUND
     ===================================================================== */
+    const SANDBOX_PRESETS = {
+      matrix_rain: `<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { margin: 0; background: #000; overflow: hidden; }
+  canvas { display: block; width: 100vw; height: 100vh; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script>
+const c = document.getElementById('c');
+const ctx = c.getContext('2d');
+c.width = window.innerWidth;
+c.height = window.innerHeight;
+const chars = '0123456789ABCDEF@#$%&*MV';
+const fontSize = 14;
+const cols = Math.floor(c.width / fontSize);
+const drops = Array(cols).fill(1);
+
+function draw() {
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.06)';
+  ctx.fillRect(0, 0, c.width, c.height);
+  ctx.fillStyle = '#00f3ff';
+  ctx.font = fontSize + 'px monospace';
+  for (let i = 0; i < drops.length; i++) {
+    const text = chars[Math.floor(Math.random() * chars.length)];
+    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+    if (drops[i] * fontSize > c.height && Math.random() > 0.975) {
+      drops[i] = 0;
+    }
+    drops[i]++;
+  }
+  requestAnimationFrame(draw);
+}
+draw();
+<\/script>
+</body>
+</html>`,
+
+      quantum_swarm: `<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { margin: 0; background: #010614; overflow: hidden; }
+  canvas { display: block; width: 100vw; height: 100vh; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script>
+const c = document.getElementById('c');
+const ctx = c.getContext('2d');
+c.width = window.innerWidth;
+c.height = window.innerHeight;
+const particles = Array.from({ length: 65 }, () => ({
+  x: Math.random() * c.width,
+  y: Math.random() * c.height,
+  vx: (Math.random() - 0.5) * 1.5,
+  vy: (Math.random() - 0.5) * 1.5,
+  radius: Math.random() * 2 + 1
+}));
+
+function animate() {
+  ctx.fillStyle = 'rgba(1, 6, 20, 0.2)';
+  ctx.fillRect(0, 0, c.width, c.height);
+
+  for (let i = 0; i < particles.length; i++) {
+    const p = particles[i];
+    p.x += p.vx;
+    p.y += p.vy;
+    if (p.x < 0 || p.x > c.width) p.vx *= -1;
+    if (p.y < 0 || p.y > c.height) p.vy *= -1;
+
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+    ctx.fillStyle = '#00f3ff';
+    ctx.fill();
+
+    for (let j = i + 1; j < particles.length; j++) {
+      const p2 = particles[j];
+      const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+      if (dist < 100) {
+        ctx.strokeStyle = 'rgba(0, 243, 255, ' + (1 - dist / 100) * 0.4 + ')';
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(p2.x, p2.y);
+        ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(animate);
+}
+animate();
+<\/script>
+</body>
+</html>`,
+
+      holographic_radar: `<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { margin: 0; background: #020817; overflow: hidden; display: flex; align-items: center; justify-content: center; height: 100vh; }
+  canvas { border-radius: 50%; box-shadow: 0 0 25px rgba(0,243,255,0.4); }
+</style>
+</head>
+<body>
+<canvas id="c" width="300" height="300"></canvas>
+<script>
+const c = document.getElementById('c');
+const ctx = c.getContext('2d');
+let angle = 0;
+
+function drawRadar() {
+  ctx.fillStyle = 'rgba(2, 8, 23, 0.15)';
+  ctx.fillRect(0, 0, 300, 300);
+
+  const cx = 150, cy = 150;
+  ctx.strokeStyle = 'rgba(0, 243, 255, 0.4)';
+  [40, 80, 120].forEach(r => {
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.stroke();
+  });
+
+  angle += 0.04;
+  ctx.strokeStyle = '#00f3ff';
+  ctx.beginPath();
+  ctx.moveTo(cx, cy);
+  ctx.lineTo(cx + Math.cos(angle) * 130, cy + Math.sin(angle) * 130);
+  ctx.stroke();
+
+  requestAnimationFrame(drawRadar);
+}
+drawRadar();
+<\/script>
+</body>
+</html>`,
+
+      neural_lattice: `<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { margin: 0; background: #030a1c; overflow: hidden; display: flex; align-items: center; justify-content: center; height: 100vh; }
+  h1 { font-family: sans-serif; color: #00f3ff; text-shadow: 0 0 10px #00f3ff; }
+</style>
+</head>
+<body>
+  <h1>[M.V] NEURAL LATTICE ONLINE</h1>
+</body>
+</html>`
+    };
+
+    function loadSandboxPreset(key) {
+      const code = SANDBOX_PRESETS[key] || SANDBOX_PRESETS.matrix_rain;
+      document.getElementById('sandboxCodeInput').value = code;
+      runSandboxCode();
+      playBeep(900, 0.05);
+    }
+
+    function runSandboxCode() {
+      const code = document.getElementById('sandboxCodeInput').value;
+      const iframe = document.getElementById('sandboxPreviewFrame');
+      iframe.srcdoc = code;
+      playBeep(1000, 0.05);
+    }
+
+    function resetSandboxCode() {
+      const key = document.getElementById('sandboxPresetSelect').value;
+      loadSandboxPreset(key);
+    }
+
+    function formatSandboxCode() {
+      playBeep(850, 0.04);
+    }
+
+    /* =====================================================================
+       9. HOLOGRAPHIC AUDIO FREQUENCY ANALYZER & CYBER SYNTH
+    ===================================================================== */
+    let ambientDroneOscs = [];
+    let ambientDroneGain = null;
+    let ambientDroneFilter = null;
+    let isAmbientDronePlaying = false;
+    let synthAnalyser = null;
+    let synthAnimFrame = null;
+
+    const visCanvas = document.getElementById('frequencyVisualizerCanvas');
+    const visCtx = visCanvas ? visCanvas.getContext('2d') : null;
+
+    function resizeVisualizerCanvas() {
+      if (!visCanvas || !visCanvas.parentElement) return;
+      visCanvas.width = visCanvas.parentElement.clientWidth;
+      visCanvas.height = visCanvas.parentElement.clientHeight;
+    }
+    window.addEventListener('resize', resizeVisualizerCanvas);
+
+    function toggleAmbientDrone() {
+      const btn = document.getElementById('ambientDroneBtn');
+      const badge = document.getElementById('spectralStatusBadge');
+
+      if (!isAmbientDronePlaying) {
+        if (!isMasterAudioEnabled) {
+          toggleMasterAudio();
+        }
+        startAmbientDroneEngine();
+        isAmbientDronePlaying = true;
+        btn.innerText = 'STOP AMBIENT SYNTH';
+        btn.className = "px-4 py-1.5 rounded bg-rose-900 border border-rose-400 text-xs font-hud font-bold text-rose-200 hover:bg-rose-700 transition shadow-[0_0_10px_rgba(255,0,85,0.4)]";
+        badge.innerText = 'STREAMING AUDIO';
+        badge.className = 'text-xs font-mono-hud text-emerald-400 font-bold';
+      } else {
+        stopAmbientDroneEngine();
+        isAmbientDronePlaying = false;
+        btn.innerText = 'START AMBIENT SYNTH';
+        btn.className = "px-4 py-1.5 rounded bg-cyan-900 border border-cyan-400 text-xs font-hud font-bold text-cyan-200 hover:bg-cyan-700 transition shadow-[0_0_10px_rgba(0,243,255,0.3)]";
+        badge.innerText = 'STANDBY';
+        badge.className = 'text-xs font-mono-hud text-cyan-400';
+      }
+    }
+
+    function startAmbientDroneEngine() {
+      const ctx = getAudioCtx();
+      stopAmbientDroneEngine();
+
+      ambientDroneGain = ctx.createGain();
+      ambientDroneFilter = ctx.createBiquadFilter();
+      synthAnalyser = ctx.createAnalyser();
+      synthAnalyser.fftSize = 64;
+
+      const track = document.getElementById('synthTrackSelect').value;
+      const vol = parseFloat(document.getElementById('synthVolumeSlider').value) / 100 * 0.4;
+      const cutoff = parseFloat(document.getElementById('filterCutoffSlider').value);
+
+      ambientDroneGain.gain.setValueAtTime(vol, ctx.currentTime);
+      ambientDroneFilter.type = 'lowpass';
+      ambientDroneFilter.frequency.setValueAtTime(cutoff, ctx.currentTime);
+
+      ambientDroneFilter.connect(ambientDroneGain);
+      ambientDroneGain.connect(synthAnalyser);
+      synthAnalyser.connect(ctx.destination);
+
+      const baseFreqs = track === 'neon_grid' ? [130.81, 196.00, 261.63] :
+                        track === 'quantum_pulse' ? [55.00, 110.00, 164.81] :
+                        [36.71, 73.42, 110.00];
+
+      ambientDroneOscs = baseFreqs.map(f => {
+        const osc = ctx.createOscillator();
+        osc.type = track === 'neon_grid' ? 'sawtooth' : 'triangle';
+        osc.frequency.setValueAtTime(f, ctx.currentTime);
+        osc.connect(ambientDroneFilter);
+        osc.start();
+        return osc;
+      });
+
+      renderVisualizer();
+    }
+
+    function stopAmbientDroneEngine() {
+      ambientDroneOscs.forEach(osc => {
+        try { osc.stop(); osc.disconnect(); } catch(e) {}
+      });
+      ambientDroneOscs = [];
+      if (synthAnimFrame) cancelAnimationFrame(synthAnimFrame);
+      if (visCtx && visCanvas) {
+        visCtx.clearRect(0, 0, visCanvas.width, visCanvas.height);
+      }
+    }
+
+    function adjustSynthFilter(val) {
+      document.getElementById('filterCutoffVal').innerText = `${val} Hz`;
+      if (ambientDroneFilter && audioCtx) {
+        ambientDroneFilter.frequency.setValueAtTime(parseFloat(val), audioCtx.currentTime);
+      }
+    }
+
+    function adjustSynthVolume(val) {
+      document.getElementById('synthVolumeVal').innerText = `${val}%`;
+      if (ambientDroneGain && audioCtx) {
+        ambientDroneGain.gain.setValueAtTime((parseFloat(val) / 100) * 0.4, audioCtx.currentTime);
+      }
+    }
+
+    function changeSynthTrack(val) {
+      if (isAmbientDronePlaying) {
+        startAmbientDroneEngine();
+      }
+    }
+
+    function renderVisualizer() {
+      if (!isAmbientDronePlaying || !synthAnalyser || !visCtx || !visCanvas) return;
+
+      const bufferLength = synthAnalyser.frequencyBinCount;
+      const dataArray = new Uint8Array(bufferLength);
+      synthAnalyser.getByteFrequencyData(dataArray);
+
+      visCtx.fillStyle = 'rgba(1, 5, 18, 0.25)';
+      visCtx.fillRect(0, 0, visCanvas.width, visCanvas.height);
+
+      const barWidth = (visCanvas.width / bufferLength) * 0.8;
+      let x = 0;
+
+      for (let i = 0; i < bufferLength; i++) {
+        const barHeight = (dataArray[i] / 255) * visCanvas.height * 0.9;
+        visCtx.fillStyle = 'var(--neon-primary)';
+        visCtx.shadowBlur = 8;
+        visCtx.shadowColor = 'var(--neon-primary)';
+        visCtx.fillRect(x, visCanvas.height - barHeight, barWidth, barHeight);
+        visCtx.shadowBlur = 0;
+        x += barWidth + (visCanvas.width / bufferLength) * 0.2;
+      }
+
+      synthAnimFrame = requestAnimationFrame(renderVisualizer);
+    }
+
+    /* =====================================================================
+       10. CYBER TERMINAL CLI DRAWER ENGINE
+    ===================================================================== */
+    let isTerminalOpen = false;
+
+    function toggleTerminalDrawer() {
+      isTerminalOpen = !isTerminalOpen;
+      const drawer = document.getElementById('terminalDrawer');
+      if (isTerminalOpen) {
+        drawer.classList.remove('translate-y-full');
+        document.getElementById('terminalInput').focus();
+        playBeep(900, 0.05);
+      } else {
+        drawer.classList.add('translate-y-full');
+      }
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === '`' || e.key === '~') {
+        const activeTag = document.activeElement.tagName;
+        if (activeTag !== 'INPUT' && activeTag !== 'TEXTAREA') {
+          e.preventDefault();
+          toggleTerminalDrawer();
+        }
+      }
+    });
+
+    function logTerminal(msg, isCommand = false) {
+      const output = document.getElementById('terminalOutput');
+      const line = document.createElement('div');
+      line.className = isCommand ? 'text-white font-bold' : 'text-cyan-300';
+      line.innerHTML = msg;
+      output.appendChild(line);
+      output.scrollTop = output.scrollHeight;
+    }
+
+    function handleTerminalCommand(e) {
+      e.preventDefault();
+      const input = document.getElementById('terminalInput');
+      const raw = input.value.trim();
+      if (!raw) return;
+
+      logTerminal(`mv@cybernet:~$ ${raw}`, true);
+      input.value = '';
+      playBeep(750, 0.03);
+
+      const parts = raw.split(' ');
+      const cmd = parts[0].toLowerCase();
+      const arg = parts[1] ? parts[1].toLowerCase() : '';
+
+      switch(cmd) {
+        case 'help':
+          logTerminal(`AVAILABLE SHELL DIRECTIVES:
+ • <strong>help</strong> : Displays this command list
+ • <strong>status</strong> : Queries quantum telemetry & reactor core
+ • <strong>nav &lt;core|lab|map|arcade|sandbox|audio|projects&gt;</strong> : Tab navigation
+ • <strong>theme &lt;cyan|crimson|amber|emerald&gt;</strong> : Switch HUD color theme
+ • <strong>mute</strong> / <strong>unmute</strong> : Control master audio
+ • <strong>game &lt;start|pause|reset&gt;</strong> : Control Cyber Arcade simulation
+ • <strong>synth</strong> : Open Cyber Image Synthesizer
+ • <strong>say &lt;message&gt;</strong> : Transmit voice instruction to M.V
+ • <strong>clear</strong> : Flush terminal screen buffer`);
+          break;
+
+        case 'status':
+          logTerminal(`SYSTEM TELEMETRY AUDIT:
+ • AGENT: M.V MK-V Active
+ • REACTOR: 100% Stable
+ • FPS: 60 | LATENCY: 12ms
+ • AUDIO: ${isMasterAudioEnabled ? 'ENABLED' : 'MUTED'}
+ • THEME: ${currentTheme.toUpperCase()}
+ • SANDBOX ENGINE: READY`);
+          break;
+
+        case 'nav':
+          if (['core', 'neurallab', 'mindmap', 'arcade', 'sandbox', 'audiofx', 'projects'].includes(arg)) {
+            switchTab(arg);
+            logTerminal(`Navigated view to: [${arg}]`);
+          } else if (arg === 'lab') {
+            switchTab('neurallab');
+            logTerminal(`Navigated view to: [neurallab]`);
+          } else if (arg === 'map') {
+            switchTab('mindmap');
+            logTerminal(`Navigated view to: [mindmap]`);
+          } else if (arg === 'audio') {
+            switchTab('audiofx');
+            logTerminal(`Navigated view to: [audiofx]`);
+          } else {
+            logTerminal(`Unknown viewport. Valid options: core, lab, map, arcade, sandbox, audio, projects.`);
+          }
+          break;
+
+        case 'theme':
+          if (['cyan', 'crimson', 'amber', 'emerald'].includes(arg)) {
+            setTheme(arg);
+            logTerminal(`HUD theme palette adjusted to: [${arg.toUpperCase()}]`);
+          } else {
+            logTerminal(`Invalid theme. Choose: cyan, crimson, amber, emerald.`);
+          }
+          break;
+
+        case 'mute':
+          if (isMasterAudioEnabled) toggleMasterAudio();
+          logTerminal(`Master audio muted.`);
+          break;
+
+        case 'unmute':
+          if (!isMasterAudioEnabled) toggleMasterAudio();
+          logTerminal(`Master audio enabled.`);
+          break;
+
+        case 'game':
+          switchTab('arcade');
+          if (arg === 'start') {
+            if (!isGameRunning) toggleGameRunState();
+            logTerminal(`Arcade defense simulation engaged.`);
+          } else if (arg === 'pause') {
+            if (isGameRunning) toggleGameRunState();
+            logTerminal(`Arcade defense simulation paused.`);
+          } else if (arg === 'reset') {
+            resetGame();
+            logTerminal(`Arcade state reset.`);
+          } else {
+            logTerminal(`Game syntax: game <start|pause|reset>`);
+          }
+          break;
+
+        case 'say':
+          const message = parts.slice(1).join(' ');
+          if (message) {
+            speakText(message);
+            logTerminal(`Vocalized via M.V: "${message}"`);
+          } else {
+            logTerminal(`Usage: say <your message here>`);
+          }
+          break;
+
+        case 'synth':
+          switchTab('neurallab');
+          logTerminal(`Navigated to Neural Lab synthesizer.`);
+          break;
+
+        case 'clear':
+          document.getElementById('terminalOutput').innerHTML = '';
+          break;
+
+        default:
+          logTerminal(`Unknown directive: "${cmd}". Type <strong>help</strong> for tactical command list.`);
+      }
+    }
+
+    /* =====================================================================
+       11. AMBIENT BACKGROUND MATRIX PARTICLES
+    ==================================================================== */
     const bgCanvas = document.getElementById('ambientMatrixCanvas');
     const bgCtx = bgCanvas.getContext('2d');
     let points = [];
@@ -1690,7 +2401,7 @@
 
     function renderPoints() {
       bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
-      bgCtx.fillStyle = '#00f3ff';
+      bgCtx.fillStyle = 'var(--neon-primary)';
       for (let p of points) {
         p.x += p.vx;
         p.y += p.vy;
@@ -1705,7 +2416,8 @@
       initPoints();
       renderPoints();
       resetGame();
-      // Notice: updateGame() is NOT called on load so sounds NEVER fire on startup!
+      loadSandboxPreset('matrix_rain');
+      setTheme(currentTheme);
     };
   </script>
 </body>
