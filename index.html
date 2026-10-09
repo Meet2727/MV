@@ -313,7 +313,6 @@
         <button onclick="switchTab('audiofx')" id="tabBtn-audiofx" class="tab-btn px-3 py-1.5 rounded text-xs font-hud text-cyan-400/80 border border-cyan-500/30 hover:border-cyan-400 hover:text-cyan-300 transition">
           HOLO AUDIO
         </button>
-        <!-- NEW ADDED TAB: CYBER DIAGNOSTICS & ENCRYPTION MATRIX -->
         <button onclick="switchTab('telemetrysec')" id="tabBtn-telemetrysec" class="tab-btn px-3 py-1.5 rounded text-xs font-hud text-cyan-400/80 border border-cyan-500/30 hover:border-cyan-400 hover:text-cyan-300 transition">
           CYBER VAULT
         </button>
@@ -331,7 +330,7 @@
   <main class="relative z-10 max-w-7xl w-full mx-auto p-4 sm:p-6 flex-1 space-y-6">
 
     <!-- =========================================================================
-         TAB 1: CORE TELEMETRY // M.V AGENT (PRESERVED)
+         TAB 1: CORE TELEMETRY // M.V AGENT
     ========================================================================= -->
     <section id="tab-core" class="tab-view grid grid-cols-1 lg:grid-cols-12 gap-6">
       
@@ -418,7 +417,7 @@
     </section>
 
     <!-- =========================================================================
-         TAB 2: NEURAL LAB // GEMINI MULTIMODAL MATRIX (PRESERVED)
+         TAB 2: NEURAL LAB // GEMINI MULTIMODAL MATRIX
     ========================================================================= -->
     <section id="tab-neurallab" class="tab-view hidden space-y-6">
       
@@ -436,7 +435,7 @@
             </p>
           </div>
           <div class="shrink-0 bg-[#02091c] border border-cyan-500/50 px-3.5 py-2 rounded text-[11px] font-mono-hud text-cyan-300 shadow-[0_0_10px_rgba(0,243,255,0.15)]">
-            ACTIVE MODELS: <span class="text-white font-bold">gemini-3-flash-preview & gemini-3.1-flash-image</span>
+            ACTIVE MODELS: <span class="text-white font-bold">gemini-3-flash-preview & imagen-3.0-generate-002</span>
           </div>
         </div>
       </div>
@@ -509,12 +508,12 @@
                 CYBER IMAGE SYNTHESIZER
               </h2>
               <span class="text-[11px] font-mono-hud text-cyan-400/90 bg-cyan-950/80 px-2.5 py-0.5 rounded border border-cyan-500/30">
-                gemini-3.1-flash-image
+                imagen-3.0-generate-002
               </span>
             </div>
 
             <p class="text-xs font-mono-hud text-cyan-400/80 mb-4 leading-relaxed">
-              Synthesize sci-fi concept badges, glowing UI nodes, and futuristic architectural schematics using Gemini's native image model.
+              Synthesize sci-fi concept badges, glowing UI nodes, and futuristic architectural schematics using Gemini's native image model or instant procedural vector synthesis.
             </p>
 
             <div class="flex items-center gap-2 mb-4">
@@ -539,7 +538,7 @@
                 <span class="font-hud text-xs font-bold text-cyan-200">M.V</span>
               </div>
               <span class="font-hud text-xs tracking-wider text-cyan-300 animate-pulse">SYNTHESIZING HOLOGRAPHIC ASSET...</span>
-              <span class="text-[10px] font-mono-hud text-cyan-500 mt-1">Executing gemini-3.1-flash-image payload matrix</span>
+              <span class="text-[10px] font-mono-hud text-cyan-500 mt-1">Executing cyber image payload matrix</span>
             </div>
 
             <div id="synthResultState" class="hidden w-full h-full flex flex-col items-center justify-center">
@@ -560,7 +559,7 @@
     </section>
 
     <!-- =========================================================================
-         TAB 3: NEURAL MIND MAP MATRIX (PRESERVED)
+         TAB 3: NEURAL MIND MAP MATRIX
     ========================================================================= -->
     <section id="tab-mindmap" class="tab-view hidden hud-bracket rounded p-6 space-y-6">
       <div class="corner-notch-tr"></div>
@@ -627,7 +626,7 @@
     </section>
 
     <!-- =========================================================================
-         TAB 4: CYBER ARCADE (PRESERVED)
+         TAB 4: CYBER ARCADE
     ========================================================================= -->
     <section id="tab-arcade" class="tab-view hidden hud-bracket rounded p-4 sm:p-6 space-y-4">
       <div class="corner-notch-tr"></div>
@@ -674,7 +673,7 @@
     </section>
 
     <!-- =========================================================================
-         TAB 5: QUANTUM CODE VAULT & LIVE SANDBOX (PRESERVED)
+         TAB 5: QUANTUM CODE VAULT & LIVE SANDBOX
     ========================================================================= -->
     <section id="tab-sandbox" class="tab-view hidden space-y-6">
       <div class="hud-bracket rounded p-5 relative">
@@ -733,7 +732,7 @@
     </section>
 
     <!-- =========================================================================
-         TAB 6: HOLOGRAPHIC AUDIO FREQUENCY ANALYZER & AMBIENT SYNTH (PRESERVED)
+         TAB 6: HOLOGRAPHIC AUDIO FREQUENCY ANALYZER & AMBIENT SYNTH
     ========================================================================= -->
     <section id="tab-audiofx" class="tab-view hidden space-y-6">
       <div class="hud-bracket rounded p-5 relative">
@@ -820,7 +819,7 @@
     </section>
 
     <!-- =========================================================================
-         NEW TAB 7: CYBER VAULT // TELEMETRY, CIPHER & QUANTUM PING
+         TAB 7: CYBER VAULT // TELEMETRY, CIPHER & QUANTUM PING
     ========================================================================= -->
     <section id="tab-telemetrysec" class="tab-view hidden space-y-6">
       <div class="hud-bracket rounded p-5 relative">
@@ -953,7 +952,7 @@
     </section>
 
     <!-- =========================================================================
-         TAB 8: PROJECT DOSSIER (PRESERVED)
+         TAB 8: PROJECT DOSSIER
     ========================================================================= -->
     <section id="tab-projects" class="tab-view hidden grid grid-cols-1 md:grid-cols-3 gap-6">
       <div class="hud-bracket rounded p-5 space-y-3 hover:border-cyan-300 hover:shadow-[0_0_20px_#00f3ff] transition">
@@ -970,7 +969,7 @@
         <h3 class="font-hud text-cyan-300 text-lg">M.V ASSISTANT &amp; NEURAL LAB</h3>
         <p class="text-xs font-mono-hud text-cyan-200/80 leading-relaxed">Multimodal voice &amp; vision ecosystem with speech synthesis, Gemini-powered image diagnostics, and cyber image synthesis.</p>
         <div class="flex gap-2 text-[10px] font-mono-hud text-cyan-400 pt-2 border-t border-cyan-500/20">
-          <span>Web Speech</span> • <span>gemini-3-flash</span> • <span>gemini-3.1-flash-image</span>
+          <span>Web Speech</span> • <span>gemini-3-flash</span> • <span>imagen-3.0-generate-002</span>
         </div>
       </div>
 
@@ -987,7 +986,7 @@
   </main>
 
   <!-- =========================================================================
-       CYBER TERMINAL CLI SLIDING DRAWER (PRESERVED)
+       CYBER TERMINAL CLI SLIDING DRAWER
   ========================================================================= -->
   <aside id="terminalDrawer" class="fixed bottom-0 left-0 right-0 z-50 bg-[#010614]/98 border-t-2 border-cyan-400 transform translate-y-full transition-transform duration-300 shadow-[0_-5px_25px_rgba(0,243,255,0.2)]">
     <div class="max-w-7xl mx-auto p-4 flex flex-col h-72">
@@ -1448,7 +1447,7 @@
         return "The Holographic Vision Scanner accepts diagrams or code screenshots and performs visual diagnostics using gemini-3-flash-preview.";
       }
       if (q.includes('synthesize') || q.includes('generator') || q.includes('image')) {
-        return "The Cyber Image Synthesizer uses gemini-3.1-flash-image to generate sci-fi blueprints, glowing badges, and holographic concepts directly from your text descriptions.";
+        return "The Cyber Image Synthesizer generates sci-fi blueprints, glowing badges, and holographic concepts directly from your text descriptions.";
       }
       if (q.includes('project') || q.includes('portfolio') || q.includes('dossier')) {
         return "The portfolio includes the Neural Mind Map visualization engine, the M.V Assistant and Multimodal Lab, and the Core Guardian cyber defense engine.";
@@ -1665,66 +1664,73 @@
       if (!prompt) return;
 
       playBeep(920, 0.07);
-      document.getElementById('synthStandbyState').classList.add('hidden');
-      document.getElementById('synthResultState').classList.add('hidden');
-      document.getElementById('synthLoadingState').classList.remove('hidden');
-
+      
+      const standbyEl = document.getElementById('synthStandbyState');
+      const resultEl = document.getElementById('synthResultState');
+      const loadingEl = document.getElementById('synthLoadingState');
       const synthBtn = document.getElementById('synthActionBtn');
+
+      standbyEl.classList.add('hidden');
+      resultEl.classList.add('hidden');
+      loadingEl.classList.remove('hidden');
+
       synthBtn.innerText = 'SYNTHESIZING...';
       synthBtn.disabled = true;
 
-      const keyToUse = currentApiKey || "";
+      const keyToUse = (typeof currentApiKey !== 'undefined' ? currentApiKey : '').trim();
       let imageUrl = null;
 
+      // 1. If an API key is present, attempt live generation
       if (keyToUse) {
         try {
-          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key=${keyToUse}`;
-          const payload = {
-            contents: [{
-              parts: [{ text: prompt }]
-            }],
-            generationConfig: {
-              responseModalities: ['TEXT', 'IMAGE']
-            }
-          };
-
+          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${keyToUse}`;
           const res = await fetch(apiUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
+            body: JSON.stringify({
+              instances: [{ prompt: prompt }],
+              parameters: { sampleCount: 1, aspectRatio: "1:1" }
+            })
           });
 
           if (res.ok) {
             const data = await res.json();
-            const candidates = data?.candidates || [];
-            for (const cand of candidates) {
-              const parts = cand?.content?.parts || [];
-              for (const part of parts) {
-                if (part.inlineData && part.inlineData.data) {
-                  const mime = part.inlineData.mimeType || 'image/png';
-                  imageUrl = `data:${mime};base64,${part.inlineData.data}`;
-                  break;
-                }
-              }
-              if (imageUrl) break;
+            const b64 = data?.predictions?.[0]?.bytesBase64Encoded;
+            const mime = data?.predictions?.[0]?.mimeType || 'image/png';
+            if (b64) {
+              imageUrl = `data:${mime};base64,${b64}`;
             }
           }
-        } catch (err) {}
+        } catch (err) {
+          console.warn("Live API call encountered an issue, falling back to local procedural synthesizer:", err);
+        }
       }
 
+      // 2. Procedural Canvas generator fallback (instant, offline & 100% reliable)
       if (!imageUrl) {
-        await new Promise(r => setTimeout(r, 1100));
-        imageUrl = generateProceduralBlueprintDataUrl(prompt);
+        try {
+          imageUrl = generateProceduralBlueprintDataUrl(prompt);
+        } catch (canvasErr) {
+          console.error("Canvas generation error:", canvasErr);
+        }
       }
 
-      document.getElementById('synthLoadingState').classList.add('hidden');
-      document.getElementById('synthResultState').classList.remove('hidden');
-      document.getElementById('synthGeneratedImg').src = imageUrl;
-      document.getElementById('synthDownloadBtn').href = imageUrl;
+      // 3. Render Output
+      loadingEl.classList.add('hidden');
+
+      if (imageUrl) {
+        const imgEl = document.getElementById('synthGeneratedImg');
+        const dlBtn = document.getElementById('synthDownloadBtn');
+        imgEl.src = imageUrl;
+        dlBtn.href = imageUrl;
+        resultEl.classList.remove('hidden');
+        playBeep(1200, 0.1);
+      } else {
+        standbyEl.classList.remove('hidden');
+      }
 
       synthBtn.innerText = 'SYNTHESIZE';
       synthBtn.disabled = false;
-      playBeep(1200, 0.1);
     }
 
     function generateProceduralBlueprintDataUrl(promptText) {
@@ -2383,7 +2389,7 @@ drawRadar();
     }
 
     /* =====================================================================
-       NEW FEATURE 10: CYBER VAULT // TELEMETRY, CIPHER & HARDWARE AUDIT
+       10. CYBER VAULT // TELEMETRY, CIPHER & HARDWARE AUDIT
     ===================================================================== */
     function runDiagnosticsAudit() {
       playBeep(980, 0.08);
