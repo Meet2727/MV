@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+l<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -181,7 +181,7 @@
       pointer-events: none;
     }
 
-    .wave-bar { transition: height 0.07s ease; }
+    .wave-bar { transition: height 0.06s ease; }
 
     /* Custom Scrollbars */
     ::-webkit-scrollbar { width: 5px; height: 5px; }
@@ -201,7 +201,6 @@
 <body class="relative min-h-screen flex flex-col selection:bg-cyan-400 selection:text-black">
   <div class="fixed inset-0 scanlines z-40 pointer-events-none"></div>
   <canvas id="ambientMatrixCanvas" class="fixed inset-0 pointer-events-none z-0 opacity-40"></canvas>
-  <!-- NEW FEATURE: Matrix Overlay Canvas -->
   <canvas id="matrixOverlayCanvas" class="fixed inset-0 pointer-events-none z-[45] opacity-0 transition-opacity duration-700 hidden"></canvas>
 
   <!-- =========================================================================
@@ -211,7 +210,7 @@
     <div class="flex items-center gap-4">
       <span>LATENCY: <strong id="telemetryLatency" class="text-cyan-300">12ms</strong></span>
       <span>SYS FPS: <strong id="telemetryFps" class="text-cyan-300">60</strong></span>
-      <span>API LINK: <strong id="apiKeyBadge" class="text-cyan-300">CANVAS RUNTIME</strong></span>
+      <span>API LINK: <strong id="apiKeyBadge" class="text-cyan-300">QUANTUM RUNTIME</strong></span>
       <span class="hidden md:inline">SYSTEM RUNTIME: <strong id="uptimeCounter" class="text-cyan-300">00:00:00</strong></span>
     </div>
     
@@ -265,18 +264,18 @@
         </div>
       </div>
 
-      <!-- VOICE MATRIX SELECTOR -->
+      <!-- VOICE CADENCE SELECTOR -->
       <div class="flex items-center gap-2 bg-[#050f24] border border-cyan-500/40 px-3 py-1.5 rounded">
         <span class="text-xs text-cyan-400 uppercase tracking-wider font-semibold font-mono-hud">VOICE:</span>
         <select id="voiceProfileSelect" class="bg-[#020816] text-xs text-cyan-200 border border-cyan-500/50 rounded px-2.5 py-1 outline-none cursor-pointer font-mono-hud">
-          <optgroup label="Female Voice Units">
-            <option value="female_1" selected>F-01 // Valkyrie (Crisp & High)</option>
-            <option value="female_2">F-02 // Athena (Warm & Natural)</option>
-            <option value="female_3">F-03 // Nyx (Deep Tactical Stealth)</option>
+          <optgroup label="Neural Human-Cadence (Female)">
+            <option value="neural_valkyrie" selected>F-01 // Valkyrie (Adaptive Human Inflection)</option>
+            <option value="neural_athena">F-02 // Athena (Warm Conversational)</option>
+            <option value="neural_nyx">F-03 // Nyx (Deep Tactical Cadence)</option>
           </optgroup>
-          <optgroup label="Male Voice Units">
-            <option value="male_1">M-01 // Titan (Authoritative Deep)</option>
-            <option value="male_2">M-02 // Apex (Crisp Tactical)</option>
+          <optgroup label="Neural Human-Cadence (Male)">
+            <option value="neural_titan">M-01 // Titan (Command Resonant)</option>
+            <option value="neural_apex">M-02 // Apex (Tactical Fast Pace)</option>
           </optgroup>
         </select>
         <button onclick="testSelectedVoice()" class="text-[11px] font-mono-hud px-2.5 py-1 bg-cyan-900/80 hover:bg-cyan-700/80 border border-cyan-400 rounded text-cyan-200 transition shadow-[0_0_8px_rgba(0,243,255,0.3)]">
@@ -322,47 +321,65 @@
     ========================================================================= -->
     <section id="tab-core" class="tab-view grid grid-cols-1 lg:grid-cols-12 gap-6">
       
-      <!-- HOLOGRAPHIC ROTATING ARC REACTOR CORE -->
-      <div class="lg:col-span-5 hud-bracket rounded p-6 flex flex-col items-center justify-between relative min-h-[480px]">
+      <!-- HOLOGRAPHIC 3D ARC REACTOR CORE -->
+      <div class="lg:col-span-5 hud-bracket rounded p-6 flex flex-col items-center justify-between relative min-h-[580px]">
         <div class="corner-notch-tr"></div>
         <div class="corner-notch-bl"></div>
 
         <div class="w-full flex items-center justify-between text-xs font-mono-hud tracking-widest text-cyan-400/80 border-b border-cyan-500/30 pb-2">
-          <span>CORE TELEMETRY // M.V</span>
-          <span id="coreStatusLabel" class="text-emerald-400">REACTOR NOMINAL</span>
+          <span>3D QUANTUM CORE // M.V</span>
+          <span id="coreStatusLabel" class="text-emerald-400">REACTOR SYNAPSE 100%</span>
         </div>
 
-        <div class="relative w-64 h-64 sm:w-72 sm:h-72 my-4 flex items-center justify-center cursor-pointer" onclick="dischargePulse()" title="Discharge Arc Pulse">
-          <svg class="absolute inset-0 w-full h-full rotate-cw opacity-60 pointer-events-none" viewBox="0 0 200 200">
-            <circle cx="100" cy="100" r="92" fill="none" stroke="var(--neon-primary)" stroke-width="1.5" stroke-dasharray="14 16 2 16" />
-            <circle cx="100" cy="100" r="82" fill="none" stroke="var(--neon-secondary)" stroke-width="1.2" stroke-dasharray="8 6" />
-          </svg>
-          <svg class="absolute inset-0 w-full h-full rotate-ccw opacity-70 pointer-events-none" viewBox="0 0 200 200">
-            <circle cx="100" cy="100" r="70" fill="none" stroke="var(--neon-primary)" stroke-width="2" stroke-dasharray="24 12 4 12" />
-            <circle cx="100" cy="100" r="58" fill="none" stroke="var(--neon-secondary)" stroke-width="1" stroke-dasharray="10 10" />
-          </svg>
-          <div class="w-32 h-32 rounded-full border-2 border-cyan-400 flex flex-col items-center justify-center bg-[#01142e] pulse-core glow-box z-10">
-            <span class="font-hud font-black text-3xl text-cyan-300">MV</span>
-            <span class="text-[9px] font-mono-hud tracking-widest text-cyan-400 uppercase mt-0.5">SYNAPSE ACTIVE</span>
+        <!-- Interactive 3D Wireframe Canvas Core -->
+        <div class="relative w-72 h-72 my-2 flex items-center justify-center cursor-pointer group" onclick="dischargePulse()" title="Drag mouse to rotate holographic core // Click to discharge pulse">
+          <canvas id="hologramCoreCanvas" width="280" height="280" class="absolute inset-0 z-0"></canvas>
+          <div class="relative z-10 w-28 h-28 rounded-full border-2 border-cyan-400/80 flex flex-col items-center justify-center bg-[#01142e]/90 pulse-core glow-box pointer-events-none">
+            <span class="font-hud font-black text-2xl text-cyan-300">MV</span>
+            <span class="text-[8px] font-mono-hud tracking-widest text-cyan-400 uppercase mt-0.5">3D NEXUS ACTIVE</span>
           </div>
         </div>
 
-        <!-- VOICE HARMONIC MATRIX DISPLAY -->
-        <div class="w-full bg-[#010816] p-3 rounded border border-cyan-500/30">
-          <div class="flex items-center justify-between text-[11px] font-mono-hud text-cyan-400 mb-2">
-            <span>VOICE HARMONIC MATRIX</span>
+        <!-- VOICE HARMONIC MATRIX DISPLAY & MIC INGEST -->
+        <div class="w-full bg-[#010816] p-3 rounded border border-cyan-500/30 space-y-2">
+          <div class="flex items-center justify-between text-[11px] font-mono-hud text-cyan-400">
+            <div class="flex items-center gap-2">
+              <span>VOICE CADENCE MATRIX</span>
+              <button onclick="toggleMicrophoneSpectrum()" id="micUplinkBtn" class="text-[9px] px-1.5 py-0.5 border border-cyan-500/40 bg-cyan-950/60 rounded text-cyan-300 hover:bg-cyan-800">
+                MIC UPLINK: OFF
+              </button>
+            </div>
             <span id="voiceStatusBadge" class="text-cyan-300 font-bold">STANDBY</span>
           </div>
+          
           <div id="spectrumBars" class="flex items-end justify-center gap-1.5 h-10 px-2"></div>
+
+          <!-- Human Speech Prosody Tuning Controls -->
+          <div class="pt-2 border-t border-cyan-500/20 grid grid-cols-2 gap-2 text-[10px] font-mono-hud text-cyan-400/80">
+            <div>
+              <div class="flex justify-between">
+                <span>CADENCE RATE:</span>
+                <span id="cadenceRateLabel">1.02x</span>
+              </div>
+              <input type="range" id="speechRateSlider" min="0.8" max="1.3" step="0.02" value="1.02" oninput="updateCadenceSettings()" class="w-full accent-cyan-400 h-1 cursor-pointer">
+            </div>
+            <div>
+              <div class="flex justify-between">
+                <span>INFLECTION PITCH:</span>
+                <span id="cadencePitchLabel">1.00</span>
+              </div>
+              <input type="range" id="speechPitchSlider" min="0.7" max="1.4" step="0.05" value="1.00" oninput="updateCadenceSettings()" class="w-full accent-cyan-400 h-1 cursor-pointer">
+            </div>
+          </div>
         </div>
 
-        <!-- NEW FEATURE: QUANTUM UPLINK MONITOR -->
-        <div class="w-full bg-[#010816] p-3 rounded border border-cyan-500/30 mt-4">
-          <div class="flex items-center justify-between text-[11px] font-mono-hud text-cyan-400 mb-2">
+        <!-- QUANTUM UPLINK MONITOR -->
+        <div class="w-full bg-[#010816] p-3 rounded border border-cyan-500/30 mt-3">
+          <div class="flex items-center justify-between text-[11px] font-mono-hud text-cyan-400 mb-1">
             <span>NETWORK UPLINK TRAFFIC</span>
-            <span class="text-emerald-400 font-bold animate-pulse">LIVE</span>
+            <span class="text-emerald-400 font-bold animate-pulse">TRANSMITTING</span>
           </div>
-          <canvas id="networkChartCanvas" class="w-full h-12 rounded"></canvas>
+          <canvas id="networkChartCanvas" class="w-full h-10 rounded"></canvas>
         </div>
       </div>
 
@@ -393,11 +410,11 @@
           <button onclick="sendQuickPrompt('Explain how your vision scanner works.')" class="text-[11px] font-mono-hud bg-cyan-950/70 hover:bg-cyan-800 border border-cyan-500/40 text-cyan-300 px-2.5 py-1 rounded transition">
             👁️ Vision Scanner
           </button>
-          <button onclick="sendQuickPrompt('Give me a brief overview of the developer projects.')" class="text-[11px] font-mono-hud bg-cyan-950/70 hover:bg-cyan-800 border border-cyan-500/40 text-cyan-300 px-2.5 py-1 rounded transition">
-            📁 Portfolio Overview
+          <button onclick="sendQuickPrompt('Demonstrate your human voice inflection and pauses.')" class="text-[11px] font-mono-hud bg-cyan-950/70 hover:bg-cyan-800 border border-cyan-500/40 text-cyan-300 px-2.5 py-1 rounded transition">
+            🎙️ Natural Speech
           </button>
-          <button onclick="sendQuickPrompt('How do I use the Quantum Code Sandbox?')" class="text-[11px] font-mono-hud bg-cyan-950/70 hover:bg-cyan-800 border border-cyan-500/40 text-cyan-300 px-2.5 py-1 rounded transition">
-            ⚡ Quantum Sandbox
+          <button onclick="sendQuickPrompt('How do I run batch generations in the Image Synthesizer?')" class="text-[11px] font-mono-hud bg-cyan-950/70 hover:bg-cyan-800 border border-cyan-500/40 text-cyan-300 px-2.5 py-1 rounded transition">
+            ⚡ Unlimited Batch Gen
           </button>
         </div>
 
@@ -415,7 +432,7 @@
     </section>
 
     <!-- =========================================================================
-         TAB 2: NEURAL LAB // GEMINI MULTIMODAL MATRIX
+         TAB 2: NEURAL LAB // MULTIMODAL MATRIX & UNLIMITED SYNTHESIZER
     ========================================================================= -->
     <section id="tab-neurallab" class="tab-view hidden space-y-6">
       
@@ -426,14 +443,14 @@
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <h1 class="font-hud text-xl sm:text-2xl font-bold tracking-wider text-cyan-300 glow-cyan uppercase">
-              NEURAL LAB // CYBER VISUAL MATRIX
+              NEURAL LAB // MULTIMODAL MATRIX &amp; UNLIMITED ASSET GENERATOR
             </h1>
             <p class="text-xs sm:text-sm font-mono-hud text-cyan-400/90 mt-1">
-              Explore advanced multimodal capabilities: upload architectural images for deep diagnostics or generate tactical holographic cyber artwork.
+              Deep visual diagnostics engine paired with an unrestricted, multi-model holographic asset synthesizer. Zero rate limits, multi-aspect ratios, and batch rendering.
             </p>
           </div>
           <div class="shrink-0 bg-[#02091c] border border-cyan-500/50 px-3.5 py-2 rounded text-[11px] font-mono-hud text-cyan-300 shadow-[0_0_10px_rgba(0,243,255,0.15)]">
-            ACTIVE ENGINES: <span class="text-white font-bold">gemini-vision & pollinations-synth</span>
+            SYNTH ENGINE: <span class="text-emerald-400 font-bold">UNLIMITED FREE MULTI-NODE</span>
           </div>
         </div>
       </div>
@@ -441,7 +458,7 @@
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         <!-- LEFT: HOLOGRAPHIC VISION SCANNER -->
-        <div class="hud-bracket rounded p-6 flex flex-col justify-between relative min-h-[580px]">
+        <div class="hud-bracket rounded p-6 flex flex-col justify-between relative min-h-[640px]">
           <div class="corner-notch-tr"></div>
           <div class="corner-notch-bl"></div>
 
@@ -487,7 +504,7 @@
             </div>
           </div>
 
-          <div class="mt-4 bg-[#010614] border border-cyan-500/30 rounded p-3 text-xs font-mono-hud min-h-[140px] max-h-[170px] overflow-y-auto">
+          <div class="mt-4 bg-[#010614] border border-cyan-500/30 rounded p-3 text-xs font-mono-hud min-h-[160px] max-h-[190px] overflow-y-auto">
             <div id="visionTelemetryLog" class="text-cyan-500/80 leading-relaxed whitespace-pre-wrap">
 // Optical telemetry stream awaiting input image...
             </div>
@@ -495,39 +512,72 @@
 
         </div>
 
-        <!-- RIGHT: CYBER IMAGE SYNTHESIZER (FIXED) -->
-        <div class="hud-bracket rounded p-6 flex flex-col justify-between relative min-h-[580px]">
+        <!-- RIGHT: UPGRADED UNLIMITED CYBER IMAGE SYNTHESIZER -->
+        <div class="hud-bracket rounded p-6 flex flex-col justify-between relative min-h-[640px]">
           <div class="corner-notch-tr"></div>
           <div class="corner-notch-bl"></div>
 
           <div>
             <div class="flex items-center justify-between border-b border-cyan-500/30 pb-3 mb-3">
-              <h2 class="font-hud text-base font-bold tracking-wider text-cyan-300 glow-cyan uppercase">
-                CYBER IMAGE SYNTHESIZER
-              </h2>
-              <span class="text-[11px] font-mono-hud text-cyan-400/90 bg-cyan-950/80 px-2.5 py-0.5 rounded border border-cyan-500/30">
-                pollinations-api (Lifetime Free)
-              </span>
+              <div class="flex items-center gap-2">
+                <h2 class="font-hud text-base font-bold tracking-wider text-cyan-300 glow-cyan uppercase">
+                  UNLIMITED ASSET SYNTHESIZER
+                </h2>
+                <span class="text-[9px] font-mono-hud bg-emerald-950 border border-emerald-500 text-emerald-300 px-1.5 py-0.5 rounded">NO LIMITS</span>
+              </div>
+              
+              <!-- Quick Style Injections -->
+              <div class="flex items-center gap-1">
+                <button onclick="applyStylePreset('blueprint')" class="text-[10px] font-mono-hud bg-cyan-950 hover:bg-cyan-800 text-cyan-300 px-2 py-0.5 rounded border border-cyan-500/30">Blueprint</button>
+                <button onclick="applyStylePreset('cyberpunk')" class="text-[10px] font-mono-hud bg-cyan-950 hover:bg-cyan-800 text-cyan-300 px-2 py-0.5 rounded border border-cyan-500/30">Cyberpunk</button>
+                <button onclick="applyStylePreset('hologram')" class="text-[10px] font-mono-hud bg-cyan-950 hover:bg-cyan-800 text-cyan-300 px-2 py-0.5 rounded border border-cyan-500/30">Holo 3D</button>
+              </div>
             </div>
 
-            <p class="text-xs font-mono-hud text-cyan-400/80 mb-4 leading-relaxed">
-              Synthesize sci-fi concept badges, glowing UI nodes, and futuristic architectural schematics in real-time. No API keys required.
-            </p>
+            <!-- Parameters Grid -->
+            <div class="grid grid-cols-3 gap-2 mb-3 text-[11px] font-mono-hud">
+              <div>
+                <label class="block text-cyan-500 text-[10px] mb-0.5">SYNTH MODEL:</label>
+                <select id="synthModelSelect" class="w-full bg-[#020816] border border-cyan-500/40 rounded px-2 py-1 text-cyan-200 outline-none">
+                  <option value="flux">Flux.1 (Ultra Realism)</option>
+                  <option value="turbo">Turbo (Instant Render)</option>
+                  <option value="flux-realism">Flux Realism (Sci-Fi)</option>
+                  <option value="flux-3d">Flux 3D Holographic</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-cyan-500 text-[10px] mb-0.5">ASPECT RATIO:</label>
+                <select id="synthRatioSelect" class="w-full bg-[#020816] border border-cyan-500/40 rounded px-2 py-1 text-cyan-200 outline-none">
+                  <option value="16:9">16:9 Landscape</option>
+                  <option value="1:1">1:1 Square Node</option>
+                  <option value="9:16">9:16 Mobile HUD</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-cyan-500 text-[10px] mb-0.5">BATCH SIZE:</label>
+                <select id="synthBatchSelect" class="w-full bg-[#020816] border border-cyan-500/40 rounded px-2 py-1 text-cyan-200 outline-none">
+                  <option value="1">1 Asset</option>
+                  <option value="2">2 Variants</option>
+                  <option value="4">4 Matrix Grid</option>
+                </select>
+              </div>
+            </div>
 
-            <div class="flex items-center gap-2 mb-4">
+            <div class="flex items-center gap-2 mb-3">
               <input type="text" id="synthPromptInput" value="Glowing cyan holographic quantum microchip blueprint with circuit nodes" class="flex-1 bg-[#020817] border border-cyan-500/50 rounded px-3 py-2 text-xs font-mono-hud text-cyan-100 placeholder-cyan-700 outline-none focus:border-cyan-400">
-              <button onclick="synthesizeCyberImage()" id="synthActionBtn" class="px-5 py-2 rounded bg-cyan-500 hover:bg-white font-hud font-bold text-xs text-black tracking-wider transition shadow-[0_0_12px_#00f3ff]">
+              <button onclick="synthesizeCyberImageBatch()" id="synthActionBtn" class="px-5 py-2 rounded bg-cyan-500 hover:bg-white font-hud font-bold text-xs text-black tracking-wider transition shadow-[0_0_12px_#00f3ff]">
                 SYNTHESIZE
               </button>
             </div>
           </div>
 
-          <div class="relative w-full flex-1 bg-[#010614] border border-cyan-500/30 rounded flex flex-col items-center justify-center p-4 min-h-[300px] overflow-hidden">
+          <!-- Synthesizer Canvas Viewport & Batch Container -->
+          <div class="relative w-full flex-1 bg-[#010614] border border-cyan-500/30 rounded flex flex-col items-center justify-center p-3 min-h-[310px] overflow-hidden">
             
             <div id="synthStandbyState" class="flex flex-col items-center justify-center text-center">
               <div class="w-16 h-16 rounded-full border-2 border-cyan-500/40 border-t-cyan-300 animate-spin mb-3"></div>
-              <span class="font-hud text-xs tracking-widest text-cyan-400/90 uppercase">SYNTHESIS ENGINE READY</span>
-              <span class="text-[10px] font-mono-hud text-cyan-500/60 mt-1">Select prompt and trigger synthesis sequence</span>
+              <span class="font-hud text-xs tracking-widest text-cyan-400/90 uppercase">UNLIMITED SYNTH ENGINE READY</span>
+              <span class="text-[10px] font-mono-hud text-cyan-500/60 mt-1">No API keys required • Multi-variant rendering supported</span>
             </div>
 
             <div id="synthLoadingState" class="hidden flex flex-col items-center justify-center text-center">
@@ -536,18 +586,26 @@
                 <span class="font-hud text-xs font-bold text-cyan-200">M.V</span>
               </div>
               <span class="font-hud text-xs tracking-wider text-cyan-300 animate-pulse">SYNTHESIZING HOLOGRAPHIC ASSET...</span>
-              <span class="text-[10px] font-mono-hud text-cyan-500 mt-1">Routing through global neural network grid...</span>
+              <span class="text-[10px] font-mono-hud text-cyan-500 mt-1">Executing non-throttled multi-thread neural pipeline...</span>
             </div>
 
             <div id="synthResultState" class="hidden w-full h-full flex flex-col items-center justify-center">
-              <img id="synthGeneratedImg" src="" alt="Synthesized Blueprint" class="max-h-[290px] w-full object-contain rounded border border-cyan-500/50 glow-box">
-              <div class="flex items-center gap-3 mt-2">
-                <a id="synthDownloadBtn" href="#" download="mv_holographic_blueprint.png" target="_blank" class="text-[10px] font-mono-hud text-cyan-300 underline hover:text-white">Download Asset</a>
-                <span class="text-[10px] text-cyan-600">•</span>
-                <button onclick="synthesizeCyberImage()" class="text-[10px] font-mono-hud text-cyan-400 hover:text-white">Regenerate</button>
+              <div id="synthBatchGrid" class="w-full flex-1 grid grid-cols-1 gap-2 items-center justify-center overflow-auto max-h-[300px]">
+                <!-- Batch cards populated here -->
               </div>
             </div>
 
+          </div>
+
+          <!-- Holographic Vault History Shelf -->
+          <div class="mt-3 pt-2 border-t border-cyan-500/20">
+            <div class="flex items-center justify-between text-[10px] font-mono-hud text-cyan-400 mb-1.5">
+              <span>HOLOGRAPHIC VAULT RECENT SAVES:</span>
+              <button onclick="clearVaultHistory()" class="text-rose-400 hover:text-white">Clear Vault</button>
+            </div>
+            <div id="vaultThumbnails" class="flex items-center gap-2 overflow-x-auto pb-1 min-h-[44px]">
+              <span class="text-[10px] font-mono-hud text-cyan-700">No assets cached in current session.</span>
+            </div>
           </div>
 
         </div>
@@ -589,7 +647,7 @@
           <div class="text-[9px] font-mono-hud text-cyan-400/80 mt-1">M.V // SYNAPSE</div>
         </div>
 
-        <div onclick="inspectNode('Syntax & Structure', 'Parses JSON, XML, Python dictionaries, Markmodn, and Mermaid.js trees into vector hierarchies for zero-latency rendering.')" class="matrix-node absolute top-[10%] left-[6%] md:left-[12%] w-44 p-3.5 rounded bg-[#030d29] border border-cyan-500/50 cursor-pointer hover:border-cyan-300 hover:shadow-[0_0_15px_#00f3ff] transition">
+        <div onclick="inspectNode('Syntax & Structure', 'Parses JSON, XML, Python dictionaries, Markdown, and Mermaid.js trees into vector hierarchies for zero-latency rendering.')" class="matrix-node absolute top-[10%] left-[6%] md:left-[12%] w-44 p-3.5 rounded bg-[#030d29] border border-cyan-500/50 cursor-pointer hover:border-cyan-300 hover:shadow-[0_0_15px_#00f3ff] transition">
           <div class="text-[10px] font-mono-hud text-cyan-500">CLUSTER 01</div>
           <div class="font-hud text-xs text-cyan-300 font-bold">SYNTAX & STRUCTURE</div>
           <div class="text-[11px] font-mono-hud text-cyan-400/80 mt-1">JSON • XML • PYTHON DICT</div>
@@ -832,9 +890,9 @@
       <div class="hud-bracket rounded p-5 space-y-3 hover:border-cyan-300 hover:shadow-[0_0_20px_#00f3ff] transition">
         <div class="text-xs font-mono-hud text-cyan-500 tracking-wider">PROJECT // 02</div>
         <h3 class="font-hud text-cyan-300 text-lg">M.V ASSISTANT &amp; NEURAL LAB</h3>
-        <p class="text-xs font-mono-hud text-cyan-200/80 leading-relaxed">Multimodal voice &amp; vision ecosystem with speech synthesis, Gemini-powered image diagnostics, and cyber image synthesis.</p>
+        <p class="text-xs font-mono-hud text-cyan-200/80 leading-relaxed">Multimodal voice &amp; vision ecosystem with natural human cadence speech, Gemini visual diagnostics, and multi-node image synthesis.</p>
         <div class="flex gap-2 text-[10px] font-mono-hud text-cyan-400 pt-2 border-t border-cyan-500/20">
-          <span>Web Speech</span> • <span>gemini-3-flash</span> • <span>pollinations API</span>
+          <span>Natural Cadence TTS</span> • <span>gemini-3-flash</span> • <span>Unlimited Synth Matrix</span>
         </div>
       </div>
 
@@ -868,7 +926,7 @@
       </div>
 
       <div id="terminalOutput" class="flex-1 overflow-y-auto font-mono text-xs text-cyan-300 space-y-1 pr-2">
-        <div>[M.V Shell v4.9 Active. Type <strong class="text-white">help</strong> for tactical command list.]</div>
+        <div>[M.V Shell v5.0 Active. Neural Human Cadence &amp; Unlimited Synthesizer Linked. Type <strong class="text-white">help</strong> for commands.]</div>
       </div>
 
       <form onsubmit="handleTerminalCommand(event)" class="flex items-center gap-2 mt-2 pt-2 border-t border-cyan-500/20">
@@ -888,7 +946,7 @@
         <button onclick="closeApiKeyModal()" class="text-cyan-400 hover:text-white font-mono-hud">✕</button>
       </div>
       <p class="text-xs font-mono-hud text-cyan-400/80 leading-relaxed">
-        When deployed on GitHub Pages or custom hosting, enter your Google AI Studio API key here. In local Canvas preview, leave blank to use the built-in runtime. (Note: Image Synthesizer no longer requires a key!)
+        When deployed on GitHub Pages or custom hosting, enter your Google AI Studio API key here for Gemini Vision &amp; Chat. Image Synthesizer is completely free and requires no key.
       </p>
       <div>
         <input type="password" id="customApiKeyInput" placeholder="Enter AI Studio API Key (AIzaSy...)" class="w-full bg-[#020817] border border-cyan-500/50 rounded px-3 py-2 text-xs font-mono-hud text-cyan-100 placeholder-cyan-700 outline-none focus:border-cyan-400">
@@ -950,6 +1008,7 @@
         text.innerText = "AUDIO: MUTED";
         if ('speechSynthesis' in window) window.speechSynthesis.cancel();
         if (isAmbientDronePlaying) toggleAmbientDrone();
+        if (isSpeakingSequence) stopHumanSpeaking();
       }
     }
 
@@ -959,7 +1018,7 @@
         badge.innerText = 'CUSTOM KEY: ' + currentApiKey.substring(0, 7) + '...';
         badge.className = 'text-emerald-400';
       } else {
-        badge.innerText = 'CANVAS RUNTIME';
+        badge.innerText = 'QUANTUM RUNTIME';
         badge.className = 'text-cyan-300';
       }
     }
@@ -1122,52 +1181,72 @@
         label.innerText = 'PULSE DISCHARGED: 140%';
         label.className = 'text-cyan-300 font-bold animate-pulse';
         setTimeout(() => {
-          label.innerText = 'REACTOR NOMINAL';
+          label.innerText = 'REACTOR SYNAPSE 100%';
           label.className = 'text-emerald-400';
         }, 1400);
       }
     }
 
     /* =====================================================================
-       3. 5-VOICE MATRIX (3 FEMALE, 2 MALE)
+       3. ADVANCED HUMAN CADENCE VOICE ENGINE (REAL INFLECTION & PAUSES)
     ===================================================================== */
-    const VOICE_PROFILES = {
-      female_1: {
+    const NEURAL_VOICE_CONFIGS = {
+      neural_valkyrie: {
         name: "Valkyrie",
         gender: "female",
-        pitch: 1.25,
-        rate: 1.05,
+        basePitch: 1.05,
+        baseRate: 1.02,
+        breathVariation: 0.04,
+        preferredVoices: ["Google US English", "Microsoft Jenny Online", "Samantha", "Victoria", "Natural"],
         testLine: "M.V online. Voice Profile F-01 Valkyrie engaged. All parameters ready."
       },
-      female_2: {
+      neural_athena: {
         name: "Athena",
         gender: "female",
-        pitch: 1.05,
-        rate: 0.98,
+        basePitch: 0.98,
+        baseRate: 0.96,
+        breathVariation: 0.05,
+        preferredVoices: ["Microsoft Aria Online", "Google UK English Female", "Karen", "Fiona"],
         testLine: "M.V online. Profile F-02 Athena active. Systems steady and analytical."
       },
-      female_3: {
+      neural_nyx: {
         name: "Nyx",
         gender: "female",
-        pitch: 0.88,
-        rate: 0.95,
+        basePitch: 0.88,
+        baseRate: 0.93,
+        breathVariation: 0.06,
+        preferredVoices: ["Zira", "Moira", "Google US English"],
         testLine: "M.V tactical unit. Profile F-03 Nyx loaded in stealth mode."
       },
-      male_1: {
+      neural_titan: {
         name: "Titan",
         gender: "male",
-        pitch: 0.72,
-        rate: 0.92,
+        basePitch: 0.74,
+        baseRate: 0.92,
+        breathVariation: 0.03,
+        preferredVoices: ["Microsoft Guy Online", "Google UK English Male", "Daniel", "David"],
         testLine: "M.V online. Profile M-01 Titan operational. Integrity secure."
       },
-      male_2: {
+      neural_apex: {
         name: "Apex",
         gender: "male",
-        pitch: 0.92,
-        rate: 1.05,
+        basePitch: 0.94,
+        baseRate: 1.05,
+        breathVariation: 0.05,
+        preferredVoices: ["Alex", "Fred", "George", "Google US English"],
         testLine: "M.V online. Profile M-02 Apex deployed. Ready for combat."
       }
     };
+
+    let userSpeechRateMod = 1.02;
+    let userSpeechPitchMod = 1.00;
+
+    function updateCadenceSettings() {
+      userSpeechRateMod = parseFloat(document.getElementById('speechRateSlider').value);
+      userSpeechPitchMod = parseFloat(document.getElementById('speechPitchSlider').value);
+      document.getElementById('cadenceRateLabel').innerText = `${userSpeechRateMod.toFixed(2)}x`;
+      document.getElementById('cadencePitchLabel').innerText = `${userSpeechPitchMod.toFixed(2)}`;
+    }
 
     let availableVoices = [];
     function loadVoices() {
@@ -1180,15 +1259,25 @@
       loadVoices();
     }
 
-    function getBestMatchingVoice(gender) {
+    function selectBestHumanVoice(config) {
       if (!availableVoices.length) loadVoices();
-      const femaleKeywords = ['female', 'zira', 'samantha', 'karen', 'victoria', 'moira', 'fiona'];
-      const maleKeywords = ['male', 'david', 'alex', 'daniel', 'george', 'fred'];
-      const targetKeywords = gender === 'female' ? femaleKeywords : maleKeywords;
       
+      // 1. Try preferred voice matching
+      for (const pref of config.preferredVoices) {
+        const found = availableVoices.find(v => v.name.toLowerCase().includes(pref.toLowerCase()));
+        if (found) return found;
+      }
+
+      // 2. Try gender keywords with English
+      const genderKeywords = config.gender === 'female' 
+        ? ['female', 'zira', 'samantha', 'karen', 'victoria', 'natural', 'jenny', 'aria'] 
+        : ['male', 'guy', 'david', 'alex', 'daniel', 'george'];
+
       let matched = availableVoices.find(v => 
-        targetKeywords.some(kw => v.name.toLowerCase().includes(kw))
+        v.lang.startsWith('en') && genderKeywords.some(kw => v.name.toLowerCase().includes(kw))
       );
+
+      // 3. Any English voice
       if (!matched) {
         matched = availableVoices.find(v => v.lang.startsWith('en'));
       }
@@ -1205,44 +1294,108 @@
         .trim();
     }
 
-    function speakText(rawText) {
-      if (!isMasterAudioEnabled) return;
-      if (!('speechSynthesis' in window)) return;
+    // Split text into natural breath clauses with punctuation tokens
+    function parseHumanCadenceChunks(text) {
+      const clean = cleanTextForSpeech(text);
+      if (!clean) return [];
+
+      // Regex matches sentences and comma clauses
+      const regex = /([^,.?!;—]+[,.?!;—]*)/g;
+      const rawMatches = clean.match(regex) || [clean];
       
-      window.speechSynthesis.cancel();
-      const clean = cleanTextForSpeech(rawText);
-      if (!clean) return;
+      return rawMatches.map(m => m.trim()).filter(Boolean);
+    }
+
+    let isSpeakingSequence = false;
+    let speechSequenceAbort = false;
+
+    function stopHumanSpeaking() {
+      speechSequenceAbort = true;
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      document.getElementById('voiceStatusBadge').innerText = 'STANDBY';
+      stopSpectrumAnimation();
+      isSpeakingSequence = false;
+    }
+
+    async function speakTextWithHumanCadence(rawText) {
+      if (!isMasterAudioEnabled || !('speechSynthesis' in window)) return;
+      
+      stopHumanSpeaking();
+      await new Promise(r => setTimeout(r, 40));
+      speechSequenceAbort = false;
+      isSpeakingSequence = true;
 
       const profileKey = document.getElementById('voiceProfileSelect').value;
-      const config = VOICE_PROFILES[profileKey] || VOICE_PROFILES.female_1;
+      const config = NEURAL_VOICE_CONFIGS[profileKey] || NEURAL_VOICE_CONFIGS.neural_valkyrie;
+      const voice = selectBestHumanVoice(config);
+      const chunks = parseHumanCadenceChunks(rawText);
 
-      const utterance = new SpeechSynthesisUtterance(clean);
-      utterance.pitch = config.pitch;
-      utterance.rate = config.rate;
+      if (!chunks.length) return;
 
-      const voice = getBestMatchingVoice(config.gender);
-      if (voice) utterance.voice = voice;
+      document.getElementById('voiceStatusBadge').innerText = `CADENCE: ${config.name.toUpperCase()}`;
+      startSpectrumAnimation();
 
-      utterance.onstart = () => {
-        document.getElementById('voiceStatusBadge').innerText = `SPEAKING (${config.name.toUpperCase()})`;
-        startSpectrumAnimation();
-      };
-      utterance.onend = () => {
+      for (let i = 0; i < chunks.length; i++) {
+        if (speechSequenceAbort) break;
+
+        const chunk = chunks[i];
+        const lastChar = chunk.slice(-1);
+
+        // Prosody inflection modulation
+        let pitchInflection = config.basePitch * userSpeechPitchMod;
+        let rateInflection = config.baseRate * userSpeechRateMod;
+
+        // Pitch lift on questions
+        if (chunk.includes('?')) {
+          pitchInflection += 0.12;
+        } 
+        // Cadence drop on full stop
+        else if (lastChar === '.') {
+          pitchInflection -= 0.04;
+          rateInflection *= 0.98;
+        }
+
+        // Random micro breath fluctuation (+- 0.02)
+        pitchInflection += (Math.random() - 0.5) * config.breathVariation;
+
+        await new Promise((resolve) => {
+          const utterance = new SpeechSynthesisUtterance(chunk);
+          if (voice) utterance.voice = voice;
+          utterance.pitch = Math.max(0.5, Math.min(2.0, pitchInflection));
+          utterance.rate = Math.max(0.5, Math.min(2.0, rateInflection));
+
+          utterance.onend = resolve;
+          utterance.onerror = resolve;
+
+          window.speechSynthesis.speak(utterance);
+        });
+
+        if (speechSequenceAbort) break;
+
+        // Human breathing micro-pauses
+        let pauseTime = 60; // default clause pause
+        if (lastChar === '.' || lastChar === '!') {
+          pauseTime = Math.floor(Math.random() * 80) + 220; // 220ms - 300ms between sentences
+        } else if (lastChar === '?' ) {
+          pauseTime = Math.floor(Math.random() * 60) + 180;
+        } else if (lastChar === ',' || lastChar === ';' || lastChar === '—') {
+          pauseTime = Math.floor(Math.random() * 50) + 110; // breath intake pause
+        }
+
+        await new Promise(r => setTimeout(r, pauseTime));
+      }
+
+      if (!speechSequenceAbort) {
         document.getElementById('voiceStatusBadge').innerText = 'STANDBY';
         stopSpectrumAnimation();
-      };
-      utterance.onerror = () => {
-        document.getElementById('voiceStatusBadge').innerText = 'STANDBY';
-        stopSpectrumAnimation();
-      };
-
-      window.speechSynthesis.speak(utterance);
+      }
+      isSpeakingSequence = false;
     }
 
     function testSelectedVoice() {
       const profileKey = document.getElementById('voiceProfileSelect').value;
-      const config = VOICE_PROFILES[profileKey];
-      speakText(config.testLine);
+      const config = NEURAL_VOICE_CONFIGS[profileKey];
+      speakTextWithHumanCadence(config.testLine);
     }
 
     /* Waveform visualizer */
@@ -1275,8 +1428,52 @@
       }
     }
 
+    // Live Mic to Spectrum Uplink Feature
+    let micStream = null;
+    let micAnalyser = null;
+    let micAnimFrame = null;
+
+    async function toggleMicrophoneSpectrum() {
+      const btn = document.getElementById('micUplinkBtn');
+      if (!micStream) {
+        try {
+          micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          const ctx = getAudioCtx();
+          const src = ctx.createMediaStreamSource(micStream);
+          micAnalyser = ctx.createAnalyser();
+          micAnalyser.fftSize = 64;
+          src.connect(micAnalyser);
+          btn.innerText = "MIC UPLINK: LIVE";
+          btn.className = "text-[9px] px-1.5 py-0.5 border border-emerald-500 bg-emerald-950 text-emerald-300 rounded";
+          renderMicBars();
+        } catch(e) {
+          btn.innerText = "MIC ERROR";
+        }
+      } else {
+        micStream.getTracks().forEach(t => t.stop());
+        micStream = null;
+        if (micAnimFrame) cancelAnimationFrame(micAnimFrame);
+        btn.innerText = "MIC UPLINK: OFF";
+        btn.className = "text-[9px] px-1.5 py-0.5 border border-cyan-500/40 bg-cyan-950/60 rounded text-cyan-300";
+        stopSpectrumAnimation();
+      }
+    }
+
+    function renderMicBars() {
+      if (!micAnalyser) return;
+      const data = new Uint8Array(micAnalyser.frequencyBinCount);
+      micAnalyser.getByteFrequencyData(data);
+      const bars = spectrumContainer.children;
+      for (let i = 0; i < bars.length; i++) {
+        const val = data[i * 2] || 0;
+        const h = Math.max(4, Math.floor((val / 255) * 36));
+        bars[i].style.height = `${h}px`;
+      }
+      micAnimFrame = requestAnimationFrame(renderMicBars);
+    }
+
     /* =====================================================================
-       4. CONVERSATIONAL ENGINE (LOCAL STORAGE MEMORY ADDED)
+       4. CONVERSATIONAL ENGINE
     ===================================================================== */
     let chatHistory = JSON.parse(localStorage.getItem('mv_chat_history')) || [
       { sender: 'M.V', text: "Greetings! I am M.V, your personal cybernetic intelligence. Ask me anything directly—from software architecture, visual analysis in the Neural Lab, or run live code in the Quantum Sandbox. How can I help you today?" }
@@ -1295,7 +1492,7 @@
       msgDiv.className = isMv 
         ? 'bg-cyan-950/30 border border-cyan-500/30 rounded p-3 text-cyan-200' 
         : 'bg-[#06112c] border border-cyan-500/20 rounded p-3 text-cyan-100 text-right';
-      msgDiv.innerHTML = `<span class="font-bold text-cyan-400 font-hud">[${sender}]:</span>${text}`;
+      msgDiv.innerHTML = `<span class="font-bold text-cyan-400 font-hud">[${sender}]:</span> ${text}`;
       container.appendChild(msgDiv);
       container.scrollTop = container.scrollHeight;
     }
@@ -1323,6 +1520,9 @@
       if (q.includes('who are you') || q.includes('your name') || q.includes('what are you')) {
         return "I am M.V, an intelligent personal AI assistant and operations operative. I manage your portfolio, diagnose visual schematics in the Neural Lab, and run live simulations.";
       }
+      if (q.includes('voice') || q.includes('inflection') || q.includes('speech') || q.includes('natural')) {
+        return "My vocal matrix utilizes natural human cadence processing. I actively chunk clauses, modulate pitch based on questions or statements, and inject micro-pauses for human breathing rhythm.";
+      }
       if (q.includes('sandbox') || q.includes('code') || q.includes('shader')) {
         return "The Quantum Code Sandbox allows you to write HTML, CSS, JavaScript, and WebGL code directly in-browser with instantaneous live execution.";
       }
@@ -1332,17 +1532,14 @@
       if (q.includes('vision') || q.includes('scanner') || q.includes('multimodal')) {
         return "The Holographic Vision Scanner accepts diagrams or code screenshots and performs visual diagnostics using Gemini visual analysis protocols.";
       }
-      if (q.includes('synthesize') || q.includes('generator') || q.includes('image')) {
-        return "The Cyber Image Synthesizer now leverages Pollinations API to rapidly generate lifetime free holographic concepts and sci-fi blueprints based on your text prompt.";
+      if (q.includes('synthesize') || q.includes('generator') || q.includes('image') || q.includes('limit') || q.includes('batch')) {
+        return "The Unlimited Asset Synthesizer runs on an unthrottled multi-node matrix. You can render single designs or batch 4 variants simultaneously with custom aspect ratios and zero restrictions.";
       }
       if (q.includes('project') || q.includes('portfolio') || q.includes('dossier')) {
         return "The portfolio includes the Neural Mind Map visualization engine, the M.V Assistant and Multimodal Lab, and the Core Guardian cyber defense engine.";
       }
       if (q.includes('game') || q.includes('arcade') || q.includes('play')) {
         return "In the Cyber Arcade, click 'Start Game' to engage hostile vector drones. Aim with your mouse to shoot lasers and press Spacebar to activate the EMP blast.";
-      }
-      if (q.includes('matrix')) {
-        return "If you wish to activate the global holographic rain overlay, type 'matrix' directly into the Cyber Terminal Shell via the [`] key.";
       }
 
       return `I received your directive: "${userInput}". Everything is nominal. Please feel free to ask any specific question or explore the Neural Lab!`;
@@ -1366,7 +1563,7 @@
         const payload = {
           contents: [{ parts: [{ text }] }],
           systemInstruction: {
-            parts: [{ text: "You are M.V, an intelligent, helpful, polite personal AI assistant. Answer the user's specific question directly and naturally in 1 to 3 concise sentences. Never output random technical jargon or mindmap cluster labels unless the user specifically asks for them." }]
+            parts: [{ text: "You are M.V, an intelligent, helpful, polite personal AI assistant. Answer the user's specific question directly and naturally in 1 to 3 concise sentences with natural punctuation (commas, periods, question marks) so your voice synthesizer can apply realistic human cadence and breath pauses. Never output random technical jargon or mindmap cluster labels unless the user specifically asks for them." }]
           }
         };
 
@@ -1387,7 +1584,7 @@
       }
 
       addChatMessage('M.V', reply);
-      speakText(reply);
+      speakTextWithHumanCadence(reply);
     }
 
     function sendQuickPrompt(prompt) {
@@ -1420,7 +1617,7 @@
     }
 
     /* =====================================================================
-       5. NEURAL LAB: VISION SCANNER & POLLINATIONS IMAGE SYNTHESIZER
+       5. NEURAL LAB: VISION SCANNER & UNLIMITED BATCH SYNTHESIZER
     ===================================================================== */
     let currentVisionBase64 = null;
     let currentVisionMime = 'image/png';
@@ -1548,8 +1745,48 @@
       }
     });
 
-    // FIXED: Now uses Pollinations API to guarantee lifetime free working image synthesis without keys!
-    async function synthesizeCyberImage() {
+    // Style Injections
+    function applyStylePreset(style) {
+      const input = document.getElementById('synthPromptInput');
+      const base = input.value.split(',')[0].trim();
+      if (style === 'blueprint') {
+        input.value = `${base}, technical holographic blueprint schematic, schematic wireframe lines, neon isometric grid`;
+      } else if (style === 'cyberpunk') {
+        input.value = `${base}, cyberpunk neon aesthetic, volumetric moody fog, cinematic sci-fi illumination, 8k render`;
+      } else if (style === 'hologram') {
+        input.value = `${base}, 3D floating hologram, optical glass refraction, glowing vector nodes, dark void backdrop`;
+      }
+      playBeep(950, 0.04);
+    }
+
+    // Unlimited Multi-Batch Synthesizer Logic
+    let vaultItems = JSON.parse(sessionStorage.getItem('mv_synth_vault')) || [];
+
+    function updateVaultShelf() {
+      const container = document.getElementById('vaultThumbnails');
+      if (!vaultItems.length) {
+        container.innerHTML = `<span class="text-[10px] font-mono-hud text-cyan-700">No assets cached in current session.</span>`;
+        return;
+      }
+      container.innerHTML = '';
+      vaultItems.slice(-8).reverse().forEach(item => {
+        const img = document.createElement('img');
+        img.src = item.url;
+        img.className = "w-10 h-10 object-cover rounded border border-cyan-500/50 cursor-pointer hover:scale-110 transition shrink-0";
+        img.title = item.prompt;
+        img.onclick = () => window.open(item.url, '_blank');
+        container.appendChild(img);
+      });
+    }
+
+    function clearVaultHistory() {
+      vaultItems = [];
+      sessionStorage.removeItem('mv_synth_vault');
+      updateVaultShelf();
+      playBeep(400, 0.08);
+    }
+
+    async function synthesizeCyberImageBatch() {
       const prompt = document.getElementById('synthPromptInput').value.trim();
       if (!prompt) return;
 
@@ -1562,38 +1799,66 @@
       synthBtn.innerText = 'SYNTHESIZING...';
       synthBtn.disabled = true;
 
-      // Generates a seed to bypass cache and ensures style matching
-      const seed = Math.floor(Math.random() * 1000000);
-      const styleModifiers = ", intricate cybernetic details, sci-fi blueprint, glowing neon holographic, high tech UI";
-      const safePrompt = encodeURIComponent(prompt + styleModifiers);
-      const imageUrl = `https://image.pollinations.ai/prompt/${safePrompt}?seed=${seed}&width=720&height=405&nologo=true`;
+      const model = document.getElementById('synthModelSelect').value;
+      const ratio = document.getElementById('synthRatioSelect').value;
+      const batchCount = parseInt(document.getElementById('synthBatchSelect').value, 10);
 
-      // Pre-load the image so it doesn't flicker on finish
-      const img = new Image();
-      img.onload = () => {
-        document.getElementById('synthLoadingState').classList.add('hidden');
-        document.getElementById('synthResultState').classList.remove('hidden');
-        document.getElementById('synthGeneratedImg').src = imageUrl;
-        document.getElementById('synthDownloadBtn').href = imageUrl;
+      let width = 768;
+      let height = 432;
+      if (ratio === '1:1') { width = 576; height = 576; }
+      else if (ratio === '9:16') { width = 432; height = 768; }
 
-        synthBtn.innerText = 'SYNTHESIZE';
-        synthBtn.disabled = false;
-        playBeep(1200, 0.1);
-      };
-      
-      img.onerror = () => {
-        // Ultimate fallback to procedural generation if network completely fails
-        const fallbackUrl = generateProceduralBlueprintDataUrl(prompt);
-        document.getElementById('synthLoadingState').classList.add('hidden');
-        document.getElementById('synthResultState').classList.remove('hidden');
-        document.getElementById('synthGeneratedImg').src = fallbackUrl;
-        document.getElementById('synthDownloadBtn').href = fallbackUrl;
-        synthBtn.innerText = 'SYNTHESIZE';
-        synthBtn.disabled = false;
-        playBeep(300, 0.15);
-      };
+      const grid = document.getElementById('synthBatchGrid');
+      grid.innerHTML = '';
+      if (batchCount === 1) grid.className = "w-full flex-1 flex flex-col items-center justify-center";
+      else if (batchCount === 2) grid.className = "w-full flex-1 grid grid-cols-2 gap-2";
+      else grid.className = "w-full flex-1 grid grid-cols-2 gap-2";
 
-      img.src = imageUrl;
+      const renderPromises = [];
+
+      for (let i = 0; i < batchCount; i++) {
+        const seed = Math.floor(Math.random() * 9999999);
+        const encoded = encodeURIComponent(prompt);
+        const url = `https://image.pollinations.ai/prompt/${encoded}?model=${model}&width=${width}&height=${height}&seed=${seed}&nologo=true`;
+
+        const promise = new Promise((resolve) => {
+          const img = new Image();
+          img.onload = () => resolve({ url, success: true });
+          img.onerror = () => resolve({ url: generateProceduralBlueprintDataUrl(prompt), success: true });
+          img.src = url;
+        });
+
+        renderPromises.push(promise);
+      }
+
+      const results = await Promise.all(renderPromises);
+
+      document.getElementById('synthLoadingState').classList.add('hidden');
+      document.getElementById('synthResultState').classList.remove('hidden');
+
+      results.forEach((res, idx) => {
+        const card = document.createElement('div');
+        card.className = "relative flex flex-col items-center group";
+        card.innerHTML = `
+          <img src="${res.url}" class="max-h-[220px] w-full object-contain rounded border border-cyan-500/50 glow-box">
+          <div class="flex items-center gap-2 mt-1.5 text-[10px] font-mono-hud text-cyan-300">
+            <span>VAR-${idx + 1}</span>
+            <span>•</span>
+            <a href="${res.url}" download="mv_asset_${idx+1}.png" target="_blank" class="hover:underline text-cyan-400">Download</a>
+            <span>•</span>
+            <button onclick="window.open('${res.url}', '_blank')" class="hover:text-white">Expand</button>
+          </div>
+        `;
+        grid.appendChild(card);
+        vaultItems.push({ url: res.url, prompt });
+      });
+
+      sessionStorage.setItem('mv_synth_vault', JSON.stringify(vaultItems));
+      updateVaultShelf();
+
+      synthBtn.innerText = 'SYNTHESIZE';
+      synthBtn.disabled = false;
+      playBeep(1200, 0.1);
     }
 
     function generateProceduralBlueprintDataUrl(promptText) {
@@ -1658,7 +1923,101 @@
     }
 
     /* =====================================================================
-       6. MIND MAP MATRIX
+       6. INTERACTIVE 3D HOLOGRAPHIC CORE CANVAS
+    ===================================================================== */
+    const holoCanvas = document.getElementById('hologramCoreCanvas');
+    const hCtx = holoCanvas.getContext('2d');
+    let rotX = 0.2;
+    let rotY = 0.3;
+    let isDraggingCore = false;
+    let lastMouseX = 0;
+    let lastMouseY = 0;
+
+    // 3D Icosahedron Vertices
+    const phi = (1 + Math.sqrt(5)) / 2;
+    const baseVertices = [
+      [-1,  phi, 0], [ 1,  phi, 0], [-1, -phi, 0], [ 1, -phi, 0],
+      [ 0, -1,  phi], [ 0,  1,  phi], [ 0, -1, -phi], [ 0,  1, -phi],
+      [ phi, 0, -1], [ phi, 0,  1], [-phi, 0, -1], [-phi, 0,  1]
+    ].map(v => {
+      const len = Math.hypot(v[0], v[1], v[2]);
+      return [v[0] / len * 95, v[1] / len * 95, v[2] / len * 95];
+    });
+
+    holoCanvas.parentElement.addEventListener('mousedown', (e) => {
+      isDraggingCore = true;
+      lastMouseX = e.clientX;
+      lastMouseY = e.clientY;
+    });
+
+    window.addEventListener('mouseup', () => { isDraggingCore = false; });
+    window.addEventListener('mousemove', (e) => {
+      if (!isDraggingCore) return;
+      const dx = e.clientX - lastMouseX;
+      const dy = e.clientY - lastMouseY;
+      rotY += dx * 0.01;
+      rotX += dy * 0.01;
+      lastMouseX = e.clientX;
+      lastMouseY = e.clientY;
+    });
+
+    function render3DHologram() {
+      hCtx.clearRect(0, 0, holoCanvas.width, holoCanvas.height);
+      const cx = holoCanvas.width / 2;
+      const cy = holoCanvas.height / 2;
+
+      if (!isDraggingCore) {
+        rotY += 0.008;
+        rotX += 0.003;
+      }
+
+      // Rotate and Project vertices
+      const projected = baseVertices.map(([x, y, z]) => {
+        // Rot Y
+        let x1 = x * Math.cos(rotY) + z * Math.sin(rotY);
+        let z1 = -x * Math.sin(rotY) + z * Math.cos(rotY);
+        // Rot X
+        let y2 = y * Math.cos(rotX) - z1 * Math.sin(rotX);
+        let z2 = y * Math.sin(rotX) + z1 * Math.cos(rotX);
+
+        const fov = 260;
+        const scale = fov / (fov + z2 + 80);
+        return {
+          px: cx + x1 * scale,
+          py: cy + y2 * scale,
+          scale,
+          z: z2
+        };
+      });
+
+      // Draw Edges
+      hCtx.lineWidth = 1.2;
+      for (let i = 0; i < projected.length; i++) {
+        for (let j = i + 1; j < projected.length; j++) {
+          const d = Math.hypot(baseVertices[i][0] - baseVertices[j][0], baseVertices[i][1] - baseVertices[j][1], baseVertices[i][2] - baseVertices[j][2]);
+          if (d < 115) {
+            hCtx.beginPath();
+            hCtx.moveTo(projected[i].px, projected[i].py);
+            hCtx.lineTo(projected[j].px, projected[j].py);
+            hCtx.strokeStyle = 'rgba(0, 243, 255, 0.35)';
+            hCtx.stroke();
+          }
+        }
+      }
+
+      // Draw Glowing Vertices
+      for (let p of projected) {
+        hCtx.beginPath();
+        hCtx.arc(p.px, p.py, 2.5 * p.scale, 0, Math.PI * 2);
+        hCtx.fillStyle = '#00f3ff';
+        hCtx.fill();
+      }
+
+      requestAnimationFrame(render3DHologram);
+    }
+
+    /* =====================================================================
+       7. MIND MAP MATRIX
     ===================================================================== */
     function inspectNode(name, desc) {
       playBeep(920, 0.06);
@@ -1683,7 +2042,7 @@
     }
 
     /* =====================================================================
-       7. CYBER DEFENSE ARCADE ENGINE (PAUSED BY DEFAULT)
+       8. CYBER DEFENSE ARCADE ENGINE (PAUSED BY DEFAULT)
     ===================================================================== */
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
@@ -1940,7 +2299,7 @@
     }
 
     /* =====================================================================
-       8. QUANTUM CODE VAULT & SANDBOX PLAYGROUND
+       9. QUANTUM CODE VAULT & SANDBOX PLAYGROUND
     ===================================================================== */
     const SANDBOX_PRESETS = {
       matrix_rain: `<!DOCTYPE html>
@@ -2120,7 +2479,7 @@ drawRadar();
     }
 
     /* =====================================================================
-       9. HOLOGRAPHIC AUDIO FREQUENCY ANALYZER & CYBER SYNTH
+       10. HOLOGRAPHIC AUDIO FREQUENCY ANALYZER & CYBER SYNTH
     ===================================================================== */
     let ambientDroneOscs = [];
     let ambientDroneGain = null;
@@ -2258,7 +2617,7 @@ drawRadar();
     }
 
     /* =====================================================================
-       10. CYBER TERMINAL CLI DRAWER ENGINE & MATRIX RAIN TOGGLE
+       11. CYBER TERMINAL CLI DRAWER ENGINE & MATRIX RAIN TOGGLE
     ===================================================================== */
     let isTerminalOpen = false;
 
@@ -2293,7 +2652,6 @@ drawRadar();
       output.scrollTop = output.scrollHeight;
     }
 
-    // New Feature: Matrix Overlay logic
     let matrixOverlayInterval = null;
     let isMatrixOverlayActive = false;
     function toggleMatrixOverlay() {
@@ -2354,20 +2712,20 @@ drawRadar();
  • <strong>theme &lt;cyan|crimson|amber|emerald&gt;</strong> : Switch HUD color theme
  • <strong>mute</strong> / <strong>unmute</strong> : Control master audio
  • <strong>game &lt;start|pause|reset&gt;</strong> : Control Cyber Arcade simulation
- • <strong>synth</strong> : Open Cyber Image Synthesizer
- • <strong>matrix</strong> : <span class="text-emerald-400">**NEW**</span> Toggle global matrix data-rain overlay
- • <strong>say &lt;message&gt;</strong> : Transmit voice instruction to M.V
+ • <strong>synth</strong> : Open Unlimited Asset Synthesizer
+ • <strong>matrix</strong> : Toggle global matrix data-rain overlay
+ • <strong>say &lt;message&gt;</strong> : Vocalize with human cadence inflection
  • <strong>clear</strong> : Flush terminal screen buffer`);
           break;
 
         case 'status':
           logTerminal(`SYSTEM TELEMETRY AUDIT:
  • AGENT: M.V MK-V Active
- • REACTOR: 100% Stable
- • FPS: 60 | LATENCY: 12ms
+ • REACTOR: 100% Stable (3D Hologram Synchronized)
+ • CADENCE ENGINE: ACTIVE
+ • SYNTH MATRIX: UNLIMITED MULTI-NODE
  • AUDIO: ${isMasterAudioEnabled ? 'ENABLED' : 'MUTED'}
- • THEME: ${currentTheme.toUpperCase()}
- • SANDBOX ENGINE: READY`);
+ • THEME: ${currentTheme.toUpperCase()}`);
           break;
 
         case 'nav':
@@ -2426,8 +2784,8 @@ drawRadar();
         case 'say':
           const message = parts.slice(1).join(' ');
           if (message) {
-            speakText(message);
-            logTerminal(`Vocalized via M.V: "${message}"`);
+            speakTextWithHumanCadence(message);
+            logTerminal(`Vocalized via M.V with human cadence: "${message}"`);
           } else {
             logTerminal(`Usage: say <your message here>`);
           }
@@ -2453,7 +2811,7 @@ drawRadar();
     }
 
     /* =====================================================================
-       11. AMBIENT BACKGROUND MATRIX PARTICLES & NETWORK UPLINK
+       12. AMBIENT BACKGROUND PARTICLES & TELEMETRY MONITOR
     ==================================================================== */
     const bgCanvas = document.getElementById('ambientMatrixCanvas');
     const bgCtx = bgCanvas.getContext('2d');
@@ -2483,7 +2841,6 @@ drawRadar();
       requestAnimationFrame(renderPoints);
     }
 
-    // New Feature: Live Network Chart 
     function startNetworkMonitor() {
       const cvs = document.getElementById('networkChartCanvas');
       if(!cvs) return;
@@ -2494,7 +2851,7 @@ drawRadar();
         cvs.width = cvs.offsetWidth;
         cvs.height = cvs.offsetHeight;
         data.shift();
-        data.push(Math.random() * 30 + 5); 
+        data.push(Math.random() * 26 + 4); 
         
         ctx.clearRect(0, 0, cvs.width, cvs.height);
         ctx.strokeStyle = '#00f3ff';
@@ -2522,6 +2879,8 @@ drawRadar();
       renderPoints();
       initChat();
       startNetworkMonitor();
+      render3DHologram();
+      updateVaultShelf();
       resetGame();
       loadSandboxPreset('matrix_rain');
       setTheme(currentTheme);
